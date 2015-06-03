@@ -36,9 +36,20 @@ public final class ShapeTest {
         printAreaOf(rp1);
         printPerimeterOf(rp1);
         System.out.println("Regular polygon 4 sides");
-        Shape rp2 = new RegularPolygon(3.0f, 4);
+        Shape rp2 = new RegularPolygon(new Float(5 * Math.sqrt(2f) / 2), 4);
         printAreaOf(rp2);
         printPerimeterOf(rp2);
+        System.out.println("Regular polygon 999 sides");
+        Shape rp3 = new RegularPolygon(1f, 999);
+        printAreaOf(rp3);
+        printPerimeterOf(rp3);
+        System.out.println(Math.PI * 2);
+        try {
+            Shape tr = new Triangle(0f, 1f, 2f);
+        } catch (IllegalArgumentException e) {
+            System.out.format("Erreur during creation of shape: %s\n"
+                              + e.getMessage());
+        }
 
     }
 
@@ -50,7 +61,7 @@ public final class ShapeTest {
                            sh.area()));
     }
 
-    /** Method to print in the console the Permiter of a Shape.
+    /** Method to print in the console the Perimeter of a Shape.
      * @param sh Shape to use.
      */
     public static void printPerimeterOf(final Shape sh) {

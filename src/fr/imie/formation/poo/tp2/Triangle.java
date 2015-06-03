@@ -32,8 +32,8 @@ public class Triangle extends Shape {
     public final Float area() {
         // TODO Auto-generated method stub
         Float p = perimeter() / 2.0f;
-        return (float)
-                Math.sqrt(p * (p - side1) * (p - side2) * (p - side3));
+        return new Float(
+                Math.sqrt(p * (p - side1) * (p - side2) * (p - side3)));
     }
 
     /**

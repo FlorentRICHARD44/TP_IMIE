@@ -32,7 +32,7 @@ public class RegularPolygon extends Shape {
     @Override
     public final Float area() {
         Shape sh = new Triangle(radius, radius, side);
-        return sh.area() * nbSide;
+        return new Float(sh.area() * nbSide);
     }
 
     /**
@@ -72,7 +72,7 @@ public class RegularPolygon extends Shape {
     /** Mutator for the side.
      */
     public final void setSide() {
-        this.side = 2 * radius * (float) Math.sin(Math.PI / radius);
+        this.side = new Float(2 * radius * Math.sin(Math.PI / nbSide));
     }
 
     /** Accessor for the number of sides.
