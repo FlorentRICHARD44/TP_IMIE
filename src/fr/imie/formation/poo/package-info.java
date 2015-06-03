@@ -1,7 +1,4 @@
-/**
- * 
- */
-/**
+/** Package for the POO.
  * @author imie
  *
  */
