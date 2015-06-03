@@ -79,7 +79,9 @@ public class Triangle extends Shape {
         } else if ((s3 <= 0) || (s2 <= 0) || (s1 < 0)) {
             throw new IllegalArgumentException("Un côté doit être positif");
         } else {
-            this.side3 = s3;
+            side1 = s1;
+            side2 = s2;
+            side3 = s3;
         }
     }
 }

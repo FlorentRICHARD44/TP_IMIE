@@ -3,7 +3,12 @@ package fr.imie.formation.poo.tp1;
 /** Class for testing the TP1.
  * @author imie
  */
-public class TestMain {
+public final class TestMain {
+    /** Constructor.
+     * Not used.
+     */
+    private TestMain() {
+    }
 
     /** Main function.
      * @param args Application arguments.

@@ -2,50 +2,50 @@ package fr.imie.formation.poo.tpbases;
 
 /** Class reprensenting the price of one photocopie in a tranche of prices.
  * @author imie
- *
+
  */
 public class PhotocopPrice {
-	/** Price for one photocopie.
-	 */
-	private Float price = 0.0f;
-	/** Number of photocopies in the tranche.
-	 */
-	private Integer number = 0;
-	
-	/** Constructor.
-	 * @param price price for one photocopie.
-	 * @param number number of photocopies in this tranche.
-	 */
-	public PhotocopPrice(final Float price, final Integer number) {
-		setPrice(price);
-		setNumber(number);
-	}
+    /** Price for one photocopie.
+     */
+    private Float price = 0.0f;
+    /** Number of photocopies in the tranche.
+     */
+    private Integer number = 0;
 
-	/**
-	 * @return the price
-	 */
-	public Float getPrice() {
-		return price;
-	}
+    /** Constructor.
+     * @param p price for one photocopie.
+     * @param n number of photocopies in this tranche.
+     */
+    public PhotocopPrice(final Float p, final Integer n) {
+        setPrice(p);
+        setNumber(n);
+    }
 
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(Float price) {
-		this.price = price;
-	}
+    /** Accessor to the price.
+     * @return the price
+     */
+    public final Float getPrice() {
+        return price;
+    }
 
-	/**
-	 * @return the number
-	 */
-	public Integer getNumber() {
-		return number;
-	}
+    /** Mutator to the price.
+     * @param p the price to set
+     */
+    public final void setPrice(final Float p) {
+        this.price = p;
+    }
 
-	/**
-	 * @param number the number to set
-	 */
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    /** Accessor to the number.
+     * @return the number
+     */
+    public final Integer getNumber() {
+        return number;
+    }
+
+    /** Mutator for the number.
+     * @param n the number to set
+     */
+    public final void setNumber(final Integer n) {
+        this.number = n;
+    }
 }
