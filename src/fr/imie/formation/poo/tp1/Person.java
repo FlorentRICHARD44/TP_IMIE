@@ -5,35 +5,34 @@ package fr.imie.formation.poo.tp1;
  *
  */
 public class Person {
-	/** Name of the person.
-	 */
-	private String name;
-	
-	/** Constructor.
-	 * @param name Name of the person.
-	 */
-	public Person(final String name) {
-		this.name = name;
-	}
-	
-	/** Write a hello sentence in the console.
-	 */
-	public void sayHello() {
-		System.out.format("Hello, my name is %s.\n", this.name);
-	}
+    /** Name of the person.
+     */
+    private String name;
 
-	/** Accessor to the name.
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /** Constructor.
+     * @param pName Name of the person.
+     */
+    public Person(final String pName) {
+        setName(pName);
+    }
 
-	/** Mutator for the name.
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** Write a hello sentence in the console.
+     */
+    public void sayHello() {
+        System.out.format("Hello, my name is %s.\n", this.name);
+    }
 
+    /** Accessor to the name.
+     * @return the name
+     */
+    public final String getName() {
+        return name;
+    }
+
+    /** Mutator for the name.
+     * @param pName the name to set
+     */
+    public final void setName(final String pName) {
+        this.name = pName;
+    }
 }

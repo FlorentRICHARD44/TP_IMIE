@@ -6,11 +6,10 @@ package fr.imie.formation.poo.tp1;
  */
 public class Student extends Person {
 
-	/** Constructor.
-	 * @param name Name of the Student
-	 */
-	public Student(String name) {
-		super(name);
-	}
-
+    /** Constructor.
+     * @param pName Name of the Student
+     */
+    public Student(final String pName) {
+        super(pName);
+    }
 }
