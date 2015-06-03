@@ -1,7 +1,4 @@
-/**
- * 
- */
-/**
+/** Package for France.
  * @author imie
  *
  */

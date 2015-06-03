@@ -1,7 +1,4 @@
-/**
- * 
- */
-/**
+/** Package for formation.
  * @author imie
  *
  */

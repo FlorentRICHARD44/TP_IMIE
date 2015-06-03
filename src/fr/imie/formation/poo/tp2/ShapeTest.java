@@ -31,6 +31,14 @@ public final class ShapeTest {
         Shape myTri = new Triangle(3.0f, 4.0f, 5.0f);
         printAreaOf(myTri);
         printPerimeterOf(myTri);
+        System.out.println("Regular polygon 3 sides");
+        Shape rp1 = new RegularPolygon(10.0f, 3);
+        printAreaOf(rp1);
+        printPerimeterOf(rp1);
+        System.out.println("Regular polygon 4 sides");
+        Shape rp2 = new RegularPolygon(3.0f, 4);
+        printAreaOf(rp2);
+        printPerimeterOf(rp2);
 
     }
 

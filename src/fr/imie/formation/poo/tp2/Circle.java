@@ -12,6 +12,7 @@ public class Circle extends Shape {
      * @param r radius of the circle.
      */
     public Circle(final Float r) {
+        super();
         setRadius(r);
     }
 
@@ -42,8 +43,13 @@ public class Circle extends Shape {
 
     /** Mutator for the radius.
      * @param r the radius to set
+     * @throws IllegalArgumentException Case where the radius is not positive.
      */
-    public final void setRadius(final Float r) {
-        this.radius = r;
+    public final void setRadius(final Float r) throws IllegalArgumentException {
+        if (r > 0) {
+            this.radius = r;
+        } else {
+            throw new IllegalArgumentException("The radius shall be positive");
+        }
     }
 }

@@ -21,9 +21,14 @@ public class Triangle extends Shape {
      * @param s3 Third side of the triangle.
      */
     public Triangle(final Float s1, final Float s2, final Float s3) {
-        setSide1(s1);
-        setSide2(s2);
-        setSide3(s3);
+        super();
+        if ((s1 + s2 < s3) || (s2 + s3 < s1) || (s3 + s1 < s2)) {
+            throw new IllegalArgumentException("Valeurs des côtés incorrects");
+        } else {
+            setSide1(s1);
+            setSide2(s2);
+            setSide3(s3);
+        }
     }
 
     /**
@@ -54,9 +59,15 @@ public class Triangle extends Shape {
 
     /** Mutator for the side1.
      * @param s1 the side1 to set
+     * @throws IllegalArgumentException case where the side is not positive.
      */
-    public final void setSide1(final Float s1) {
-        this.side1 = s1;
+    public final void setSide1(final Float s1)
+        throws IllegalArgumentException {
+        if (s1 > 0) {
+            this.side1 = s1;
+        } else {
+            throw new IllegalArgumentException("Un côté doit être positif");
+        }
     }
 
     /** Accessor to the side2.
@@ -68,9 +79,15 @@ public class Triangle extends Shape {
 
     /** Mutator for the side2.
      * @param s2 the side2 to set
+     * @throws IllegalArgumentException case where the side is not positive.
      */
-    public final void setSide2(final Float s2) {
-        this.side2 = s2;
+    public final void setSide2(final Float s2)
+        throws IllegalArgumentException {
+        if (s2 > 0) {
+            this.side2 = s2;
+        } else {
+            throw new IllegalArgumentException("Un côté doit être positif");
+        }
     }
 
     /** Accessor to the side3.
@@ -82,8 +99,14 @@ public class Triangle extends Shape {
 
     /** Mutator for the side3.
      * @param s3 the side3 to set
+     * @throws IllegalArgumentException case where the side is not positive.
      */
-    public final void setSide3(final Float s3) {
-        this.side3 = s3;
+    public final void setSide3(final Float s3)
+        throws IllegalArgumentException {
+        if (s3 > 0) {
+            this.side3 = s3;
+        } else {
+            throw new IllegalArgumentException("Un côté doit être positif");
+        }
     }
 }
