@@ -22,13 +22,7 @@ public class Triangle extends Shape {
      */
     public Triangle(final Float s1, final Float s2, final Float s3) {
         super();
-        if ((s1 + s2 < s3) || (s2 + s3 < s1) || (s3 + s1 < s2)) {
-            throw new IllegalArgumentException("Valeurs des côtés incorrects");
-        } else {
-            setSide1(s1);
-            setSide2(s2);
-            setSide3(s3);
-        }
+        setSides(s1, s2, s3);
     }
 
     /**
@@ -57,37 +51,11 @@ public class Triangle extends Shape {
         return side1;
     }
 
-    /** Mutator for the side1.
-     * @param s1 the side1 to set
-     * @throws IllegalArgumentException case where the side is not positive.
-     */
-    public final void setSide1(final Float s1)
-        throws IllegalArgumentException {
-        if (s1 > 0) {
-            this.side1 = s1;
-        } else {
-            throw new IllegalArgumentException("Un côté doit être positif");
-        }
-    }
-
     /** Accessor to the side2.
      * @return the side2
      */
     public final Float getSide2() {
         return side2;
-    }
-
-    /** Mutator for the side2.
-     * @param s2 the side2 to set
-     * @throws IllegalArgumentException case where the side is not positive.
-     */
-    public final void setSide2(final Float s2)
-        throws IllegalArgumentException {
-        if (s2 > 0) {
-            this.side2 = s2;
-        } else {
-            throw new IllegalArgumentException("Un côté doit être positif");
-        }
     }
 
     /** Accessor to the side3.
@@ -97,16 +65,21 @@ public class Triangle extends Shape {
         return side3;
     }
 
-    /** Mutator for the side3.
+    /** Mutator for the 3 sides.
+     * @param s1 the side1 to set
+     * @param s2 the side2 to set
      * @param s3 the side3 to set
-     * @throws IllegalArgumentException case where the side is not positive.
+     * @throws IllegalArgumentException case where the side is not positive
+     *         Or size of the 3 sides are not coherent.
      */
-    public final void setSide3(final Float s3)
+    public final void setSides(final Float s1, final Float s2, final Float s3)
         throws IllegalArgumentException {
-        if (s3 > 0) {
-            this.side3 = s3;
-        } else {
+        if ((s1 + s2 < s3) || (s2 + s3 < s1) || (s3 + s1 < s2)) {
+            throw new IllegalArgumentException("Valeurs des côtés incorrects");
+        } else if ((s3 <= 0) || (s2 <= 0) || (s1 < 0)) {
             throw new IllegalArgumentException("Un côté doit être positif");
+        } else {
+            this.side3 = s3;
         }
     }
 }
