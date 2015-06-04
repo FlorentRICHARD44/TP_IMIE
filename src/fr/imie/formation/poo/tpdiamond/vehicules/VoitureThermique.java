@@ -1,5 +1,6 @@
 package fr.imie.formation.poo.tpdiamond.vehicules;
 
+import fr.imie.formation.poo.tpdiamond.VehiculeMarque;
 import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseThermiqueComp;
 import fr.imie.formation.poo.tpdiamond.behaviours.VoitureComp;
 import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseThermique;
@@ -9,6 +10,12 @@ import fr.imie.formation.poo.tpdiamond.ifs.IVoiture;
  * @author Florent RICHARD
  */
 public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
+    /** Name of the vehicule.
+     */
+    private String name;
+    /** Mark of the vehicule.
+     */
+    private VehiculeMarque mark;
     /** Behaviour for a Thermic Motor Vehicule.
      */
     private VehiculeMotoriseThermiqueComp vehThermComp;
@@ -18,8 +25,8 @@ public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
     /** Constructor.
      */
     public VoitureThermique() {
-        vehThermComp = new VehiculeMotoriseThermiqueComp();
-        voitComp = new VoitureComp();
+        vehThermComp = new VehiculeMotoriseThermiqueComp(this);
+        voitComp = new VoitureComp(this);
     }
 
     /**
@@ -46,5 +53,38 @@ public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
     public final void demarrer() {
         vehThermComp.demarrer(this);
 
+    }
+
+    /**
+     * @see fr.imie.formation.poo.tpdiamond.ifs.IVehicule#getName()
+     */
+    @Override
+    public final String getName() {
+        return this.name;
+    }
+
+    /**
+     * @see fr.imie.formation.poo.tpdiamond.ifs.IVehicule#setName(String)
+     */
+    @Override
+    public final void setName(final String n) {
+        this.name = n;
+    }
+
+    /**
+     * @see fr.imie.formation.poo.tpdiamond.ifs.IVehicule#getMark()
+     */
+    @Override
+    public final VehiculeMarque getMark() {
+        return this.mark;
+    }
+
+
+    /**
+     * @see fr.imie.formation.poo.tpdiamond.ifs.IVehicule#setMark(fr.imie.formation.poo.tpdiamond.VehiculeMarque)
+     */
+    @Override
+    public final void setMark(final VehiculeMarque m) {
+        this.mark = m;
     }
 }
