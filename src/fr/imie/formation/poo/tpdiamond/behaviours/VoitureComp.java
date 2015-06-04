@@ -1,4 +1,4 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.behaviours;
 
 /** Describe the behaviour of a Voiture.
  * @author Florent RICHARD

@@ -1,4 +1,7 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.behaviours;
+
+import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotorise;
+
 
 /** Describes behaviour for a Vehicule Motorise.
  * @author Florent RICHARD
@@ -9,8 +12,8 @@ public class VehiculeMotoriseComp extends VehiculeComp {
     /** Starts the motor for a Motorised Vehicule.
      * @param vehMot Motorised Vehicule to start.
      */
-    public void demarrer(final IVehiculeMotorise vehMot) {
-        // TODO Auto-generated method stub
+    public final void demarrer(final IVehiculeMotorise vehMot) {
+        System.out.println("Turn key: Engine start!");
     }
 
 }

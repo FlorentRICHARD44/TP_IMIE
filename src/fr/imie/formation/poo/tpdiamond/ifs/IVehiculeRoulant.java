@@ -1,4 +1,4 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.ifs;
 
 /** Define the interface for a Vehicule roulant.
  * @author Florent RICHARD

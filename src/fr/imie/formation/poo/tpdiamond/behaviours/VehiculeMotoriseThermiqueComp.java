@@ -1,4 +1,4 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.behaviours;
 
 /** Describes the behaviour of a Vehicule Motorised Thermique.
  * @author Florent RICHARD

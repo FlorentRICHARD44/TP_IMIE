@@ -1,4 +1,4 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.ifs;
 
 /** Interface defining elements for a Vehicule.
  * @author Florent RICHARD

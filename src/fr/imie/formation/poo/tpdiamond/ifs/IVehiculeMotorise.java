@@ -1,4 +1,4 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.ifs;
 
 /** Define inteface for a motorised vehicule.
  * @author Florent RICHARD
