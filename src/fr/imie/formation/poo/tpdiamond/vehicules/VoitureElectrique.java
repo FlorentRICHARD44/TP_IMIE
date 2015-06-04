@@ -1,25 +1,28 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.vehicules;
 
-import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseThermiqueComp;
+import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseElectriqueComp;
 import fr.imie.formation.poo.tpdiamond.behaviours.VoitureComp;
-import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseThermique;
+import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseElectrique;
 import fr.imie.formation.poo.tpdiamond.ifs.IVoiture;
 
-/** Class representing a Voiture with a thermic motor.
+/** Class representing an Electric Motor Vehicule.
  * @author Florent RICHARD
  */
-public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
-    /** Behaviour for a Thermic Motor Vehicule.
-     */
-    private VehiculeMotoriseThermiqueComp vehThermComp;
-    /** Behaviour for a Voiture.
+public class VoitureElectrique
+        implements IVoiture,
+                   IVehiculeMotoriseElectrique {
+    /** Behaviour for the Voiture.
      */
     private VoitureComp voitComp;
+    /** Behaviour for the Electric Vehicule.
+     */
+    private VehiculeMotoriseElectriqueComp vehElecComp;
+
     /** Constructor.
      */
-    public VoitureThermique() {
-        vehThermComp = new VehiculeMotoriseThermiqueComp();
+    public VoitureElectrique() {
         voitComp = new VoitureComp();
+        vehElecComp = new VehiculeMotoriseElectriqueComp();
     }
 
     /**
@@ -28,6 +31,7 @@ public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
     @Override
     public final void avancer() {
         voitComp.avancer(this);
+
     }
 
     /**
@@ -35,8 +39,7 @@ public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
      */
     @Override
     public final void mettreCasse() {
-        voitComp.mettreCasse(this);
-
+        vehElecComp.mettreCasse(this);
     }
 
     /**
@@ -44,7 +47,6 @@ public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
      */
     @Override
     public final void demarrer() {
-        vehThermComp.demarrer(this);
-
+        vehElecComp.demarrer(this);
     }
 }

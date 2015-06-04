@@ -1,28 +1,25 @@
-package fr.imie.formation.poo.tpdiamond;
+package fr.imie.formation.poo.tpdiamond.vehicules;
 
-import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseElectriqueComp;
+import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseThermiqueComp;
 import fr.imie.formation.poo.tpdiamond.behaviours.VoitureComp;
-import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseElectrique;
+import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseThermique;
 import fr.imie.formation.poo.tpdiamond.ifs.IVoiture;
 
-/** Class representing an Electric Motor Vehicule.
+/** Class representing a Voiture with a thermic motor.
  * @author Florent RICHARD
  */
-public class VoitureElectrique
-        implements IVoiture,
-                   IVehiculeMotoriseElectrique {
-    /** Behaviour for the Voiture.
+public class VoitureThermique implements IVoiture, IVehiculeMotoriseThermique {
+    /** Behaviour for a Thermic Motor Vehicule.
+     */
+    private VehiculeMotoriseThermiqueComp vehThermComp;
+    /** Behaviour for a Voiture.
      */
     private VoitureComp voitComp;
-    /** Behaviour for the Electric Vehicule.
-     */
-    private VehiculeMotoriseElectriqueComp vehElecComp;
-
     /** Constructor.
      */
-    public VoitureElectrique() {
+    public VoitureThermique() {
+        vehThermComp = new VehiculeMotoriseThermiqueComp();
         voitComp = new VoitureComp();
-        vehElecComp = new VehiculeMotoriseElectriqueComp();
     }
 
     /**
@@ -31,7 +28,6 @@ public class VoitureElectrique
     @Override
     public final void avancer() {
         voitComp.avancer(this);
-
     }
 
     /**
@@ -39,7 +35,8 @@ public class VoitureElectrique
      */
     @Override
     public final void mettreCasse() {
-        vehElecComp.mettreCasse(this);
+        voitComp.mettreCasse(this);
+
     }
 
     /**
@@ -47,6 +44,7 @@ public class VoitureElectrique
      */
     @Override
     public final void demarrer() {
-        vehElecComp.demarrer(this);
+        vehThermComp.demarrer(this);
+
     }
 }

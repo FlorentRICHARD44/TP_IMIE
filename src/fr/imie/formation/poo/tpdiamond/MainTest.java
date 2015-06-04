@@ -1,5 +1,10 @@
 package fr.imie.formation.poo.tpdiamond;
 
+import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurElectrique;
+import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurThermique;
+import fr.imie.formation.poo.tpdiamond.vehicules.VoitureElectrique;
+import fr.imie.formation.poo.tpdiamond.vehicules.VoitureThermique;
+
 
 /** Class for testing the TP.
  * @author Florent RICHARD
@@ -25,7 +30,15 @@ public final class MainTest {
         vTherm.demarrer();
         vTherm.avancer();
         vTherm.mettreCasse();
-
+        AeroglisseurThermique aTherm = new AeroglisseurThermique();
+        aTherm.demarrer();
+        aTherm.gonflerCoussin();
+        aTherm.avancer();
+        aTherm.mettreCasse();
+        AeroglisseurElectrique aElec = new AeroglisseurElectrique();
+        aElec.demarrer();
+        aElec.gonflerCoussin();
+        aElec.avancer();
+        aElec.mettreCasse();
     }
-
 }
