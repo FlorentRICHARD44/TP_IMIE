@@ -1,6 +1,5 @@
 package fr.imie.formation.poo.tpdiamond;
 
-import fr.imie.formation.poo.tpdiamond.ifs.IVoiture;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurElectrique;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurThermique;
 import fr.imie.formation.poo.tpdiamond.vehicules.VoitureElectrique;
@@ -16,7 +15,6 @@ public final class MainTest {
      * Not used.
      */
     private MainTest() {
-        // TODO Auto-generated constructor stub
     }
 
     /** Main Function.
