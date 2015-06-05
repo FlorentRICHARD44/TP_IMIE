@@ -8,14 +8,12 @@ public class CalcRunnable implements Runnable {
     /** Calcul used in the runnable.
      */
     private Calcul calcul;
-    private Integer tempValue;
     /** Constructor.
      * @param calc Calcul to perform.
      */
     public CalcRunnable(final Calcul calc) {
         super();
         this.calcul = calc;
-        tempValue = 0;
     }
 
     /**
@@ -24,19 +22,5 @@ public class CalcRunnable implements Runnable {
     @Override
     public final void run() {
         calcul.doFactorielle();
-    }
-
-    /**
-     * @return the tempValue
-     */
-    public final Integer getTempValue() {
-        return tempValue;
-    }
-
-    /**
-     * @param tempVal the tempValue to set
-     */
-    public final void setTempValue(Integer tempVal) {
-        this.tempValue = tempVal;
     }
 }

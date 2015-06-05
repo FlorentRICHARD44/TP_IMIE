@@ -10,14 +10,23 @@ public class Calcul {
     /** Class used for affichage.
      */
     private IAffichage affichage;
-    private boolean swap = true;
+    /** Current step of calcul.
+     */
+    private Integer step;
+    /** Result of calcul.
+     */
+    private Integer result;
+    /** Start time of calcul.
+     */
+    private long t0;
 
     /** Constructor.
      * @param aff Class used for the Affichage.
      */
     public Calcul(final IAffichage aff) {
         affichage = aff;
-        swap = true;
+        step = 1;
+        result = 1;
     }
 
     /** Constructor.
@@ -27,47 +36,39 @@ public class Calcul {
     public Calcul(final Integer val, final IAffichage aff) {
         this.value = val;
         affichage = aff;
+        step = 1;
+        result = 1;
     }
 
     /** Calculates the factorielle of the value.
      */
     public final void doFactorielle() {
-        long t0 = System.nanoTime();
-        Integer res = factorielle(this.value);
-        affichage.printFinalValue(res);
-        affichage.printTempsCalcul(System.nanoTime() - t0);
-    }
-
-    /** Fonction retournant la factorielle d'un nombre.
-     * @param val Nombre pour lequel retourner la factorielle.
-     * @return Factorielle du nombre passé en paramètre
-     */
-    private synchronized Integer factorielle(final Integer val) {
-        boolean ready = false;
-        CalcThread curThread = (CalcThread) (CalcThread.currentThread());
-        System.out.println(curThread.getName() + " " + swap);
-        while (!ready) {
-            if (swap) {
-                ready = true;
-            } else {
-                try {
-                    curThread.wait();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        t0 = System.nanoTime();
+        while (!factStep()) {
+            try {
+                Thread.sleep(1L);
+            } catch (InterruptedException e) {
             }
         }
-        curThread.setTmpResult(1);
-        if (val > 0) {
-            Integer tmp = val * factorielle(val - 1);
-            affichage.printMiddleValue(curThread.getTmpResult());
-            curThread.setTmpResult(tmp);
-        }
-        swap = true;
-        return curThread.getTmpResult();
     }
 
+    /** Executes one step of calcul for the factorielle.
+     * @return false while the calcul is not finished, true else.
+     */
+    private synchronized boolean factStep() {
+        boolean retour = false;
+        if (step <= value) {
+            result = step * result;
+            step++;
+            affichage.printMiddleValue(result);
+            if (step > value) {
+                affichage.printFinalValue(result);
+                affichage.printTempsCalcul(System.nanoTime() - t0);
+                retour = true;
+            }
+        }
+        return retour;
+    }
     /** Getter for the value.
      * @return the value
      */
@@ -80,19 +81,5 @@ public class Calcul {
      */
     public final void setValue(final Integer val) {
         this.value = val;
-    }
-
-    /**
-     * @return the swap
-     */
-    public final boolean isSwap() {
-        return swap;
-    }
-
-    /**
-     * @param swap the swap to set
-     */
-    public final void setSwap(boolean swap) {
-        this.swap = swap;
     }
 }

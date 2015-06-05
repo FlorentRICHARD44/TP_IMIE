@@ -11,7 +11,8 @@ public class AffichageConsole implements IAffichage {
     @Override
     public final void printMiddleValue(final Integer value) {
         String thName = Thread.currentThread().getName();
-        System.out.format("Thread %s, Valeur intermediaire: %d\n", thName, value);
+        System.out.format("Thread %s, Valeur intermediaire: %d\n",
+                          thName, value);
     }
 
     /**
@@ -24,11 +25,12 @@ public class AffichageConsole implements IAffichage {
     }
 
     /**
-     * @see fr.imie.formation.poo.tpthread.IAffichage#printTempsCalcul(double)
+     * @see fr.imie.formation.poo.tpthread.IAffichage#printTempsCalcul(long)
      */
     @Override
     public final void printTempsCalcul(final long temps) {
         String thName = Thread.currentThread().getName();
-        System.out.format("Thread %s, Temps d'exécution: %dns\n", thName, temps);
+        System.out.format("Thread %s, Temps d'exécution: %dns\n",
+                          thName, temps);
     }
 }
