@@ -48,6 +48,7 @@ public class Calcul {
             try {
                 Thread.sleep(1L);
             } catch (InterruptedException e) {
+                System.out.println("ie");
             }
         }
     }

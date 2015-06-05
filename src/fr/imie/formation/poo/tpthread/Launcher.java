@@ -15,16 +15,13 @@ public final class Launcher {
      */
     public static void main(final String[] args) {
         IAffichage aff = new AffichageConsole();
-        Calcul c1 = new Calcul(6, aff);
+        Calcul c1 = new Calcul(12, aff);
         Calcul c2 = new Calcul(9, aff);
         /* Step 5*/
         CalcRunnable cr1 = new CalcRunnable(c1);
-        Thread t1 = new Thread(cr1);
-        t1.setName("T1");
+        Thread t1 = new Thread(cr1, "T1");
         CalcRunnable cr2 = new CalcRunnable(c1);
-        Thread t2 = new Thread(cr2);
-        t2.setName("T2");
-
+        Thread t2 = new Thread(cr2, "T2");
         try {
             t1.start();
             t2.start();
@@ -70,5 +67,6 @@ public final class Launcher {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
+        System.out.println("Fin du travail");
     }
 }

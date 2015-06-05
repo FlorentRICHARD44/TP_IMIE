@@ -22,5 +22,6 @@ public class CalcRunnable implements Runnable {
     @Override
     public final void run() {
         calcul.doFactorielle();
+        System.exit(0);
     }
 }
