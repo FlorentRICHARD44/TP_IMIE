@@ -17,7 +17,7 @@ public final class Launcher {
         IAffichage aff = new AffichageConsole();
         Calcul c1 = new Calcul(12, aff);
         Calcul c2 = new Calcul(9, aff);
-        /* Step 5*/
+        /* Step 5 - 2 Threads accessing the same calcul*/
         CalcRunnable cr1 = new CalcRunnable(c1);
         Thread t1 = new Thread(cr1, "T1");
         CalcRunnable cr2 = new CalcRunnable(c1);
