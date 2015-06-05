@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-/**
+/** Class used to access to the database.
  * @author Florent RICHARD
  *
  */
