@@ -3,6 +3,7 @@ package fr.imie.formation.poo.tpdiamond;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import fr.imie.formation.poo.tpdiamond.people.Driver;
 import fr.imie.formation.poo.tpdiamond.people.Person;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurElectrique;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurThermique;
@@ -26,6 +27,14 @@ public final class MainTest {
      */
     public static void main(final String[] args) {
         VoitureElectrique vElec = new VoitureElectrique();
+        Driver toto = new Driver();
+        toto.setFirstName("to");
+        toto.setName("TO");
+        vElec.setDriver(toto);
+        Person p1 = new Person();
+        p1.setFirstName("Alain");
+        p1.setName("DELOIN");
+        vElec.addPassenger(p1);
         vElec.setName("Twizzy");
         vElec.setMark(VehiculeMarque.RENAULT);
         vElec.demarrer();
@@ -35,6 +44,8 @@ public final class MainTest {
         VoitureThermique vTherm = new VoitureThermique();
         vTherm.setName("Xsara");
         vTherm.setMark(VehiculeMarque.CITROEN);
+        vTherm.setDriver(toto);
+        vTherm.addPassenger(p1);
         vTherm.demarrer();
         vTherm.avancer();
         vTherm.mettreCasse();
@@ -42,6 +53,8 @@ public final class MainTest {
         AeroglisseurThermique aTherm = new AeroglisseurThermique();
         aTherm.setName("Aero t");
         aTherm.setMark(VehiculeMarque.RENAULT);
+        aTherm.setDriver(toto);
+        aTherm.addPassenger(p1);
         aTherm.demarrer();
         aTherm.gonflerCoussin();
         aTherm.avancer();
@@ -50,19 +63,11 @@ public final class MainTest {
         AeroglisseurElectrique aElec = new AeroglisseurElectrique();
         aElec.setName("fusee aero");
         aElec.setMark(VehiculeMarque.FERRARI);
+        aElec.setDriver(toto);
+        aElec.addPassenger(p1);
         aElec.demarrer();
         aElec.gonflerCoussin();
         aElec.avancer();
         aElec.mettreCasse();
-        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Person florent = new Person();
-        try {
-            florent.setDateBirth(dateFormat.parse("07/06/1987"));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        System.out.println(florent.getAge());
     }
 }

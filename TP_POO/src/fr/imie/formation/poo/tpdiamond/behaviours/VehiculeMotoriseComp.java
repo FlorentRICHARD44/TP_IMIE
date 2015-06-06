@@ -24,7 +24,8 @@ public class VehiculeMotoriseComp extends VehiculeComp {
      * @param vehMot Motorised Vehicule to start.
      */
     public final void demarrer(final IVehiculeMotorise vehMot) {
-        System.out.format("Turn key: Engine of %s start!\n",
+        System.out.format("%s turn key: Engine of %s start!\n",
+                          vehicule.getDriver().getName(),
                           vehicule.getName());
     }
 

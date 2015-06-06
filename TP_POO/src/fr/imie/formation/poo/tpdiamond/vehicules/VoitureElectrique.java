@@ -1,10 +1,15 @@
 package fr.imie.formation.poo.tpdiamond.vehicules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.imie.formation.poo.tpdiamond.VehiculeMarque;
 import fr.imie.formation.poo.tpdiamond.behaviours.VehiculeMotoriseElectriqueComp;
 import fr.imie.formation.poo.tpdiamond.behaviours.VoitureComp;
 import fr.imie.formation.poo.tpdiamond.ifs.IVehiculeMotoriseElectrique;
 import fr.imie.formation.poo.tpdiamond.ifs.IVoiture;
+import fr.imie.formation.poo.tpdiamond.people.Driver;
+import fr.imie.formation.poo.tpdiamond.people.Person;
 
 /** Class representing an Electric Motor Vehicule.
  * @author Florent RICHARD
@@ -18,6 +23,12 @@ public class VoitureElectrique
     /** Mark of the vehicule.
      */
     private VehiculeMarque mark;
+    /** Driver of vehicule.
+     */
+    private Driver driver;
+    /** List of passengers of the vehicule.
+     */
+    private List<Person> listPassengers;
     /** Behaviour for the Voiture.
      */
     private VoitureComp voitComp;
@@ -30,6 +41,8 @@ public class VoitureElectrique
     public VoitureElectrique() {
         voitComp = new VoitureComp(this);
         vehElecComp = new VehiculeMotoriseElectriqueComp(this);
+        driver = null;
+        listPassengers = new ArrayList<Person>();
     }
 
     /**
@@ -87,5 +100,35 @@ public class VoitureElectrique
     @Override
     public final void setMark(final VehiculeMarque m) {
         this.mark = m;
+    }
+
+    @Override
+    public final Driver getDriver() {
+        return this.driver;
+    }
+
+    @Override
+    public final void setDriver(final Driver vDriver) {
+        this.driver = vDriver;
+    }
+
+    @Override
+    public final List<Person> getPassengers() {
+        return this.listPassengers;
+    }
+
+    @Override
+    public final void setPassengers(final List<Person> vListPassengers) {
+        this.listPassengers = vListPassengers;
+    }
+
+    @Override
+    public final void addPassenger(final Person passenger) {
+        this.listPassengers.add(passenger);
+    }
+
+    @Override
+    public final void removePassenger(final Person passenger) {
+        this.listPassengers.remove(passenger);
     }
 }
