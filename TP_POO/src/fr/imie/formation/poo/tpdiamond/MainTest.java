@@ -1,5 +1,9 @@
 package fr.imie.formation.poo.tpdiamond;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import fr.imie.formation.poo.tpdiamond.people.Person;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurElectrique;
 import fr.imie.formation.poo.tpdiamond.vehicules.AeroglisseurThermique;
 import fr.imie.formation.poo.tpdiamond.vehicules.VoitureElectrique;
@@ -50,5 +54,15 @@ public final class MainTest {
         aElec.gonflerCoussin();
         aElec.avancer();
         aElec.mettreCasse();
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Person florent = new Person();
+        try {
+            florent.setDateBirth(dateFormat.parse("07/06/1987"));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println(florent.getAge());
     }
 }
