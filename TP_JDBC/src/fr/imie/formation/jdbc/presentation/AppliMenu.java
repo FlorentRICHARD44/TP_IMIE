@@ -22,7 +22,10 @@ public enum AppliMenu {
     DELETE (3, "Supprimer un usager"),
     /** Menu: Update one user.
      */
-    UPDATE (4, "Modifier un usager");
+    UPDATE (4, "Modifier un usager"),
+    /** Menu: Presentation of Usager.
+     */
+    PRESENTATION_ALL (5, "Présentation de tous les usagers.");
 
     /** Code for menu selection.
      */

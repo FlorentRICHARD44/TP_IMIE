@@ -258,6 +258,9 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case DELETE: deleteUser();
                 break;
+                case PRESENTATION_ALL: servDao.selectAll().stream().forEach(
+                                            x -> System.out.println(x.pres()));
+                break;
                 default:break;
             }
         } while (menuOption != AppliMenu.QUIT);
