@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +18,10 @@ public class DaoUsager implements IDao<DtoUsager> {
     /** Connection to Database.
      */
     private Connection connection;
-    /** Date formater for SQL.
-     */
-    private SimpleDateFormat dateformat;
 
     /** Constructor.
      */
     public DaoUsager() {
-        dateformat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
         } catch (SQLException e) {
@@ -151,29 +146,25 @@ public class DaoUsager implements IDao<DtoUsager> {
         String query = "";
         /* Construct the query */
         if (elementFilter.getName() != null) {
-            query = query.concat(String.format("nom = '%s'",
-                                               elementFilter.getName()));
+            query = query.concat(String.format("nom LIKE ?"));
         }
         if (elementFilter.getFirstName() != null) {
             if (query.length() > 0) {
                 query = query.concat(" AND ");
             }
-            query = query.concat(String.format("prenom = '%s'",
-                    elementFilter.getFirstName()));
+            query = query.concat(String.format("prenom LIKE ?"));
         }
         if (elementFilter.getDateBirth() != null) {
             if (query.length() > 0) {
                 query = query.concat(" AND ");
             }
-            query = query.concat(String.format("datenaissance = '%s'",
-                    (dateformat.format(elementFilter.getDateBirth().getTime()))));
+            query = query.concat(String.format("datenaissance = ?"));
         }
         if (elementFilter.getEmail() != null) {
             if (query.length() > 0) {
                 query = query.concat(" AND ");
             }
-            query = query.concat(String.format("email = '%s'",
-                    elementFilter.getEmail()));
+            query = query.concat(String.format("email LIKE ?"));
         }
         if (elementFilter.getNbConnection() != null) {
             if (query.length() > 0) {
@@ -188,6 +179,24 @@ public class DaoUsager implements IDao<DtoUsager> {
         List<DtoUsager> listUsagers = new ArrayList<DtoUsager>();
         try (PreparedStatement pst = connection.prepareStatement(
                     "SELECT * FROM usager WHERE " + query)) {
+            Integer nbParam = 1;
+            if (elementFilter.getName() != null) {
+                pst.setString(nbParam++, "%" + elementFilter.getName() + "%");
+            }
+            if (elementFilter.getFirstName() != null) {
+                pst.setString(nbParam++,
+                              "%" + elementFilter.getFirstName() + "%");
+            }
+            if (elementFilter.getDateBirth() != null) {
+                pst.setDate(nbParam++,
+                            new Date(elementFilter.getDateBirth().getTime()));
+            }
+            if (elementFilter.getEmail() != null) {
+                pst.setString(nbParam++, "%" + elementFilter.getEmail() + "%");
+            }
+            if (elementFilter.getNbConnection() != null) {
+                pst.setInt(nbParam++, elementFilter.getNbConnection());
+            }
             try (ResultSet res = pst.executeQuery()) {
                 while (res.next()) {
                     DtoUsager usager = convertResultToDTO(res);
