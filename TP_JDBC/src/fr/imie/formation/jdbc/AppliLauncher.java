@@ -1,5 +1,10 @@
 package fr.imie.formation.jdbc;
 
+import fr.imie.formation.jdbc.dao.DaoUsager;
+import fr.imie.formation.jdbc.dao.IDao;
+import fr.imie.formation.jdbc.dto.DtoUsager;
+import fr.imie.formation.jdbc.presentation.IHMConsole;
+
 /** Launcher for the Application.
  * @author Florent RICHARD
  */
@@ -13,27 +18,9 @@ public final class AppliLauncher {
      * @param args Arguments of the application.
      */
     public static void main(final String[] args) {
-        try (IHMConsole ihm = new IHMConsole();
-                DatabaseAccess dbAccess = new DatabaseAccess()) {
-            AppliMenu menuOption;
-            do {
-                menuOption = ihm.getMenu();
-                switch (menuOption) {
-                    case QUIT: System.out.println("Sortie");
-                    break;
-                    case DISPLAY: ihm.displayUsers(dbAccess.selectAll());
-                    break;
-                    case INSERT: dbAccess.insert(ihm.addNewUser());
-                    break;
-                    case UPDATE: dbAccess.update(
-                                     ihm.updateUser(dbAccess.selectAll()));
-                    break;
-                    case DELETE: dbAccess.delete(
-                                     ihm.deleteUser(dbAccess.selectAll()));
-                    break;
-                    default:break;
-                }
-            } while (menuOption != AppliMenu.QUIT);
+        try (IDao<DtoUsager> dbAccess = new DaoUsager();
+            IHMConsole ihm = new IHMConsole(dbAccess)) {
+            ihm.run();
         } catch (Exception e) {
             e.printStackTrace();
             // TODO Add better catch

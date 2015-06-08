@@ -1,58 +1,44 @@
-package fr.imie.formation.jdbc;
+package fr.imie.formation.jdbc.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.imie.formation.jdbc.dto.DtoUsager;
+
 /** Class used to access to the database.
  * @author Florent RICHARD
  *
  */
-public class DatabaseAccess implements AutoCloseable {
+public class DaoUsager implements IDao<DtoUsager> {
     /** Connection to Database.
      */
     private Connection connection;
 
     /** Constructor.
      */
-    public DatabaseAccess() {
+    public DaoUsager() {
         try {
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/jdbc_TP_usager",
-                    "postgres", "postgres");
+            connection = ConnectionProvider.getInstance().getConnection();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    /** Get the list of all users from database.
-     * @return List of all users from database.
-     */
-    public final List<Usager> selectAll() {
-        List<Usager> listUsagers = new ArrayList<Usager>();
+    @SuppressWarnings("javadoc")
+    @Override
+    public final List<DtoUsager> selectAll() {
+        List<DtoUsager> listUsagers = new ArrayList<DtoUsager>();
         try (PreparedStatement pst = connection.prepareStatement(
                     "SELECT * FROM usager")) {
             try (ResultSet res = pst.executeQuery()) {
                 while (res.next()) {
-                    Usager usager = new Usager();
-                    usager.setId(res.getInt("id"));
-                    usager.setName(res.getString("nom"));
-                    usager.setFirstName(res.getString("prenom"));
-                    usager.setEmail(res.getString("email"));
-                    if (res.wasNull()) {
-                        usager.setEmail(null);
-                    }
-                    usager.setDateBirth(res.getDate("datenaissance"));
-                    if (res.wasNull()) {
-                        usager.setDateBirth(null);
-                    }
-                    usager.setNbConnection(res.getInt("nb_connexion"));
+                    DtoUsager usager = convertResultToDTO(res);
                     listUsagers.add(usager);
                 }
             }
@@ -62,11 +48,11 @@ public class DatabaseAccess implements AutoCloseable {
         return listUsagers;
     }
 
-    /** Insert a new Usager in the Database.
-     * @param usager New Usager to add in Database.
-     */
-    public final void insert(final Usager usager) {
-        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO usager (\"nom\", \"prenom\", \"datenaissance\", \"email\") VALUES (?, ?, ?, ?)")) {
+    @SuppressWarnings("javadoc")
+    @Override
+    public final DtoUsager insert(final DtoUsager usager) {
+        DtoUsager newUsager = null;
+        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO usager (nom, prenom, datenaissance, email) VALUES (?, ?, ?, ?) returning *;")) {
             pst.setString(1, usager.getName());
             pst.setString(2, usager.getFirstName());
             if (usager.getDateBirth() == null) {
@@ -79,16 +65,43 @@ public class DatabaseAccess implements AutoCloseable {
             } else {
                 pst.setString(4, usager.getEmail());
             }
-            pst.executeUpdate();
+            ResultSet res = pst.executeQuery();
+            if (res.next()) {
+                newUsager = convertResultToDTO(res);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return newUsager;
     }
 
-    /** Delete one user from Table.
-     * @param user user to delete.
+    /** Convert a Result into Dto.
+     * @param res Result to convert.
+     * @return DtoUsager Usager from result.
+     * @throws SQLException Case of error during SQL statement.
      */
-    public final void delete(final Usager user) {
+    private DtoUsager convertResultToDTO(final ResultSet res)
+            throws SQLException {
+        DtoUsager usager = null;
+        usager = new DtoUsager();
+        usager.setId(res.getInt("id"));
+        usager.setName(res.getString("nom"));
+        usager.setFirstName(res.getString("prenom"));
+        usager.setEmail(res.getString("email"));
+        if (res.wasNull()) {
+            usager.setEmail(null);
+        }
+        usager.setDateBirth(res.getDate("datenaissance"));
+        if (res.wasNull()) {
+            usager.setDateBirth(null);
+        }
+        usager.setNbConnection(res.getInt("nb_connexion"));
+        return usager;
+    }
+
+    @SuppressWarnings("javadoc")
+    @Override
+    public final void delete(final DtoUsager user) {
         try (PreparedStatement pst = connection.prepareStatement(
                                     "DELETE FROM usager WHERE id = ?")) {
             pst.setInt(1, user.getId());
@@ -98,10 +111,10 @@ public class DatabaseAccess implements AutoCloseable {
         }
     }
 
-    /** Update an Usager in the Table.
-     * @param user User to update.
-     */
-    public final void update(final Usager user) {
+
+    @SuppressWarnings("javadoc")
+    @Override
+    public final void update(final DtoUsager user) {
         try (PreparedStatement pst = connection.prepareStatement(
                 "UPDATE usager SET nom = ?, prenom = ?, datenaissance = ?, email = ?, nb_connexion = ? WHERE id = ?")) {
             pst.setString(1, user.getName());
@@ -127,8 +140,10 @@ public class DatabaseAccess implements AutoCloseable {
         }
     }
 
+    /**
+     * @see java.lang.AutoCloseable#close()
+     */
     @Override
-    public final void close() throws Exception {
-        connection.close();
+    public final void close() {
     }
 }

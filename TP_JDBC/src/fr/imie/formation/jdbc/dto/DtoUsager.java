@@ -1,11 +1,11 @@
-package fr.imie.formation.jdbc;
+package fr.imie.formation.jdbc.dto;
 
 import java.util.Date;
 
 /** Represents an Usager.
  * @author Florent RICHARD
  */
-public class Usager {
+public class DtoUsager {
     /** Id of usager.
      */
     private Integer id;
@@ -27,7 +27,7 @@ public class Usager {
 
     /** Constructor.
      */
-    public Usager() {
+    public DtoUsager() {
     }
 
     /**

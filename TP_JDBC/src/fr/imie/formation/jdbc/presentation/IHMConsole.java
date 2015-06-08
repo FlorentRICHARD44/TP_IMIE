@@ -1,10 +1,13 @@
-package fr.imie.formation.jdbc;
+package fr.imie.formation.jdbc.presentation;
 
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+
+import fr.imie.formation.jdbc.dao.IDao;
+import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Inteface Human Machine by the console.
  * @author Florent RICHARD
@@ -16,18 +19,23 @@ public class IHMConsole implements AutoCloseable {
     /** Formatter for date.
      */
     private SimpleDateFormat dateformat;
-    /** Constructor.
+    /** Access to data.
      */
-    public IHMConsole() {
+    private IDao<DtoUsager> daoUsager;
+    /** Constructor.
+     * @param usagerDao DAO for Usager
+     */
+    public IHMConsole(final IDao<DtoUsager> usagerDao) {
         scan = new Scanner(System.in);
         dateformat = new SimpleDateFormat("dd/MM/yyyy");
+        daoUsager = usagerDao;
     }
 
     /** Display a choice of next menu to apply.
      * Gets the selection of user.
      * @return Menu to apply.
      */
-    public final AppliMenu getMenu() {
+    private AppliMenu getMenu() {
         AppliMenu retour = null;
         do {
             System.out.println("Choissir une option:");
@@ -42,12 +50,13 @@ public class IHMConsole implements AutoCloseable {
     }
 
     /** Display a list of users.
-     * @param userList List of users.
+     * @return List of Usager.
      */
-    public final void displayUsers(final List<Usager> userList) {
-        System.out.format("    Id     |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
+    private List<DtoUsager> displayUsers() {
+        List<DtoUsager> userList = daoUsager.selectAll();
+        System.out.format("    Id     |           PrÃ©nom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
         System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        for (Usager u: userList) {
+        for (DtoUsager u: userList) {
             String userEmail;
             String userDateBirth;
             if (u.getEmail() == null) {
@@ -64,14 +73,14 @@ public class IHMConsole implements AutoCloseable {
                     u.getId(), u.getFirstName(), u.getName(),
                     userDateBirth, userEmail, u.getNbConnection());
         }
+        return userList;
     }
 
     /** Ask the user to add a new user.
-     * @return new User.
      */
-    public final Usager addNewUser() {
-        Usager user = new Usager();
-        System.out.print("Entrer le prénom: ");
+    private void addNewUser() {
+        DtoUsager user = new DtoUsager();
+        System.out.print("Entrer le prï¿½nom: ");
         user.setFirstName(scan.nextLine());
         System.out.print("Entrer le nom: ");
         user.setName(scan.nextLine());
@@ -79,8 +88,8 @@ public class IHMConsole implements AutoCloseable {
         String strDate = scan.nextLine();
         if (strDate.length() > 0) {
             try {
-                user.setDateBirth(new Date(dateformat.parse(strDate)
-                                        .getTime()));
+                user.setDateBirth(
+                       new Date(dateformat.parse(strDate).getTime()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -90,40 +99,37 @@ public class IHMConsole implements AutoCloseable {
         if (strEmail.length() > 0) {
             user.setEmail(strEmail);
         }
-        return user;
+        user = daoUsager.insert(user);
+        System.out.format("Usager insÃ©rÃ© avec l'id %d\n", user.getId());
     }
 
     /** Ask the user to delete one user.
-     * @param userList Actual user list.
-     * @return user to delete.
      */
-    public final Usager deleteUser(final List<Usager> userList) {
-        Usager userToDelete = null;
-        displayUsers(userList);
-        System.out.print("Entrer l'id de l'usager à supprimer: ");
+    private void deleteUser() {
+        DtoUsager userToDelete = null;
+        List<DtoUsager> userList = displayUsers();
+        System.out.print("Entrer l'id de l'usager ï¿½ supprimer: ");
         do {
             Integer idToDel = new Integer(scan.nextLine());
-            for (Usager u: userList) {
+            for (DtoUsager u: userList) {
                 if (idToDel.equals(u.getId())) {
                     userToDelete = u;
                     break;
                 }
             }
         } while (userToDelete == null);
-        return userToDelete;
+        daoUsager.delete(userToDelete);
     }
 
     /** Ask the user to update an Usager.
-     * @param userList List of all Usagers.
-     * @return user to update.
      */
-    public final Usager updateUser(final List<Usager> userList) {
-        Usager userToUpdate = null;
-        displayUsers(userList);
-        System.out.print("Entrer l'Id de l'usager à modifier: ");
+    private void updateUser() {
+        DtoUsager userToUpdate = null;
+        List<DtoUsager> userList = displayUsers();
+        System.out.print("Entrer l'Id de l'usager ï¿½ modifier: ");
         do {
             Integer idToUp = new Integer(scan.nextLine());
-            for (Usager u: userList) {
+            for (DtoUsager u: userList) {
                 if (idToUp.equals(u.getId())) {
                     userToUpdate = u;
                     break;
@@ -131,7 +137,7 @@ public class IHMConsole implements AutoCloseable {
             }
         } while (userToUpdate == null);
         String strScan = "";
-        System.out.format("Entrer le prénom (%s): ",
+        System.out.format("Entrer le prï¿½nom (%s): ",
                           userToUpdate.getFirstName());
         strScan = scan.nextLine();
         if (strScan.length() > 0) {
@@ -150,8 +156,8 @@ public class IHMConsole implements AutoCloseable {
         strScan = scan.nextLine();
         if (strScan.length() > 0) {
             try {
-                userToUpdate.setDateBirth(new Date(dateformat.parse(strScan)
-                                        .getTime()));
+                userToUpdate.setDateBirth(
+                        new Date(dateformat.parse(strScan).getTime()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -171,11 +177,38 @@ public class IHMConsole implements AutoCloseable {
         if (strScan.length() > 0) {
             userToUpdate.setNbConnection(new Integer(strScan));
         }
-        return userToUpdate;
+        daoUsager.update(userToUpdate);
     }
 
+    /** Execute the Console and actions until user ask the end.
+     */
+    public final void run() {
+        AppliMenu menuOption;
+        do {
+            menuOption = getMenu();
+            switch (menuOption) {
+                case QUIT: System.out.println("Sortie");
+                break;
+                case DISPLAY: displayUsers();
+                break;
+                case INSERT: addNewUser();
+                break;
+                case UPDATE: updateUser();
+                break;
+                case DELETE: deleteUser();
+                break;
+                default:break;
+            }
+        } while (menuOption != AppliMenu.QUIT);
+    }
+
+    /**
+     * @see java.lang.AutoCloseable#close()
+     */
     @Override
-    public final void close() throws Exception {
-        scan.close();
+    public final void close() {
+        if (scan != null) {
+            scan.close();
+        }
     }
 }
