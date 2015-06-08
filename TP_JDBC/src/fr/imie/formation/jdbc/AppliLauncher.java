@@ -1,8 +1,5 @@
 package fr.imie.formation.jdbc;
 
-import fr.imie.formation.jdbc.dao.DaoUsager;
-import fr.imie.formation.jdbc.dao.IDao;
-import fr.imie.formation.jdbc.dto.DtoUsager;
 import fr.imie.formation.jdbc.presentation.IHMConsole;
 
 /** Launcher for the Application.
@@ -18,8 +15,7 @@ public final class AppliLauncher {
      * @param args Arguments of the application.
      */
     public static void main(final String[] args) {
-        try (IDao<DtoUsager> dbAccess = new DaoUsager();
-            IHMConsole ihm = new IHMConsole(dbAccess)) {
+        try (IHMConsole ihm = new IHMConsole()) {
             ihm.run();
         } catch (Exception e) {
             e.printStackTrace();

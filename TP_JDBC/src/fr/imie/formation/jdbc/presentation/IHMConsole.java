@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.imie.formation.jdbc.dao.IDao;
-import fr.imie.formation.jdbc.dto.DtoUsager;
+import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.services.ServiceDao;
 
 /** Inteface Human Machine by the console.
  * @author Florent RICHARD
@@ -21,14 +21,13 @@ public class IHMConsole implements AutoCloseable {
     private SimpleDateFormat dateformat;
     /** Access to data.
      */
-    private IDao<DtoUsager> daoUsager;
+    private ServiceDao servDao;
     /** Constructor.
-     * @param usagerDao DAO for Usager
      */
-    public IHMConsole(final IDao<DtoUsager> usagerDao) {
+    public IHMConsole() {
         scan = new Scanner(System.in);
         dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        daoUsager = usagerDao;
+        servDao = new ServiceDao();
     }
 
     /** Display a choice of next menu to apply.
@@ -40,7 +39,7 @@ public class IHMConsole implements AutoCloseable {
         do {
             System.out.println("Choissir une option:");
             for (AppliMenu opt: AppliMenu.values()) {
-                System.out.format(" - %d -> %s\n",
+                System.out.format(" - %2s -> %s\n",
                         opt.getCode(), opt.getName());
             }
             Integer code = Integer.valueOf(scan.nextLine());
@@ -53,10 +52,10 @@ public class IHMConsole implements AutoCloseable {
      * @param usersToDisplay List of users to display
      * @return List of Usager.
      */
-    private List<DtoUsager> displayUsers(List<DtoUsager> usersToDisplay) {
+    private List<Usager> displayUsers(List<Usager> usersToDisplay) {
         System.out.format("    Id     |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
         System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        for (DtoUsager u: usersToDisplay) {
+        for (Usager u: usersToDisplay) {
             String userEmail;
             String userDateBirth;
             if (u.getEmail() == null) {
@@ -79,7 +78,7 @@ public class IHMConsole implements AutoCloseable {
     /** Ask the user to add a new user.
      */
     private void addNewUser() {
-        DtoUsager user = new DtoUsager();
+        Usager user = new Usager();
         System.out.print("Entrer le pr�nom: ");
         user.setFirstName(scan.nextLine());
         System.out.print("Entrer le nom: ");
@@ -99,39 +98,39 @@ public class IHMConsole implements AutoCloseable {
         if (strEmail.length() > 0) {
             user.setEmail(strEmail);
         }
-        user = daoUsager.insert(user);
+        user = servDao.insert(user);
         System.out.format("Usager inséré avec l'id %d\n", user.getId());
     }
 
     /** Ask the user to delete one user.
      */
     private void deleteUser() {
-        DtoUsager userToDelete = null;
-        List<DtoUsager> userList = daoUsager.selectAll();
+        Usager userToDelete = null;
+        List<Usager> userList = servDao.selectAll();
         displayUsers(userList);
         System.out.print("Entrer l'id de l'usager à supprimer: ");
         do {
             Integer idToDel = new Integer(scan.nextLine());
-            for (DtoUsager u: userList) {
+            for (Usager u: userList) {
                 if (idToDel.equals(u.getId())) {
                     userToDelete = u;
                     break;
                 }
             }
         } while (userToDelete == null);
-        daoUsager.delete(userToDelete);
+        servDao.delete(userToDelete);
     }
 
     /** Ask the user to update an Usager.
      */
     private void updateUser() {
-        DtoUsager userToUpdate = null;
-        List<DtoUsager> userList = daoUsager.selectAll();
+        Usager userToUpdate = null;
+        List<Usager> userList = servDao.selectAll();
         displayUsers(userList);
         System.out.print("Entrer l'Id de l'usager à modifier: ");
         do {
             Integer idToUp = new Integer(scan.nextLine());
-            for (DtoUsager u: userList) {
+            for (Usager u: userList) {
                 if (idToUp.equals(u.getId())) {
                     userToUpdate = u;
                     break;
@@ -179,13 +178,13 @@ public class IHMConsole implements AutoCloseable {
         if (strScan.length() > 0) {
             userToUpdate.setNbConnection(new Integer(strScan));
         }
-        daoUsager.update(userToUpdate);
+        servDao.update(userToUpdate);
     }
 
     /** Ask the user for the parameters to filter and display list of results.
      */
     private void displayFiltered() {
-        DtoUsager userFilter = new DtoUsager();
+        Usager userFilter = new Usager();
         System.out.println("Renseigner les paramètres à utiliser pour le filtre (Laisser vide pour ne pas utiliser un paramètre");
         String strScan = "";
         System.out.format("Filtrer par le prénom: ");
@@ -229,7 +228,7 @@ public class IHMConsole implements AutoCloseable {
             userFilter.setNbConnection(null);
         }
         try {
-            List<DtoUsager> usagers = daoUsager.selectFiltered(userFilter);
+            List<Usager> usagers = servDao.selectFiltered(userFilter);
             if (usagers.size() == 0) {
                 System.out.println("-> Aucun résultat");
             } else {
@@ -249,7 +248,7 @@ public class IHMConsole implements AutoCloseable {
             switch (menuOption) {
                 case QUIT: System.out.println("Sortie");
                 break;
-                case DISPLAY: displayUsers(daoUsager.selectAll());
+                case DISPLAY: displayUsers(servDao.selectAll());
                 break;
                 case DISPLAY_FILTERS: displayFiltered();
                 break;
@@ -264,13 +263,15 @@ public class IHMConsole implements AutoCloseable {
         } while (menuOption != AppliMenu.QUIT);
     }
 
-    /**
-     * @see java.lang.AutoCloseable#close()
-     */
+
+    @SuppressWarnings("javadoc")
     @Override
-    public final void close() {
+    public final void close() throws Exception {
         if (scan != null) {
             scan.close();
+        }
+        if (servDao != null) {
+            servDao.close();
         }
     }
 }

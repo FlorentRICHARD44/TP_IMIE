@@ -1,11 +1,11 @@
-package fr.imie.formation.jdbc.dto;
+package fr.imie.formation.jdbc.data;
 
 import java.util.Date;
 
-/** Represents an Usager stored in DAO.
+/** Class represents an Usager.
  * @author Florent RICHARD
  */
-public class DtoUsager {
+public class Usager {
     /** Id of usager.
      */
     private Integer id;
@@ -27,7 +27,14 @@ public class DtoUsager {
 
     /** Constructor.
      */
-    public DtoUsager() {
+    public Usager() {
+    }
+
+    /** Return the salutation done by the usager.
+     * @return Salutation.
+     */
+    public final String pres() {
+        return String.format("Bonjour, je m'appelle %s %s", firstName, name);
     }
 
     /** Accessor to the id.
