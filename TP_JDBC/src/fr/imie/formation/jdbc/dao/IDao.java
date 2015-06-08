@@ -28,4 +28,12 @@ public interface IDao<D> extends AutoCloseable {
      * @param data Element to modify with new values to apply.
      */
     void update(D data);
+
+    /** Return a list of elements corresponding to the filter specified.
+     * Attributes set to null in the filter are not used for filtering.
+     * @param elementFilter Pattern of element.
+     * @return List of elements corresponding to the filter.
+     * @throws Exception Case of error during filtering.
+     */
+    List<D> selectFiltered(D elementFilter) throws Exception;
 }

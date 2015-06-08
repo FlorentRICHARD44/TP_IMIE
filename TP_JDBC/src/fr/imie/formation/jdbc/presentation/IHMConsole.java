@@ -50,13 +50,13 @@ public class IHMConsole implements AutoCloseable {
     }
 
     /** Display a list of users.
+     * @param usersToDisplay List of users to display
      * @return List of Usager.
      */
-    private List<DtoUsager> displayUsers() {
-        List<DtoUsager> userList = daoUsager.selectAll();
+    private List<DtoUsager> displayUsers(List<DtoUsager> usersToDisplay) {
         System.out.format("    Id     |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
         System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        for (DtoUsager u: userList) {
+        for (DtoUsager u: usersToDisplay) {
             String userEmail;
             String userDateBirth;
             if (u.getEmail() == null) {
@@ -73,7 +73,7 @@ public class IHMConsole implements AutoCloseable {
                     u.getId(), u.getFirstName(), u.getName(),
                     userDateBirth, userEmail, u.getNbConnection());
         }
-        return userList;
+        return usersToDisplay;
     }
 
     /** Ask the user to add a new user.
@@ -107,8 +107,9 @@ public class IHMConsole implements AutoCloseable {
      */
     private void deleteUser() {
         DtoUsager userToDelete = null;
-        List<DtoUsager> userList = displayUsers();
-        System.out.print("Entrer l'id de l'usager � supprimer: ");
+        List<DtoUsager> userList = daoUsager.selectAll();
+        displayUsers(userList);
+        System.out.print("Entrer l'id de l'usager à supprimer: ");
         do {
             Integer idToDel = new Integer(scan.nextLine());
             for (DtoUsager u: userList) {
@@ -125,8 +126,9 @@ public class IHMConsole implements AutoCloseable {
      */
     private void updateUser() {
         DtoUsager userToUpdate = null;
-        List<DtoUsager> userList = displayUsers();
-        System.out.print("Entrer l'Id de l'usager � modifier: ");
+        List<DtoUsager> userList = daoUsager.selectAll();
+        displayUsers(userList);
+        System.out.print("Entrer l'Id de l'usager à modifier: ");
         do {
             Integer idToUp = new Integer(scan.nextLine());
             for (DtoUsager u: userList) {
@@ -180,6 +182,64 @@ public class IHMConsole implements AutoCloseable {
         daoUsager.update(userToUpdate);
     }
 
+    /** Ask the user for the parameters to filter and display list of results.
+     */
+    private void displayFiltered() {
+        DtoUsager userFilter = new DtoUsager();
+        System.out.println("Renseigner les paramètres à utiliser pour le filtre (Laisser vide pour ne pas utiliser un paramètre");
+        String strScan = "";
+        System.out.format("Filtrer par le prénom: ");
+        strScan = scan.nextLine();
+        if (strScan.length() > 0) {
+            userFilter.setFirstName(strScan);
+        } else {
+            userFilter.setFirstName(null);
+        }
+        System.out.format("Filtrer par le nom: ");
+        strScan = scan.nextLine();
+        if (strScan.length() > 0) {
+            userFilter.setName(strScan);
+        } else {
+            userFilter.setName(null);
+        }
+        System.out.format("Filter par la date (format jj/mm/aaaa): ");
+        strScan = scan.nextLine();
+        if (strScan.length() > 0) {
+            try {
+                userFilter.setDateBirth(
+                        new Date(dateformat.parse(strScan).getTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            userFilter.setDateBirth(null);
+        }
+        System.out.format("Filtrer par l'adresse mail: ");
+        strScan = scan.nextLine();
+        if (strScan.length() > 0) {
+            userFilter.setEmail(strScan);
+        } else {
+            userFilter.setEmail(null);
+        }
+        System.out.format("Filtrer le nombre de connexions: ");
+        strScan = scan.nextLine();
+        if (strScan.length() > 0) {
+            userFilter.setNbConnection(new Integer(strScan));
+        } else {
+            userFilter.setNbConnection(null);
+        }
+        try {
+            List<DtoUsager> usagers = daoUsager.selectFiltered(userFilter);
+            if (usagers.size() == 0) {
+                System.out.println("-> Aucun résultat");
+            } else {
+                displayUsers(usagers);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     /** Execute the Console and actions until user ask the end.
      */
     public final void run() {
@@ -189,7 +249,9 @@ public class IHMConsole implements AutoCloseable {
             switch (menuOption) {
                 case QUIT: System.out.println("Sortie");
                 break;
-                case DISPLAY: displayUsers();
+                case DISPLAY: displayUsers(daoUsager.selectAll());
+                break;
+                case DISPLAY_FILTERS: displayFiltered();
                 break;
                 case INSERT: addNewUser();
                 break;

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +19,14 @@ public class DaoUsager implements IDao<DtoUsager> {
     /** Connection to Database.
      */
     private Connection connection;
+    /** Date formater for SQL.
+     */
+    private SimpleDateFormat dateformat;
 
     /** Constructor.
      */
     public DaoUsager() {
+        dateformat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             connection = ConnectionProvider.getInstance().getConnection();
         } catch (SQLException e) {
@@ -138,6 +143,61 @@ public class DaoUsager implements IDao<DtoUsager> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @SuppressWarnings("javadoc")
+    @Override
+    public final List<DtoUsager> selectFiltered(final DtoUsager elementFilter) throws Exception {
+        String query = "";
+        /* Construct the query */
+        if (elementFilter.getName() != null) {
+            query = query.concat(String.format("nom = '%s'",
+                                               elementFilter.getName()));
+        }
+        if (elementFilter.getFirstName() != null) {
+            if (query.length() > 0) {
+                query = query.concat(" AND ");
+            }
+            query = query.concat(String.format("prenom = '%s'",
+                    elementFilter.getFirstName()));
+        }
+        if (elementFilter.getDateBirth() != null) {
+            if (query.length() > 0) {
+                query = query.concat(" AND ");
+            }
+            query = query.concat(String.format("datenaissance = '%s'",
+                    (dateformat.format(elementFilter.getDateBirth().getTime()))));
+        }
+        if (elementFilter.getEmail() != null) {
+            if (query.length() > 0) {
+                query = query.concat(" AND ");
+            }
+            query = query.concat(String.format("email = '%s'",
+                    elementFilter.getEmail()));
+        }
+        if (elementFilter.getNbConnection() != null) {
+            if (query.length() > 0) {
+                query = query.concat(" AND ");
+            }
+            query = query.concat(String.format("nb_connexion = %d",
+                    elementFilter.getNbConnection()));
+        }
+        if (query.length() == 0) {
+            throw new Exception("Impossible de faire un filtre: aucun paramètre n'est défini");
+        }
+        List<DtoUsager> listUsagers = new ArrayList<DtoUsager>();
+        try (PreparedStatement pst = connection.prepareStatement(
+                    "SELECT * FROM usager WHERE " + query)) {
+            try (ResultSet res = pst.executeQuery()) {
+                while (res.next()) {
+                    DtoUsager usager = convertResultToDTO(res);
+                    listUsagers.add(usager);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listUsagers;
     }
 
     /**

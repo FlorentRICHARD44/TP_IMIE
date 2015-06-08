@@ -11,6 +11,9 @@ public enum AppliMenu {
     /** Menu: Display all users.
      */
     DISPLAY (1, "Afficher tous les usagers"),
+    /** Menu: Display users filtered by searched parameters.
+     */
+    DISPLAY_FILTERS (11, "Afficher les usagers filtrés par paramètre(s)"),
     /** Menu: Add a new user.
      */
     INSERT (2, "Ajouter un usager"),
