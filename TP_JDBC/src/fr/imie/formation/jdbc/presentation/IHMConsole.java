@@ -53,8 +53,9 @@ public class IHMConsole implements AutoCloseable {
      * @return List of Usager.
      */
     private List<Usager> displayUsers(List<Usager> usersToDisplay) {
-        System.out.format("    Id     |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
+        System.out.format("  Ligne    |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
         System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        Integer numLigne = 1;
         for (Usager u: usersToDisplay) {
             String userEmail;
             String userDateBirth;
@@ -69,7 +70,7 @@ public class IHMConsole implements AutoCloseable {
                 userDateBirth = dateformat.format(u.getDateBirth().getTime());
             }
             System.out.format("%10s | %-25s | %-25s | %-14s | %-45s | %15d\n",
-                    u.getId(), u.getFirstName(), u.getName(),
+                    numLigne++, u.getFirstName(), u.getName(),
                     userDateBirth, userEmail, u.getNbConnection());
         }
         return usersToDisplay;
@@ -108,15 +109,10 @@ public class IHMConsole implements AutoCloseable {
         Usager userToDelete = null;
         List<Usager> userList = servDao.selectAll();
         displayUsers(userList);
-        System.out.print("Entrer l'id de l'usager à supprimer: ");
+        System.out.print("Entrer la ligne de l'usager à supprimer: ");
         do {
             Integer idToDel = new Integer(scan.nextLine());
-            for (Usager u: userList) {
-                if (idToDel.equals(u.getId())) {
-                    userToDelete = u;
-                    break;
-                }
-            }
+            userToDelete = userList.get(idToDel - 1);
         } while (userToDelete == null);
         servDao.delete(userToDelete);
     }
@@ -127,18 +123,13 @@ public class IHMConsole implements AutoCloseable {
         Usager userToUpdate = null;
         List<Usager> userList = servDao.selectAll();
         displayUsers(userList);
-        System.out.print("Entrer l'Id de l'usager à modifier: ");
+        System.out.print("Entrer la ligne de l'usager à modifier: ");
         do {
             Integer idToUp = new Integer(scan.nextLine());
-            for (Usager u: userList) {
-                if (idToUp.equals(u.getId())) {
-                    userToUpdate = u;
-                    break;
-                }
-            }
+            userToUpdate = userList.get(idToUp - 1);
         } while (userToUpdate == null);
         String strScan = "";
-        System.out.format("Entrer le pr�nom (%s): ",
+        System.out.format("Entrer le prénom (%s): ",
                           userToUpdate.getFirstName());
         strScan = scan.nextLine();
         if (strScan.length() > 0) {
