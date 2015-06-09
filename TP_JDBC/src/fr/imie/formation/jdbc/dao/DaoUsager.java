@@ -142,6 +142,18 @@ public class DaoUsager implements IDao<DtoUsager> {
         }
     }
 
+    @SuppressWarnings("javadoc")
+    @Override
+    public final void delete(final DtoUsager user, final Connection con) {
+        try (PreparedStatement pst = con.prepareStatement(
+                                    "DELETE FROM usager WHERE id = ?")) {
+            pst.setInt(1, user.getId());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @SuppressWarnings("javadoc")
     @Override

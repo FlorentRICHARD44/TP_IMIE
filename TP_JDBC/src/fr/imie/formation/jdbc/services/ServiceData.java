@@ -1,9 +1,12 @@
 package fr.imie.formation.jdbc.services;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.imie.formation.jdbc.NullFilterException;
+import fr.imie.formation.jdbc.dao.ConnectionProvider;
 import fr.imie.formation.jdbc.dao.DaoSite;
 import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
@@ -145,6 +148,51 @@ public class ServiceData implements AutoCloseable {
             usagers.add(dtoToData(dtoU));
         }
         return usagers;
+    }
+
+    /** Delete a site and all the usagers affected to this site.
+     * @param site Site to delete.
+     * @param test if true usager Florent RICHARD can't be deleted
+     * @throws Exception Case of error during delete.
+     */
+    public final void deleteSiteAndRelatedUsers(final Site site, final boolean test) throws Exception {
+        Connection connection = null;
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+            connection.setAutoCommit(false);
+            DtoUsager usager = new DtoUsager();
+            usager.setName(null);
+            usager.setFirstName(null);
+            usager.setDateBirth(null);
+            usager.setEmail(null);
+            usager.setNbConnection(null);
+            usager.setId(null);
+            usager.setInscrSite(dataToDto(site));
+            List<DtoUsager> listUsager = new ArrayList<DtoUsager>();
+            try {
+                listUsager = daoUsager.selectFiltered(usager);
+            } catch (NullFilterException e) {
+                // Exception never raised since DtoUsager set in filter
+                // contains setInscrSite() not null.
+            }
+            try {
+                daoSite.delete(dataToDto(site), connection);
+                for (DtoUsager dtoUsager: listUsager) {
+                    if (test && dtoUsager.getFirstName().equals("Florent")) {
+                        throw new Exception("Impossible de supprimer le site et les usages attachés car un des usagers ne doit pas être supprimé");
+                    } else {
+                        daoUsager.delete(dtoUsager, connection);
+                    }
+                }
+                connection.commit();
+            } catch (Exception e) {
+                connection.rollback();
+                throw e;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /** Convert from Usager to DtoUsager.

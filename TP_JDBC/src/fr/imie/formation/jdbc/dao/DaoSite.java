@@ -109,6 +109,18 @@ public class DaoSite implements IDao<DtoSite> {
 
     @SuppressWarnings("javadoc")
     @Override
+    public final void delete(final DtoSite site, final Connection con) {
+        try (PreparedStatement pst = con.prepareStatement(
+                "DELETE FROM site WHERE si_id = ?")) {
+            pst.setInt(1, site.getId());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SuppressWarnings("javadoc")
+    @Override
     public final void update(final DtoSite site) {
         try (PreparedStatement pst = connection.prepareStatement(
                 "UPDATE site SET si_nom = ? WHERE si_id = ?")) {

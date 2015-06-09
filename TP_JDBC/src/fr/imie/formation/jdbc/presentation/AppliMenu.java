@@ -43,7 +43,10 @@ public enum AppliMenu {
     SITE_UPDATE (24, "Modifier un site"),
     /** Menu: affect site to usager.
      */
-    AFFECT_SITE_USAGER (31, "Affecter un site à un usager");
+    AFFECT_SITE_USAGER (31, "Affecter un site à un usager"),
+    /** Menu: delete a site and all affected usager.
+     */
+    DELETE_SITE_AND_USAGER (32, "Supprimer un site et tous les usagers qui y sont affectés");
 
     /** Code for menu selection.
      */

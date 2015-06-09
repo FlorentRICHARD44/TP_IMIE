@@ -1,41 +1,43 @@
 package fr.imie.formation.jdbc.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import fr.imie.formation.jdbc.NullFilterException;
+import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Defines the interface for Dao.
  * @author Florent RICHARD
- * @param <D> Data exchanged
+ * @param <T> Data exchanged
  */
-public interface IDao<D> extends AutoCloseable {
+public interface IDao<T> extends AutoCloseable {
 
     /** Return the list of all elements.
      * @return List of all elements.
      */
-    List<D> selectAll();
+    List<T> selectAll();
 
     /** Return the element specified by its Id.
      * @param id Id of the element to return
      * @return Element corresponding to the Id.
      */
-    D getById(Integer id);
+    T getById(Integer id);
 
     /** Add a new element.
      * @param data Element to add.
      * @return element added.
      */
-    D insert(D data);
+    T insert(T data);
 
     /** Remove an element.
      * @param data Element to remove.
      */
-    void delete(D data);
+    void delete(T data);
 
     /** Modify an element.
      * @param data Element to modify with new values to apply.
      */
-    void update(D data);
+    void update(T data);
 
     /** Return a list of elements corresponding to the filter specified.
      * Attributes set to null in the filter are not used for filtering.
@@ -43,5 +45,11 @@ public interface IDao<D> extends AutoCloseable {
      * @return List of elements corresponding to the filter.
      * @throws NullFilterException Case of error during filtering.
      */
-    List<D> selectFiltered(D elementFilter) throws NullFilterException;
+    List<T> selectFiltered(T elementFilter) throws NullFilterException;
+
+    /** Remove an element with a connection provided.
+     * @param data Element to remove.
+     * @param con Connection to use.
+     */
+    void delete(T data, Connection con);
 }

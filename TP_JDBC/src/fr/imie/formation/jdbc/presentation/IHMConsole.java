@@ -1,12 +1,11 @@
 package fr.imie.formation.jdbc.presentation;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
@@ -41,8 +40,7 @@ public class IHMConsole implements AutoCloseable {
         do {
             System.out.println("Choissir une option:");
             for (AppliMenu opt: AppliMenu.values()) {
-                System.out.format(" - %2s -> %s\n",
-                        opt.getCode(), opt.getName());
+                System.out.format(" - %2s -> %s\n", opt.getCode(), opt.getName());
             }
             Integer code = Integer.valueOf(scan.nextLine());
             retour = AppliMenu.getMenu(code);
@@ -78,8 +76,7 @@ public class IHMConsole implements AutoCloseable {
                 site = u.getInscrSite().getName();
             }
             System.out.format("%10s | %-25s | %-25s | %-14s | %-45s | %-20s | %15d\n",
-                    numLigne++, u.getFirstName(), u.getName(),
-                    userDateBirth, userEmail, site, u.getNbConnection());
+                    numLigne++, u.getFirstName(), u.getName(), userDateBirth, userEmail, site, u.getNbConnection());
         }
         return usersToDisplay;
     }
@@ -88,110 +85,42 @@ public class IHMConsole implements AutoCloseable {
      */
     private void createUser() {
         Usager user = new Usager();
-        System.out.print("Entrer le prénom: ");
-        user.setFirstName(scan.nextLine());
-        System.out.print("Entrer le nom: ");
-        user.setName(scan.nextLine());
-        System.out.print("Entrer la date (format jj/mm/aaaa): ");
-        String strDate = scan.nextLine();
-        if (strDate.length() > 0) {
-            try {
-                user.setDateBirth(
-                       new Date(dateformat.parse(strDate).getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.print("Entrer l'adresse mail: ");
-        String strEmail = scan.nextLine();
-        if (strEmail.length() > 0) {
-            user.setEmail(strEmail);
-        }
+        user.setFirstName(getString("Entrer le prénom: ", null, false));
+        user.setName(getString("Entrer le nom: ", null, false));
+        user.setDateBirth(getDate("Entrer la date (format jj/mm/aaaa): ", null, true));
+        user.setEmail(getString("Entrer l'adrese mail: ", null, true));
         Site site = null;
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
-        System.out.print("Entrer la ligne du site d'inscription: ");
-        String strSite = "";
-        strSite = scan.nextLine();
-        if (strSite.length() > 0) {
-            Integer idToDel = Integer.valueOf(strSite);
-            site = siteList.get(idToDel - 1);
+        Integer line = getInteger("Entrer la ligne du site d'inscription: ", null, false);
+        if (line != null) {
+            site = siteList.get(line - 1);
         }
         user.setInscrSite(site);
         user = servData.insert(user);
-        System.out.format("Usager inséré avec l'id %d\n", user.getId());
-    }
-
-    /** Ask the user to delete one user.
-     */
-    private void deleteUser() {
-        Usager userToDelete = null;
-        List<Usager> userList = servData.selectAllUsagers();
-        displayUsers(userList);
-        System.out.print("Entrer la ligne de l'usager à supprimer: ");
-        do {
-            Integer idToDel = new Integer(scan.nextLine());
-            userToDelete = userList.get(idToDel - 1);
-        } while (userToDelete == null);
-        servData.delete(userToDelete);
     }
 
     /** Ask the user to update an Usager.
      */
     private void updateUser() {
-        Usager userToUpdate = null;
-        List<Usager> userList = servData.selectAllUsagers();
-        displayUsers(userList);
-        do {
-            System.out.print("Entrer la ligne de l'usager à modifier: ");
-            Integer idToUp = new Integer(scan.nextLine());
-            try {
-                userToUpdate = userList.get(idToUp - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (userToUpdate == null);
-        String strScan = "";
-        System.out.format("Entrer le prénom (%s): ",
-                          userToUpdate.getFirstName());
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userToUpdate.setFirstName(strScan);
-        }
-        System.out.format("Entrer le nom (%s): ", userToUpdate.getName());
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userToUpdate.setName(strScan);
-        }
+        Usager userToUpdate = selectLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
+        userToUpdate.setFirstName(getString(String.format("Entrer le prénom (%s): ", userToUpdate.getFirstName()),
+                                            userToUpdate.getFirstName(), false));
+        userToUpdate.setName(getString(String.format("Entrer le nom (%s): ", userToUpdate.getName()),
+                                       userToUpdate.getName(), false));
         String strDate = "--/--/----";
         if (userToUpdate.getDateBirth() != null) {
             strDate = dateformat.format(userToUpdate.getDateBirth().getTime());
         }
-        System.out.format("Entrer la date (format jj/mm/aaaa) (%s): ", strDate);
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            try {
-                userToUpdate.setDateBirth(
-                        new Date(dateformat.parse(strScan).getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        userToUpdate.setDateBirth(getDate(String.format("Entrer la date (jj/mm/aaaa) (%s): ", strDate), null, true));
         String strMail = "-";
         if (userToUpdate.getEmail() != null) {
             strMail = userToUpdate.getEmail();
         }
-        System.out.format("Entrer l'adresse mail (%s): ", strMail);
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userToUpdate.setEmail(strScan);
-        }
-        System.out.format("Entrer le nombre de connexions (%s): ",
-                userToUpdate.getNbConnection());
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userToUpdate.setNbConnection(new Integer(strScan));
-        }
+        userToUpdate.setEmail(getString(String.format("Entrer l'adresse mail (%s): ", strMail), null, true));
+        userToUpdate.setNbConnection(getInteger(String.format("Entrer le nombre de connexions (%s): ",
+                                                              userToUpdate.getNbConnection()),
+                                                null, true));
         Site site = null;
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
@@ -201,14 +130,15 @@ public class IHMConsole implements AutoCloseable {
         } else {
             strSite = userToUpdate.getInscrSite().getName();
         }
-        System.out.format("Entrer la ligne du site d'inscription (%s): ",
-                          strSite);
-        strSite = "";
-        strSite = scan.nextLine();
-        if (strSite.length() > 0) {
-            Integer idToDel = Integer.valueOf(strSite);
-            site = siteList.get(idToDel - 1);
-        }
+        do {
+            Integer line = getInteger(String.format("Entrer la ligne du site d'inscription (%s): ", strSite),
+                                      null, false);
+            try {
+                site = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
+        } while (site == null);
         userToUpdate.setInscrSite(site);
         servData.update(userToUpdate);
     }
@@ -217,58 +147,23 @@ public class IHMConsole implements AutoCloseable {
      */
     private void displayFiltered() {
         Usager userFilter = new Usager();
-        System.out.println("Renseigner les paramètres à utiliser pour le filtre (Laisser vide pour ne pas utiliser un paramètre");
-        String strScan = "";
-        System.out.format("Filtrer par le prénom: ");
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userFilter.setFirstName(strScan);
-        } else {
-            userFilter.setFirstName(null);
-        }
-        System.out.format("Filtrer par le nom: ");
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userFilter.setName(strScan);
-        } else {
-            userFilter.setName(null);
-        }
-        System.out.format("Filter par la date (format jj/mm/aaaa): ");
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            try {
-                userFilter.setDateBirth(
-                        new Date(dateformat.parse(strScan).getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            userFilter.setDateBirth(null);
-        }
-        System.out.format("Filtrer par l'adresse mail: ");
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userFilter.setEmail(strScan);
-        } else {
-            userFilter.setEmail(null);
-        }
-        System.out.format("Filtrer le nombre de connexions: ");
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            userFilter.setNbConnection(new Integer(strScan));
-        } else {
-            userFilter.setNbConnection(null);
-        }
+        System.out.println("Renseigner les paramètres à utiliser pour le filtre (** pour ne pas utiliser un paramètre");
+        userFilter.setFirstName(getString("Filtrer par le prénom: ", null, true));
+        userFilter.setName(getString("Filtrer par le nom: ", null, true));
+        userFilter.setDateBirth(getDate("Filter par la date (format jj/mm/aaaa): ", null, true));
+        userFilter.setEmail(getString("Filtrer par l'adresse mail: ", null, true));
+        userFilter.setNbConnection(getInteger("Filtrer le nombre de connexions: ", null, true));
         Site site = null;
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
-        System.out.print("Filtrer le site d'inscription (entrer la ligne): ");
-        String strSite = "";
-        strSite = scan.nextLine();
-        if (strSite.length() > 0) {
-            Integer idToDel = Integer.valueOf(strSite);
-            site = siteList.get(idToDel - 1);
-        }
+        do {
+            Integer line = getInteger("Filtrer le site d'inscription (entrer la ligne): ", null, true);
+            try {
+                site = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
+        } while (site == null);
         userFilter.setInscrSite(site);
         try {
             List<Usager> usagers = servData.selectFiltered(userFilter);
@@ -291,8 +186,7 @@ public class IHMConsole implements AutoCloseable {
         System.out.format("---------------------------------------\n");
         Integer numLigne = 1;
         for (Site s: sites) {
-            System.out.format("%10s | %-25s \n",
-                    numLigne++, s.getName());
+            System.out.format("%10s | %-25s \n", numLigne++, s.getName());
         }
         return sites;
     }
@@ -301,8 +195,7 @@ public class IHMConsole implements AutoCloseable {
      */
     private void createSite() {
         Site site = new Site();
-        System.out.print("Entrer le nom: ");
-        site.setName(scan.nextLine());
+        site.setName(getString("Entrer le nom: ", null, false));
         site = servData.insert(site);
         System.out.format("Site inséré avec l'id %d\n", site.getId());
     }
@@ -313,10 +206,13 @@ public class IHMConsole implements AutoCloseable {
         Site siteToDelete = null;
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
-        System.out.print("Entrer la ligne du site à supprimer: ");
         do {
-            Integer idToDel = new Integer(scan.nextLine());
-            siteToDelete = siteList.get(idToDel - 1);
+            Integer line = getInteger("Entrer la ligne du site à supprimer: ", null, false);
+            try {
+                siteToDelete = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
         } while (siteToDelete == null);
         try {
             servData.delete(siteToDelete);
@@ -332,48 +228,55 @@ public class IHMConsole implements AutoCloseable {
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         do {
-            System.out.print("Entrer la ligne du site à modifier: ");
-            Integer idToUp = new Integer(scan.nextLine());
+            Integer line = getInteger("Entrer la ligne du site à modifier: ", null, false);
             try {
-                siteToUpdate = siteList.get(idToUp - 1);
+                siteToUpdate = siteList.get(line - 1);
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Cette ligne n'existe pas.");
             }
         } while (siteToUpdate == null);
-        String strScan = "";
-        System.out.format("Entrer le nom (%s): ", siteToUpdate.getName());
-        strScan = scan.nextLine();
-        if (strScan.length() > 0) {
-            siteToUpdate.setName(strScan);
-        }
+        siteToUpdate.setName(getString(String.format("Entrer le nom (%s): ", siteToUpdate.getName()), null, false));
         servData.update(siteToUpdate);
     }
 
     /** Affect a site to an usager.
      */
     private void affectSiteUsager() {
-        Usager userToUpdate = null;
-        List<Usager> userList = servData.selectAllUsagers();
-        displayUsers(userList);
-        do {
-            System.out.print("Entrer la ligne de l'usager à modifier: ");
-            Integer idToUp = new Integer(scan.nextLine());
-            try {
-                userToUpdate = userList.get(idToUp - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (userToUpdate == null);
+        Usager userToUpdate = selectLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
         Site site = null;
         List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
-        System.out.print("Entrer la ligne du site à supprimer: ");
         do {
-            Integer idToDel = new Integer(scan.nextLine());
-            site = siteList.get(idToDel - 1);
+            Integer line = getInteger("Entrer la ligne du site à sélectionner: ", null, false);
+            try {
+                site = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
         } while (site == null);
         userToUpdate.setInscrSite(site);
         servData.update(userToUpdate);
+    }
+
+    /** Affect a site and all usagers affected to this site.
+     */
+    private void deleteSiteUsager() {
+        Site site = null;
+        List<Site> siteList = servData.selectAllSites();
+        displaySites(siteList);
+        do {
+            Integer line = getInteger("Entrer la ligne du site à sélectionner: ", null, false);
+            try {
+                site = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
+        } while (site == null);
+        try {
+            servData.deleteSiteAndRelatedUsers(site, true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /** Execute the Console and actions until user ask the end.
@@ -393,7 +296,8 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case USER_UPDATE: updateUser();
                 break;
-                case USER_DELETE: deleteUser();
+                case USER_DELETE: servData.delete(selectLine("Entrer la ligne de l'usager à supprimer: ",
+                                                             servData.selectAllUsagers()));
                 break;
                 case USER_PRESENTATION_ALL: servData.selectAllUsagers().stream().forEach(
                                                     x -> System.out.println(x.pres()));
@@ -407,6 +311,8 @@ public class IHMConsole implements AutoCloseable {
                 case SITE_UPDATE: updateSite();
                 break;
                 case AFFECT_SITE_USAGER: affectSiteUsager();
+                break;
+                case DELETE_SITE_AND_USAGER: deleteSiteUsager();
                 break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
@@ -423,5 +329,106 @@ public class IHMConsole implements AutoCloseable {
         if (servData != null) {
             servData.close();
         }
+    }
+
+    /** Prints a message in the console and return the value set by the user.
+     * If the line returned is empty, a default value is returned
+     * If the line is "**", null is returned.
+     * @param message Message to print
+     * @param defaultValue Default value of the String
+     * @param nullAccepted If set to true, the value null can be returned.
+     * @return Value returned.
+     */
+    private String getString(final String message,
+                             final String defaultValue,
+                             final boolean nullAccepted) {
+        String retVal = null;
+        do {
+            System.out.format("%s: ", message);
+            String str = scan.nextLine();
+            if (!str.equals("**")) {
+                if (str.length() > 0) {
+                    retVal = str;
+                } else {
+                    retVal = defaultValue;
+                }
+            }
+        } while (!(nullAccepted || (retVal != null)));
+        return retVal;
+    }
+
+    /** Prints a message in the console and return the value set by the user.
+     * If the line returned is empty, a default value is returned
+     * If the line is "**", null is returned.
+     * @param message Message to print
+     * @param defaultValue Default value of the Integer
+     * @param nullAccepted If set to true, the value null can be returned.
+     * @return Value returned.
+     */
+    private Integer getInteger(final String message,
+                             final Integer defaultValue,
+                             final boolean nullAccepted) {
+        Integer retVal = null;
+        do {
+            System.out.format("%s: ", message);
+            String str = scan.nextLine();
+            if (!str.equals("**")) {
+                if (str.length() > 0) {
+                    retVal = Integer.valueOf(str);
+                } else {
+                    retVal = defaultValue;
+                }
+            }
+        } while (!(nullAccepted || (retVal != null)));
+        return retVal;
+    }
+
+    /** Prints a message in the console and return the value set by the user.
+     * If the line returned is empty, a default value is returned
+     * If the line is "**", null is returned.
+     * @param message Message to print
+     * @param defaultValue Default value of the Date
+     * @param nullAccepted If set to true, the value null can be returned.
+     * @return Value returned.
+     */
+    private Date getDate(final String message,
+                         final Date defaultValue,
+                         final boolean nullAccepted) {
+        Date retVal = null;
+        do {
+            System.out.format("%s: ", message);
+            String str = scan.nextLine();
+            if (!str.equals("**")) {
+                if (str.length() > 0) {
+                    try {
+                        retVal = new Date(dateformat.parse(str).getTime());
+                    } catch (ParseException e) {
+                        System.out.println("Format de date incorrect.");
+                    }
+                } else {
+                    retVal = defaultValue;
+                }
+            }
+        } while (!(nullAccepted || (retVal != null)));
+        return retVal;
+    }
+
+    /** Ask the user to select an usager.
+     * @param message Message to display
+     * @param userList List of users.
+     * @return Usager selected
+     */
+    private Usager selectLine(final String message, final List<Usager> userList) {
+        Usager user = null;
+        displayUsers(userList);
+        do {
+            Integer line = getInteger(message, null, false);
+            try {
+                user = userList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas");
+            }
+        } while (user == null);
+        return user;
     }
 }
