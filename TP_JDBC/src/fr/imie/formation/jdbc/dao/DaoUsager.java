@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Class used to access to the database.
@@ -98,7 +99,7 @@ public class DaoUsager implements IDao<DtoUsager> {
     @Override
     public final DtoUsager insert(final DtoUsager usager) {
         DtoUsager newUsager = null;
-        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO usager (nom, prenom, datenaissance, email) VALUES (?, ?, ?, ?) returning *;")) {
+        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO usager (nom, prenom, datenaissance, email, si_id) VALUES (?, ?, ?, ?, ?) returning *;")) {
             pst.setString(1, usager.getName());
             pst.setString(2, usager.getFirstName());
             if (usager.getDateBirth() == null) {
@@ -110,6 +111,11 @@ public class DaoUsager implements IDao<DtoUsager> {
                 pst.setNull(4, java.sql.Types.VARCHAR);
             } else {
                 pst.setString(4, usager.getEmail());
+            }
+            if (usager.getInscrSite() == null) {
+                pst.setNull(5, java.sql.Types.INTEGER);
+            } else {
+                pst.setInt(5, usager.getInscrSite());
             }
             ResultSet res = pst.executeQuery();
             if (res.next()) {
@@ -138,7 +144,7 @@ public class DaoUsager implements IDao<DtoUsager> {
     @Override
     public final void update(final DtoUsager user) {
         try (PreparedStatement pst = connection.prepareStatement(
-                "UPDATE usager SET nom = ?, prenom = ?, datenaissance = ?, email = ?, nb_connexion = ? WHERE id = ?")) {
+                "UPDATE usager SET nom = ?, prenom = ?, datenaissance = ?, email = ?, nb_connexion = ?, si_id = ? WHERE id = ?")) {
             pst.setString(1, user.getName());
             pst.setString(2, user.getFirstName());
             if (user.getDateBirth() == null) {
@@ -152,7 +158,12 @@ public class DaoUsager implements IDao<DtoUsager> {
                 pst.setString(4, user.getEmail());
             }
             pst.setInt(5, user.getNbConnection());
-            pst.setInt(6, user.getId());
+            if (user.getInscrSite() == null) {
+                pst.setNull(6, java.sql.Types.INTEGER);
+            } else {
+                pst.setInt(6, user.getInscrSite());
+            }
+            pst.setInt(7, user.getId());
 
             pst.executeUpdate();
 
@@ -164,7 +175,7 @@ public class DaoUsager implements IDao<DtoUsager> {
 
     @SuppressWarnings("javadoc")
     @Override
-    public final List<DtoUsager> selectFiltered(final DtoUsager elementFilter) throws Exception {
+    public final List<DtoUsager> selectFiltered(final DtoUsager elementFilter) throws NullFilterException {
         String query = "";
         /* Construct the query */
         if (elementFilter.getName() != null) {
@@ -192,11 +203,16 @@ public class DaoUsager implements IDao<DtoUsager> {
             if (query.length() > 0) {
                 query = query.concat(" AND ");
             }
-            query = query.concat(String.format("nb_connexion = %d",
-                    elementFilter.getNbConnection()));
+            query = query.concat(String.format("nb_connexion = ?"));
+        }
+        if (elementFilter.getInscrSite() != null) {
+            if (query.length() > 0) {
+                query = query.concat(" AND ");
+            }
+            query = query.concat(String.format("si_id = ?"));
         }
         if (query.length() == 0) {
-            throw new Exception("Impossible de faire un filtre: aucun paramètre n'est défini");
+            throw new NullFilterException("Impossible de faire un filtre: aucun paramètre n'est défini");
         }
         List<DtoUsager> listUsagers = new ArrayList<DtoUsager>();
         try (PreparedStatement pst = connection.prepareStatement(
@@ -218,6 +234,9 @@ public class DaoUsager implements IDao<DtoUsager> {
             }
             if (elementFilter.getNbConnection() != null) {
                 pst.setInt(nbParam++, elementFilter.getNbConnection());
+            }
+            if (elementFilter.getInscrSite() != null) {
+                pst.setInt(nbParam++, elementFilter.getInscrSite());
             }
             try (ResultSet res = pst.executeQuery()) {
                 while (res.next()) {

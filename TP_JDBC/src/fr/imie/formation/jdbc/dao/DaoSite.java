@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dto.DtoSite;
 
 /** DAO to the Site in PostGreSQL.
@@ -110,8 +111,9 @@ public class DaoSite implements IDao<DtoSite> {
     @Override
     public final void update(final DtoSite site) {
         try (PreparedStatement pst = connection.prepareStatement(
-                "UPDATE site SET nom = ? WHERE si_id = ?")) {
+                "UPDATE site SET si_nom = ? WHERE si_id = ?")) {
             pst.setString(1, site.getName());
+            pst.setInt(2, site.getId());
 
             pst.executeUpdate();
 
@@ -124,14 +126,14 @@ public class DaoSite implements IDao<DtoSite> {
     @SuppressWarnings("javadoc")
     @Override
     public final List<DtoSite> selectFiltered(final DtoSite elementFilter)
-            throws Exception {
+            throws NullFilterException {
         String query = "";
         /* Construct the query */
         if (elementFilter.getName() != null) {
             query = query.concat(String.format("si_nom LIKE ?"));
         }
         if (query.length() == 0) {
-            throw new Exception(
+            throw new NullFilterException(
                 "Impossible de faire un filtre: aucun paramètre n'est défini");
         }
         List<DtoSite> listSites = new ArrayList<DtoSite>();

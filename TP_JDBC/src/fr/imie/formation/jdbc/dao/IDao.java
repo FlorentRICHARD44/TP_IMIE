@@ -2,6 +2,8 @@ package fr.imie.formation.jdbc.dao;
 
 import java.util.List;
 
+import fr.imie.formation.jdbc.NullFilterException;
+
 /** Defines the interface for Dao.
  * @author Florent RICHARD
  * @param <D> Data exchanged
@@ -39,7 +41,7 @@ public interface IDao<D> extends AutoCloseable {
      * Attributes set to null in the filter are not used for filtering.
      * @param elementFilter Pattern of element.
      * @return List of elements corresponding to the filter.
-     * @throws Exception Case of error during filtering.
+     * @throws NullFilterException Case of error during filtering.
      */
-    List<D> selectFiltered(D elementFilter) throws Exception;
+    List<D> selectFiltered(D elementFilter) throws NullFilterException;
 }

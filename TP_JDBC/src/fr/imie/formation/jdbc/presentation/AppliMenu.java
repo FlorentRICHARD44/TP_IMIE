@@ -10,22 +10,37 @@ public enum AppliMenu {
     QUIT (0, "Quitter"),
     /** Menu: Display all users.
      */
-    DISPLAY (1, "Afficher tous les usagers"),
+    USER_DISPLAY (11, "Afficher tous les usagers"),
     /** Menu: Display users filtered by searched parameters.
      */
-    DISPLAY_FILTERS (11, "Afficher les usagers filtrés par paramètre(s)"),
+    USER_DISPLAY_FILTERS (111, "Afficher les usagers filtrés par paramètre(s)"),
     /** Menu: Add a new user.
      */
-    INSERT (2, "Ajouter un usager"),
+    USER_INSERT (12, "Ajouter un usager"),
     /** Menu: delete one user.
      */
-    DELETE (3, "Supprimer un usager"),
+    USER_DELETE (13, "Supprimer un usager"),
     /** Menu: Update one user.
      */
-    UPDATE (4, "Modifier un usager"),
+    USER_UPDATE (14, "Modifier un usager"),
     /** Menu: Presentation of Usager.
      */
-    PRESENTATION_ALL (5, "Présentation de tous les usagers.");
+    USER_PRESENTATION_ALL (15, "Présentation de tous les usagers."),
+    /** Menu: Display all sites.
+     */
+    SITE_DISPLAY (21, "Afficher tous les sites"),
+    /** Menu: Display sites filtered by searched parameters.
+     */
+    SITE_DISPLAY_FILTERS (211, "Afficher les sites filtrés par paramètre(s)"),
+    /** Menu: Add a new site.
+     */
+    SITE_INSERT (22, "Ajouter un site"),
+    /** Menu: delete one user.
+     */
+    SITE_DELETE (23, "Supprimer un site"),
+    /** Menu: Update one site.
+     */
+    SITE_UPDATE (24, "Modifier un site");
 
     /** Code for menu selection.
      */

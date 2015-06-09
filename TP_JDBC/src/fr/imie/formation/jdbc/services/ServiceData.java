@@ -3,6 +3,7 @@ package fr.imie.formation.jdbc.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.DaoSite;
 import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
@@ -28,16 +29,28 @@ public class ServiceData implements AutoCloseable {
         daoSite = new DaoSite();
     }
 
-    /** Return the list of all elements.
-     * @return List of all elements.
+    /** Return the list of all Usagers.
+     * @return List of all Usagers.
      */
-    public final List<Usager> selectAll() {
+    public final List<Usager> selectAllUsagers() {
         List<DtoUsager> dtoUsagers = daoUsager.selectAll();
         List<Usager> usagers = new ArrayList<Usager>();
         for (DtoUsager dtoU: dtoUsagers) {
             usagers.add(dtoToData(dtoU));
         }
         return usagers;
+    }
+
+    /** Return the list of all Sites.
+     * @return List of all Sites.
+     */
+    public final List<Site> selectAllSites() {
+        List<DtoSite> dtoSites = daoSite.selectAll();
+        List<Site> sites = new ArrayList<Site>();
+        for (DtoSite dtoS: dtoSites) {
+            sites.add(dtoToData(dtoS));
+        }
+        return sites;
     }
 
     /** Return an Usager specified by its Id.
@@ -53,26 +66,68 @@ public class ServiceData implements AutoCloseable {
         return usager;
     }
 
-    /** Add a new element.
-     * @param data Element to add.
-     * @return element added.
+    /** Add a new usager.
+     * @param data usager to add.
+     * @return usager added.
      */
     public final Usager insert(final Usager data) {
         return dtoToData(daoUsager.insert(dataToDto(data)));
     }
 
-    /** Remove an element.
-     * @param data Element to remove.
+    /** Add a new Site.
+     * @param data Site to add.
+     * @return Site added.
+     */
+    public final Site insert(final Site data) {
+        return dtoToData(daoSite.insert(dataToDto(data)));
+    }
+
+    /** Remove an usager.
+     * @param data usager to remove.
      */
     public final void delete(final Usager data) {
         daoUsager.delete(dataToDto(data));
     }
 
-    /** Modify an element.
+    /** Remove a site.
+     * @param data Site to remove.
+     * @throws Exception case of error during delete.
+     */
+    public final void delete(final Site data) throws Exception {
+        DtoUsager usager = new DtoUsager();
+        usager.setName(null);
+        usager.setFirstName(null);
+        usager.setDateBirth(null);
+        usager.setEmail(null);
+        usager.setNbConnection(null);
+        usager.setId(null);
+        usager.setInscrSite(data.getId());
+        List<DtoUsager> listUsager = new ArrayList<DtoUsager>();
+        try {
+            listUsager = daoUsager.selectFiltered(usager);
+        } catch (NullFilterException e) {
+            // Exception never raised since DtoUsager set in filter
+            // contains setInscrSite() not null.
+        }
+        if (listUsager.size() == 0) {
+            daoSite.delete(dataToDto(data));
+        } else {
+            throw new Exception("Un site ne peut être supprimé si des usagers y sont rattachés");
+        }
+    }
+
+    /** Modify an usager.
      * @param data Element to modify with new values to apply.
      */
     public final void update(final Usager data) {
         daoUsager.update(dataToDto(data));
+    }
+
+    /** Modify a site.
+     * @param data Element to modify with new values to apply.
+     */
+    public final void update(final Site data) {
+        daoSite.update(dataToDto(data));
     }
 
     /** Return a list of elements corresponding to the filter specified.
