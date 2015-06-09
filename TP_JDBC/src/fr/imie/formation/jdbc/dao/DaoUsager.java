@@ -30,6 +30,34 @@ public class DaoUsager implements IDao<DtoUsager> {
         }
     }
 
+    /** Convert a Result into Dto.
+     * @param res Result to convert.
+     * @return DtoUsager Usager from result.
+     * @throws SQLException Case of error during SQL statement.
+     */
+    private DtoUsager convertResultToDTO(final ResultSet res)
+            throws SQLException {
+        DtoUsager usager = null;
+        usager = new DtoUsager();
+        usager.setId(res.getInt("id"));
+        usager.setName(res.getString("nom"));
+        usager.setFirstName(res.getString("prenom"));
+        usager.setEmail(res.getString("email"));
+        if (res.wasNull()) {
+            usager.setEmail(null);
+        }
+        usager.setDateBirth(res.getDate("datenaissance"));
+        if (res.wasNull()) {
+            usager.setDateBirth(null);
+        }
+        usager.setNbConnection(res.getInt("nb_connexion"));
+        usager.setInscrSite(res.getInt("si_id"));
+        if (res.wasNull()) {
+            usager.setInscrSite(null);
+        }
+        return usager;
+    }
+
     @SuppressWarnings("javadoc")
     @Override
     public final List<DtoUsager> selectAll() {
@@ -46,6 +74,24 @@ public class DaoUsager implements IDao<DtoUsager> {
             throw new RuntimeException(e);
         }
         return listUsagers;
+    }
+
+    @SuppressWarnings("javadoc")
+    @Override
+    public final DtoUsager getById(final Integer id) {
+        DtoUsager usager = null;
+        try (PreparedStatement pst = connection.prepareStatement(
+                    "SELECT * FROM usager WHERE id = ?")) {
+            pst.setInt(1, id);
+            try (ResultSet res = pst.executeQuery()) {
+                if (res.next()) {
+                    usager = convertResultToDTO(res);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usager;
     }
 
     @SuppressWarnings("javadoc")
@@ -73,30 +119,6 @@ public class DaoUsager implements IDao<DtoUsager> {
             throw new RuntimeException(e);
         }
         return newUsager;
-    }
-
-    /** Convert a Result into Dto.
-     * @param res Result to convert.
-     * @return DtoUsager Usager from result.
-     * @throws SQLException Case of error during SQL statement.
-     */
-    private DtoUsager convertResultToDTO(final ResultSet res)
-            throws SQLException {
-        DtoUsager usager = null;
-        usager = new DtoUsager();
-        usager.setId(res.getInt("id"));
-        usager.setName(res.getString("nom"));
-        usager.setFirstName(res.getString("prenom"));
-        usager.setEmail(res.getString("email"));
-        if (res.wasNull()) {
-            usager.setEmail(null);
-        }
-        usager.setDateBirth(res.getDate("datenaissance"));
-        if (res.wasNull()) {
-            usager.setDateBirth(null);
-        }
-        usager.setNbConnection(res.getInt("nb_connexion"));
-        return usager;
     }
 
     @SuppressWarnings("javadoc")
@@ -213,6 +235,9 @@ public class DaoUsager implements IDao<DtoUsager> {
      * @see java.lang.AutoCloseable#close()
      */
     @Override
-    public final void close() {
+    public final void close() throws Exception {
+        if (connection != null) {
+            connection.close();
+        }
     }
 }

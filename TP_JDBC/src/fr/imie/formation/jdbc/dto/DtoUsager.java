@@ -24,6 +24,9 @@ public class DtoUsager {
     /** Number of connections realized by the usager.
      */
     private Integer nbConnection = 0;
+    /** Inscription site.
+     */
+    private Integer inscrSite;
 
     /** Constructor.
      */
@@ -112,5 +115,19 @@ public class DtoUsager {
      */
     public final void setNbConnection(final Integer uNbConnection) {
         this.nbConnection = uNbConnection;
+    }
+
+    /** Accessor to the inscription site.
+     * @return the inscrSite
+     */
+    public final Integer getInscrSite() {
+        return inscrSite;
+    }
+
+    /** Mutator for the inscription site.
+     * @param uInscrSite the inscrSite to set
+     */
+    public final void setInscrSite(final Integer uInscrSite) {
+        this.inscrSite = uInscrSite;
     }
 }

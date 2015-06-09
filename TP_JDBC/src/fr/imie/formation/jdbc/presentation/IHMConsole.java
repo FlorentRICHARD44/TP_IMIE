@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.imie.formation.jdbc.data.Usager;
-import fr.imie.formation.jdbc.services.ServiceDao;
+import fr.imie.formation.jdbc.services.ServiceData;
 
 /** Inteface Human Machine by the console.
  * @author Florent RICHARD
@@ -21,13 +21,13 @@ public class IHMConsole implements AutoCloseable {
     private SimpleDateFormat dateformat;
     /** Access to data.
      */
-    private ServiceDao servDao;
+    private ServiceData servDao;
     /** Constructor.
      */
     public IHMConsole() {
         scan = new Scanner(System.in);
         dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        servDao = new ServiceDao();
+        servDao = new ServiceData();
     }
 
     /** Display a choice of next menu to apply.
@@ -53,12 +53,13 @@ public class IHMConsole implements AutoCloseable {
      * @return List of Usager.
      */
     private List<Usager> displayUsers(List<Usager> usersToDisplay) {
-        System.out.format("  Ligne    |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Nb Connexions\n");
-        System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.format("  Ligne    |           Prénom          |             Nom           | Date naissance |                     E-mail                    |   Site inscription   |   Nb Connexions\n");
+        System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         Integer numLigne = 1;
         for (Usager u: usersToDisplay) {
             String userEmail;
             String userDateBirth;
+            String site;
             if (u.getEmail() == null) {
                 userEmail = "-";
             } else {
@@ -69,9 +70,14 @@ public class IHMConsole implements AutoCloseable {
             } else {
                 userDateBirth = dateformat.format(u.getDateBirth().getTime());
             }
-            System.out.format("%10s | %-25s | %-25s | %-14s | %-45s | %15d\n",
+            if (u.getInscrSite() == null) {
+                site = "?";
+            } else {
+                site = u.getInscrSite().getName();
+            }
+            System.out.format("%10s | %-25s | %-25s | %-14s | %-45s | %-20s | %15d\n",
                     numLigne++, u.getFirstName(), u.getName(),
-                    userDateBirth, userEmail, u.getNbConnection());
+                    userDateBirth, userEmail, site, u.getNbConnection());
         }
         return usersToDisplay;
     }
@@ -123,10 +129,14 @@ public class IHMConsole implements AutoCloseable {
         Usager userToUpdate = null;
         List<Usager> userList = servDao.selectAll();
         displayUsers(userList);
-        System.out.print("Entrer la ligne de l'usager à modifier: ");
         do {
+            System.out.print("Entrer la ligne de l'usager à modifier: ");
             Integer idToUp = new Integer(scan.nextLine());
-            userToUpdate = userList.get(idToUp - 1);
+            try {
+                userToUpdate = userList.get(idToUp - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
         } while (userToUpdate == null);
         String strScan = "";
         System.out.format("Entrer le prénom (%s): ",

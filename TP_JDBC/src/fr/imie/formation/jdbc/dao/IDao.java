@@ -13,6 +13,12 @@ public interface IDao<D> extends AutoCloseable {
      */
     List<D> selectAll();
 
+    /** Return the element specified by its Id.
+     * @param id Id of the element to return
+     * @return Element corresponding to the Id.
+     */
+    D getById(Integer id);
+
     /** Add a new element.
      * @param data Element to add.
      * @return element added.
