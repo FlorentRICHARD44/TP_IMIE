@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.imie.formation.jdbc.NullFilterException;
+import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Class used to access to the database.
@@ -52,10 +53,12 @@ public class DaoUsager implements IDao<DtoUsager> {
             usager.setDateBirth(null);
         }
         usager.setNbConnection(res.getInt("nb_connexion"));
-        usager.setInscrSite(res.getInt("si_id"));
+        DtoSite dtoSite = new DtoSite();
+        dtoSite.setId(res.getInt("si_id"));
         if (res.wasNull()) {
-            usager.setInscrSite(null);
+            dtoSite = null;
         }
+        usager.setInscrSite(dtoSite);
         return usager;
     }
 
@@ -115,7 +118,7 @@ public class DaoUsager implements IDao<DtoUsager> {
             if (usager.getInscrSite() == null) {
                 pst.setNull(5, java.sql.Types.INTEGER);
             } else {
-                pst.setInt(5, usager.getInscrSite());
+                pst.setInt(5, usager.getInscrSite().getId());
             }
             ResultSet res = pst.executeQuery();
             if (res.next()) {
@@ -161,7 +164,7 @@ public class DaoUsager implements IDao<DtoUsager> {
             if (user.getInscrSite() == null) {
                 pst.setNull(6, java.sql.Types.INTEGER);
             } else {
-                pst.setInt(6, user.getInscrSite());
+                pst.setInt(6, user.getInscrSite().getId());
             }
             pst.setInt(7, user.getId());
 
@@ -236,7 +239,7 @@ public class DaoUsager implements IDao<DtoUsager> {
                 pst.setInt(nbParam++, elementFilter.getNbConnection());
             }
             if (elementFilter.getInscrSite() != null) {
-                pst.setInt(nbParam++, elementFilter.getInscrSite());
+                pst.setInt(nbParam++, elementFilter.getInscrSite().getId());
             }
             try (ResultSet res = pst.executeQuery()) {
                 while (res.next()) {

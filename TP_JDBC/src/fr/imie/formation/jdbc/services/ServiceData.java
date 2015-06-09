@@ -101,7 +101,7 @@ public class ServiceData implements AutoCloseable {
         usager.setEmail(null);
         usager.setNbConnection(null);
         usager.setId(null);
-        usager.setInscrSite(data.getId());
+        usager.setInscrSite(dataToDto(data));
         List<DtoUsager> listUsager = new ArrayList<DtoUsager>();
         try {
             listUsager = daoUsager.selectFiltered(usager);
@@ -162,7 +162,7 @@ public class ServiceData implements AutoCloseable {
         if (usager.getInscrSite() == null) {
             dtoUsager.setInscrSite(null);
         } else {
-            dtoUsager.setInscrSite(usager.getInscrSite().getId());
+            dtoUsager.setInscrSite(dataToDto(usager.getInscrSite()));
         }
         return dtoUsager;
     }
@@ -182,8 +182,9 @@ public class ServiceData implements AutoCloseable {
         if (dtoUsager.getInscrSite() == null) {
             usager.setInscrSite(null);
         } else {
-            usager.setInscrSite(
-                    dtoToData(daoSite.getById(dtoUsager.getInscrSite())));
+            Integer id = dtoUsager.getInscrSite().getId();
+            DtoSite dtoSite = daoSite.getById(id);
+            usager.setInscrSite(dtoToData(dtoSite));
         }
         return usager;
     }

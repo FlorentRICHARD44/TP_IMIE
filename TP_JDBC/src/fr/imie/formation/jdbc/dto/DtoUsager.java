@@ -26,7 +26,7 @@ public class DtoUsager {
     private Integer nbConnection = 0;
     /** Inscription site.
      */
-    private Integer inscrSite;
+    private DtoSite inscrSite;
 
     /** Constructor.
      */
@@ -120,14 +120,14 @@ public class DtoUsager {
     /** Accessor to the inscription site.
      * @return the inscrSite
      */
-    public final Integer getInscrSite() {
+    public final DtoSite getInscrSite() {
         return inscrSite;
     }
 
     /** Mutator for the inscription site.
      * @param uInscrSite the inscrSite to set
      */
-    public final void setInscrSite(final Integer uInscrSite) {
+    public final void setInscrSite(final DtoSite uInscrSite) {
         this.inscrSite = uInscrSite;
     }
 }
