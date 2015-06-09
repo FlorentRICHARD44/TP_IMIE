@@ -103,7 +103,7 @@ public class IHMConsole implements AutoCloseable {
     /** Ask the user to update an Usager.
      */
     private void updateUser() {
-        Usager userToUpdate = selectLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
+        Usager userToUpdate = selectUsagerLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
         userToUpdate.setFirstName(getString(String.format("Entrer le prénom (%s): ", userToUpdate.getFirstName()),
                                             userToUpdate.getFirstName(), false));
         userToUpdate.setName(getString(String.format("Entrer le nom (%s): ", userToUpdate.getName()),
@@ -203,19 +203,8 @@ public class IHMConsole implements AutoCloseable {
     /** Delete a Site.
      */
     private void deleteSite() {
-        Site siteToDelete = null;
-        List<Site> siteList = servData.selectAllSites();
-        displaySites(siteList);
-        do {
-            Integer line = getInteger("Entrer la ligne du site à supprimer: ", null, false);
-            try {
-                siteToDelete = siteList.get(line - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (siteToDelete == null);
         try {
-            servData.delete(siteToDelete);
+            servData.delete(selectSiteLine("Entrer la ligne du site à supprimer: ", servData.selectAllSites()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -224,17 +213,7 @@ public class IHMConsole implements AutoCloseable {
     /** Ask the user to update a Site.
      */
     private void updateSite() {
-        Site siteToUpdate = null;
-        List<Site> siteList = servData.selectAllSites();
-        displaySites(siteList);
-        do {
-            Integer line = getInteger("Entrer la ligne du site à modifier: ", null, false);
-            try {
-                siteToUpdate = siteList.get(line - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (siteToUpdate == null);
+        Site siteToUpdate = selectSiteLine("Entrer la ligne du site à modifier: ", servData.selectAllSites());
         siteToUpdate.setName(getString(String.format("Entrer le nom (%s): ", siteToUpdate.getName()), null, false));
         servData.update(siteToUpdate);
     }
@@ -242,38 +221,16 @@ public class IHMConsole implements AutoCloseable {
     /** Affect a site to an usager.
      */
     private void affectSiteUsager() {
-        Usager userToUpdate = selectLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
-        Site site = null;
-        List<Site> siteList = servData.selectAllSites();
-        displaySites(siteList);
-        do {
-            Integer line = getInteger("Entrer la ligne du site à sélectionner: ", null, false);
-            try {
-                site = siteList.get(line - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (site == null);
-        userToUpdate.setInscrSite(site);
+        Usager userToUpdate = selectUsagerLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
+        userToUpdate.setInscrSite(selectSiteLine("Entrer la ligne du site à sélectionner: ", servData.selectAllSites()));
         servData.update(userToUpdate);
     }
 
     /** Affect a site and all usagers affected to this site.
      */
     private void deleteSiteUsager() {
-        Site site = null;
-        List<Site> siteList = servData.selectAllSites();
-        displaySites(siteList);
-        do {
-            Integer line = getInteger("Entrer la ligne du site à sélectionner: ", null, false);
-            try {
-                site = siteList.get(line - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Cette ligne n'existe pas.");
-            }
-        } while (site == null);
         try {
-            servData.deleteSiteAndRelatedUsers(site, true);
+            servData.deleteSiteAndRelatedUsers(selectSiteLine("Entrer la ligne du site à sélectionner: ", servData.selectAllSites()), true);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -296,7 +253,7 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case USER_UPDATE: updateUser();
                 break;
-                case USER_DELETE: servData.delete(selectLine("Entrer la ligne de l'usager à supprimer: ",
+                case USER_DELETE: servData.delete(selectUsagerLine("Entrer la ligne de l'usager à supprimer: ",
                                                              servData.selectAllUsagers()));
                 break;
                 case USER_PRESENTATION_ALL: servData.selectAllUsagers().stream().forEach(
@@ -418,7 +375,7 @@ public class IHMConsole implements AutoCloseable {
      * @param userList List of users.
      * @return Usager selected
      */
-    private Usager selectLine(final String message, final List<Usager> userList) {
+    private Usager selectUsagerLine(final String message, final List<Usager> userList) {
         Usager user = null;
         displayUsers(userList);
         do {
@@ -430,5 +387,24 @@ public class IHMConsole implements AutoCloseable {
             }
         } while (user == null);
         return user;
+    }
+
+    /** Ask the user to select a site.
+     * @param message Message to display
+     * @param siteList List of sites.
+     * @return site selected
+     */
+    private Site selectSiteLine(final String message, final List<Site> siteList) {
+        Site site = null;
+        displaySites(siteList);
+        do {
+            Integer line = getInteger(message, null, false);
+            try {
+                site = siteList.get(line - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas");
+            }
+        } while (site == null);
+        return site;
     }
 }
