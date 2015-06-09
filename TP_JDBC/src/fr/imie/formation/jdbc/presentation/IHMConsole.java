@@ -222,7 +222,8 @@ public class IHMConsole implements AutoCloseable {
      */
     private void affectSiteUsager() {
         Usager userToUpdate = selectUsagerLine("Entrer la ligne de l'usager à modifier: ", servData.selectAllUsagers());
-        userToUpdate.setInscrSite(selectSiteLine("Entrer la ligne du site à sélectionner: ", servData.selectAllSites()));
+        userToUpdate.setInscrSite(selectSiteLine("Entrer la ligne du site à sélectionner: ",
+                                                 servData.selectAllSites()));
         servData.update(userToUpdate);
     }
 
@@ -230,7 +231,8 @@ public class IHMConsole implements AutoCloseable {
      */
     private void deleteSiteUsager() {
         try {
-            servData.deleteSiteAndRelatedUsers(selectSiteLine("Entrer la ligne du site à sélectionner: ", servData.selectAllSites()), true);
+            servData.deleteSiteAndRelatedUsers(selectSiteLine("Entrer la ligne du site à sélectionner: ",
+                                                              servData.selectAllSites()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
