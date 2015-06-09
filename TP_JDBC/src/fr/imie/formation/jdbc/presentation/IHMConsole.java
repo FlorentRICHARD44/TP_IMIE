@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
@@ -22,13 +23,13 @@ public class IHMConsole implements AutoCloseable {
     private SimpleDateFormat dateformat;
     /** Access to data.
      */
-    private ServiceData servDao;
+    private ServiceData servData;
     /** Constructor.
      */
     public IHMConsole() {
         scan = new Scanner(System.in);
         dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        servDao = new ServiceData();
+        servData = new ServiceData();
     }
 
     /** Display a choice of next menu to apply.
@@ -107,7 +108,7 @@ public class IHMConsole implements AutoCloseable {
             user.setEmail(strEmail);
         }
         Site site = null;
-        List<Site> siteList = servDao.selectAllSites();
+        List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         System.out.print("Entrer la ligne du site d'inscription: ");
         String strSite = "";
@@ -117,7 +118,7 @@ public class IHMConsole implements AutoCloseable {
             site = siteList.get(idToDel - 1);
         }
         user.setInscrSite(site);
-        user = servDao.insert(user);
+        user = servData.insert(user);
         System.out.format("Usager inséré avec l'id %d\n", user.getId());
     }
 
@@ -125,21 +126,21 @@ public class IHMConsole implements AutoCloseable {
      */
     private void deleteUser() {
         Usager userToDelete = null;
-        List<Usager> userList = servDao.selectAllUsagers();
+        List<Usager> userList = servData.selectAllUsagers();
         displayUsers(userList);
         System.out.print("Entrer la ligne de l'usager à supprimer: ");
         do {
             Integer idToDel = new Integer(scan.nextLine());
             userToDelete = userList.get(idToDel - 1);
         } while (userToDelete == null);
-        servDao.delete(userToDelete);
+        servData.delete(userToDelete);
     }
 
     /** Ask the user to update an Usager.
      */
     private void updateUser() {
         Usager userToUpdate = null;
-        List<Usager> userList = servDao.selectAllUsagers();
+        List<Usager> userList = servData.selectAllUsagers();
         displayUsers(userList);
         do {
             System.out.print("Entrer la ligne de l'usager à modifier: ");
@@ -192,7 +193,7 @@ public class IHMConsole implements AutoCloseable {
             userToUpdate.setNbConnection(new Integer(strScan));
         }
         Site site = null;
-        List<Site> siteList = servDao.selectAllSites();
+        List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         String strSite;
         if (userToUpdate.getInscrSite() == null) {
@@ -209,7 +210,7 @@ public class IHMConsole implements AutoCloseable {
             site = siteList.get(idToDel - 1);
         }
         userToUpdate.setInscrSite(site);
-        servDao.update(userToUpdate);
+        servData.update(userToUpdate);
     }
 
     /** Ask the user for the parameters to filter and display list of results.
@@ -259,7 +260,7 @@ public class IHMConsole implements AutoCloseable {
             userFilter.setNbConnection(null);
         }
         Site site = null;
-        List<Site> siteList = servDao.selectAllSites();
+        List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         System.out.print("Filtrer le site d'inscription (entrer la ligne): ");
         String strSite = "";
@@ -270,7 +271,7 @@ public class IHMConsole implements AutoCloseable {
         }
         userFilter.setInscrSite(site);
         try {
-            List<Usager> usagers = servDao.selectFiltered(userFilter);
+            List<Usager> usagers = servData.selectFiltered(userFilter);
             if (usagers.size() == 0) {
                 System.out.println("-> Aucun résultat");
             } else {
@@ -302,7 +303,7 @@ public class IHMConsole implements AutoCloseable {
         Site site = new Site();
         System.out.print("Entrer le nom: ");
         site.setName(scan.nextLine());
-        site = servDao.insert(site);
+        site = servData.insert(site);
         System.out.format("Site inséré avec l'id %d\n", site.getId());
     }
 
@@ -310,7 +311,7 @@ public class IHMConsole implements AutoCloseable {
      */
     private void deleteSite() {
         Site siteToDelete = null;
-        List<Site> siteList = servDao.selectAllSites();
+        List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         System.out.print("Entrer la ligne du site à supprimer: ");
         do {
@@ -318,7 +319,7 @@ public class IHMConsole implements AutoCloseable {
             siteToDelete = siteList.get(idToDel - 1);
         } while (siteToDelete == null);
         try {
-            servDao.delete(siteToDelete);
+            servData.delete(siteToDelete);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -328,7 +329,7 @@ public class IHMConsole implements AutoCloseable {
      */
     private void updateSite() {
         Site siteToUpdate = null;
-        List<Site> siteList = servDao.selectAllSites();
+        List<Site> siteList = servData.selectAllSites();
         displaySites(siteList);
         do {
             System.out.print("Entrer la ligne du site à modifier: ");
@@ -345,7 +346,34 @@ public class IHMConsole implements AutoCloseable {
         if (strScan.length() > 0) {
             siteToUpdate.setName(strScan);
         }
-        servDao.update(siteToUpdate);
+        servData.update(siteToUpdate);
+    }
+
+    /** Affect a site to an usager.
+     */
+    private void affectSiteUsager() {
+        Usager userToUpdate = null;
+        List<Usager> userList = servData.selectAllUsagers();
+        displayUsers(userList);
+        do {
+            System.out.print("Entrer la ligne de l'usager à modifier: ");
+            Integer idToUp = new Integer(scan.nextLine());
+            try {
+                userToUpdate = userList.get(idToUp - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Cette ligne n'existe pas.");
+            }
+        } while (userToUpdate == null);
+        Site site = null;
+        List<Site> siteList = servData.selectAllSites();
+        displaySites(siteList);
+        System.out.print("Entrer la ligne du site à supprimer: ");
+        do {
+            Integer idToDel = new Integer(scan.nextLine());
+            site = siteList.get(idToDel - 1);
+        } while (site == null);
+        userToUpdate.setInscrSite(site);
+        servData.update(userToUpdate);
     }
 
     /** Execute the Console and actions until user ask the end.
@@ -357,7 +385,7 @@ public class IHMConsole implements AutoCloseable {
             switch (menuOption) {
                 case QUIT: System.out.println("Sortie");
                 break;
-                case USER_DISPLAY: displayUsers(servDao.selectAllUsagers());
+                case USER_DISPLAY: displayUsers(servData.selectAllUsagers());
                 break;
                 case USER_DISPLAY_FILTERS: displayFiltered();
                 break;
@@ -367,10 +395,10 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case USER_DELETE: deleteUser();
                 break;
-                case USER_PRESENTATION_ALL: servDao.selectAllUsagers().stream().forEach(
+                case USER_PRESENTATION_ALL: servData.selectAllUsagers().stream().forEach(
                                                     x -> System.out.println(x.pres()));
                 break;
-                case SITE_DISPLAY: displaySites(servDao.selectAllSites());
+                case SITE_DISPLAY: displaySites(servData.selectAllSites());
                     break;
                 case SITE_INSERT: createSite();
                     break;
@@ -378,12 +406,13 @@ public class IHMConsole implements AutoCloseable {
                     break;
                 case SITE_UPDATE: updateSite();
                 break;
+                case AFFECT_SITE_USAGER: affectSiteUsager();
+                break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
             }
         } while (menuOption != AppliMenu.QUIT);
     }
-
 
     @SuppressWarnings("javadoc")
     @Override
@@ -391,8 +420,8 @@ public class IHMConsole implements AutoCloseable {
         if (scan != null) {
             scan.close();
         }
-        if (servDao != null) {
-            servDao.close();
+        if (servData != null) {
+            servData.close();
         }
     }
 }
