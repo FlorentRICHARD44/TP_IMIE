@@ -303,7 +303,7 @@ public class IHMConsole implements AutoCloseable {
                              final boolean nullAccepted) {
         String retVal = null;
         do {
-            System.out.format("%s: ", message);
+            System.out.format("%s", message);
             String str = scan.nextLine();
             if (!str.equals("**")) {
                 if (str.length() > 0) {
@@ -329,7 +329,7 @@ public class IHMConsole implements AutoCloseable {
                              final boolean nullAccepted) {
         Integer retVal = null;
         do {
-            System.out.format("%s: ", message);
+            System.out.format("%s", message);
             String str = scan.nextLine();
             if (!str.equals("**")) {
                 if (str.length() > 0) {
@@ -355,7 +355,7 @@ public class IHMConsole implements AutoCloseable {
                          final boolean nullAccepted) {
         Date retVal = null;
         do {
-            System.out.format("%s: ", message);
+            System.out.format("%s", message);
             String str = scan.nextLine();
             if (!str.equals("**")) {
                 if (str.length() > 0) {
