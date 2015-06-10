@@ -17,6 +17,8 @@
             <figcaption>Description de la capture</figcaption>
         </figure>
         
+        <hr/><h2>Tableau</h2>
+        
         <table border="1">
             <caption>Mon tableau de fruits</caption>
             <thead><tr>
@@ -31,6 +33,9 @@
                 <tr><td>Banane</td><td>12</td></tr>
             </tbody>
         </table>
+        
+        <hr/><h2>Listes</h2>
+        
         <ol>
             <li>Lundi</li>
             <ol>
@@ -57,6 +62,31 @@
             <dt>Ice-tea</dt><dd>Boisson fraiche</dd>
             <dt>Pina colada</dt><dd>Cocktail alcoolisé</dd>
         </dl>
+        
+        <hr/><h2>Formulaires</h2>
+        <form name="for" method="post" action="traitement.php">
+            <fieldset>
+                <legend>Mon Formulaire</legend>
+	            <label for="name">Nom</label> <input id="name" type="text" size="10" placeholder="UPPERCASE"/><br/>
+	            <label for="firtname">Prénom</label> <input id="firstname" type="text" maxlength="10"/><br/>
+	            <fieldset>
+	               <legend>Civilité</legend>
+	               <label for="radioman">Monsieur</label><input id="radioman" type="radio" name="Monsieur"/><br/>
+	               <label for="radiowoman">Madame</label><input id="radiowoman" type="radio" name="Madame"/>
+	            </fieldset>
+	            <label name="for">Légume préféré</label> <select name="manger">
+	                <option>Tomate</option>
+	                <option selected>Courgette</option>
+	            </select><br/>
+	            <label name="for">Password</label> <input type="password"/><br/>
+	            <label name="for">Email</label> <input type="email"/><br/>
+	            <label name="for">Date de Naissance</label> <input type="date"><br/><br/>
+	            <label name="for">Revoqué</label> <input type="checkbox"/><br/>
+	            <label name="for">Nombre de connexions</label> <input type="number"/><br/>
+            
+            <input type="submit"/>
+            </fieldset>
+        </form>
     </body>
 </html>
 
