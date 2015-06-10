@@ -67,12 +67,12 @@
         <form name="for" method="post" action="traitement.php">
             <fieldset>
                 <legend>Mon Formulaire</legend>
-	            <label for="name">Nom</label> <input id="name" type="text" size="10" placeholder="UPPERCASE"/><br/>
-	            <label for="firtname">Prénom</label> <input id="firstname" type="text" maxlength="10"/><br/>
+	            <label for="name">Nom</label> <input id="name" type="text" size="10" placeholder="UPPERCASE" required/><br/>
+	            <label for="firtname">Prénom</label> <input id="firstname" type="text" maxlength="10" required/><br/>
 	            <fieldset>
 	               <legend>Civilité</legend>
-	               <label for="radioman">Monsieur</label><input id="radioman" type="radio" name="Monsieur"/><br/>
-	               <label for="radiowoman">Madame</label><input id="radiowoman" type="radio" name="Madame"/>
+	               <label for="radioman">Monsieur</label><input id="radioman" type="radio" name="civilite"/><br/>
+	               <label for="radiowoman">Madame</label><input id="radiowoman" type="radio" name="civilite" checked/>
 	            </fieldset>
 	            <label name="for">Légume préféré</label> <select name="manger">
 	                <option>Tomate</option>
@@ -84,7 +84,7 @@
 	            <label name="for">Revoqué</label> <input type="checkbox"/><br/>
 	            <label name="for">Nombre de connexions</label> <input type="number"/><br/>
             
-            <input type="submit"/>
+            <input type="submit" value="Valider"/>
             </fieldset>
         </form>
     </body>
