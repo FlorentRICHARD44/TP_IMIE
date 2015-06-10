@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contact</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Contact</h1>
+        <form method="get" action="toto.php">
+	        <fieldset id="form_person">
+	            <legend>Vous</legend>
+	            <table>
+		            <tr><td><label for="name">NOM</label></td>
+		                <td><input id="name" type="text" placeholder="VOTRE NOM" /></td></tr>
+		            <tr><td><label for="firstname">Prénom</label></td>
+		                <td><input id="firstname" type="text" placeholder="Votre Prénom" /></td></tr>
+		            <tr><td><label for="email">E-Mail</label></td>
+		                <td><input id="email" type="email" placeholder="Votre e-mail" /></td></tr>
+	            </table>
+	        </fieldset>
+	        <fieldset id="form_msg">
+	            <legend>Message</legend>
+	            <textarea placeholder="Votre message ici" cols="40" rows="5"></textarea>
+	        </fieldset>
+	        <fieldset id="form_contact">
+	            <legend>Contact</legend>
+	            <label for="contactchoice">Me contacter par</label>
+	            <select>
+	                <option>E-mail</option>
+	                <option>Téléphone</option>
+	            </select>
+	            <br/>
+	            <label>Civilité: </label>    <label for="civmale">Homme</label><input id="civmale" type="radio" name="civ"/> <label for="civfemale">Femme</label><input id="civfemale" type="radio"  name="civ" checked/> 
+	        </fieldset>
+	        <input type="submit"/><input type="reset"/>
+        </form>
+    </body>
+</html>
+
