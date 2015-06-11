@@ -1,0 +1,51 @@
+*
+{
+    margin: 0px;
+    height: 100%;
+}
+
+
+#left
+{
+    background-color: green;
+       display: block;
+       width: 100%;
+}
+#center
+{
+    background-color: grey;
+       display: inline-block;
+       width: 100%;
+}
+
+#right
+{
+    background-color: blue;
+       display: block;
+       width: 100%;
+}
+
+@media (min-width: 1024px) {
+    #left{
+       display: inline-block;
+       width: 20%;
+    }
+    #center {
+       display: inline-block;
+       width: 80%;
+    }
+}
+@media (min-width: 1200px) {
+    #left {
+       display: inline-block;
+       width: 20%;
+    }
+    #center {
+       display: inline-block;
+       width: 60%;
+    }
+    #right {
+       display: inline-block;
+       width: 20%;
+    }
+}
