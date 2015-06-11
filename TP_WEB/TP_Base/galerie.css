@@ -16,7 +16,7 @@ footer
     height: 50px;
 }
 
-p
+p, legend
 {
 	text-align: center;
 }
@@ -48,32 +48,37 @@ figure
 	width: 140px;
 	height: 200px;
 	display: inline-block;
-	margin: 10px 20px 10px 20px;
+	margin: 20px 30px 20px 30px;
     padding: 10px 10px 10px 10px;
     box-shadow: 5px 5px 3px #333333;
 }
 
-figure:first-child
+/*figure:first-child, figure:nth-of-type(3n)
 {
 	transform:rotate(4deg);
 }
-figure:nth-of-type(2n)
+figure:nth-of-type(2n), figure:nth-of-type(5n)
 {
     transform:rotate(-4deg);
-}
-figure:nth-of-type(3n)
+}*/
+figure:nth-of-type(5n+1), figure:nth-of-type(5n+3), figure:nth-of-type(5n+5)
 {
     transform:rotate(4deg);
 }
+figure:nth-of-type(5n+2), figure:nth-of-type(5n+4), figure:nth-of-type(5n)
+{
+    transform:rotate(-4deg);
+}
+
 figure:hover
 {
     transform:scale(1.2);
-    transition: transform 0.1s;
 }
 
 figure, figure *
 {
     background-color: white;
+    transition: all 0.2s;
 }
 
 figure img
