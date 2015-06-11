@@ -1,0 +1,110 @@
+*
+{
+	margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+	font-family: Verdana;
+}
+
+body
+{
+    background-color: #EEEEEE;
+}
+
+header
+{
+	background-color: #3385AD;
+	height: 120px;
+    box-shadow: 0px 5px 3px #333333;
+}
+
+header h1
+{
+	background-color: inherit;
+	color: white;
+    position: absolute;
+	top: 40px;
+	left: 100px;
+}
+
+header h2
+{
+    background-color: inherit;
+    color: black;
+    font-family: "Courier New", Courier, sans-serif;
+    position: absolute;
+    top: 90px;
+    left: 250px;
+}
+
+header figure
+{
+	z-index: 500;
+	background-color: white;
+    box-shadow: 5px 5px 3px #333333;
+	height: 100px;
+	width: 75px;
+    position: absolute;
+	top: 40px;
+	right: 60px;
+}
+
+header figure img
+{
+	font-size: small;
+}
+
+footer
+{
+	display: block;
+    background-color: #3385AD;
+    height: 80px;
+    position: ;
+    bottom: 0px;
+    box-shadow: 0px -5px 3px #333333;
+}
+
+div#main
+{
+	width: 95%;
+    height: 800px;
+	margin: 0px auto;
+	position: relative;
+	top: 30px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+}
+
+aside, section
+{
+    display: inline-block;
+    margin: 0px 10px 0px 10px;
+    height: 400px;
+}
+
+aside
+{
+    position: absolute;
+    top: 20px;
+	width: 20%;
+	background-color: #22CCEE;
+}
+
+aside#left
+{
+    left: 0px;
+}
+
+aside#right
+{
+    right: 0px;
+}
+
+section
+{
+	width: 50%;
+	background-color: #006699;
+	position: relative;
+    top: 20px;
+    align-content: center;
+}
