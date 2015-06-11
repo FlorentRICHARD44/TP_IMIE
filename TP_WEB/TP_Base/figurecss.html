@@ -10,7 +10,7 @@
                 border-width: 2px;
             }
             
-            div.face, #lefteye, #righteye, #lefteyecenter, #righteyecenter
+            div.face, #lefteye, #righteye, #lefteyecenter, #righteyecenter, div.nose
             {
                 border-radius: 100%;
             }
@@ -70,11 +70,16 @@
                 height: 100px;
                 background-color: #FF0000;
                 margin: auto;
-                border-radius: 50px;
-                position: absolute;
+                position: relative;
                 top: 250px;
-                left: 250px;
                 z-index: 500;
+            }
+            
+            div.nose:hover
+            {
+                width: 150px;
+                background-color: orange;
+                transition: width 1s ease-in, background-color 1s;
             }
               
             
