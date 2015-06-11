@@ -40,7 +40,7 @@ footer p
 main
 {
 	margin: auto;
-    width: 900px;
+    width: 1200px;
 }
 
 figure
@@ -61,11 +61,11 @@ figure:nth-of-type(2n), figure:nth-of-type(5n)
 {
     transform:rotate(-4deg);
 }*/
-figure:nth-of-type(5n+1), figure:nth-of-type(5n+3), figure:nth-of-type(5n+5)
+figure:nth-of-type(odd)
 {
     transform:rotate(4deg);
 }
-figure:nth-of-type(5n+2), figure:nth-of-type(5n+4), figure:nth-of-type(5n)
+figure:nth-of-type(even)
 {
     transform:rotate(-4deg);
 }
