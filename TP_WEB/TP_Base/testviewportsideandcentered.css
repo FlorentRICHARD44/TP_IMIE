@@ -1,0 +1,64 @@
+*
+{
+	margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
+#left
+{
+    background-color: green;
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+
+#center
+{
+    background-color: grey;
+    width: 100%;
+    height:200px;
+    display: block;
+}
+
+#down
+{
+    background-color: blue;
+    width: 100%;
+    height:200px;
+    display: block;
+}
+
+
+@media (min-width: 400px) {
+    #left{
+       display: inline-block;
+       width: 20%;
+       height: 400px;
+    }
+    div.main
+    {
+       display: inline-block;
+       width: 75%;
+       height: 400px;
+    }
+    #center
+    {
+        height: 50%;
+        width: 100%;
+    }
+    #down
+    {
+        height: 50%;
+        width: 100%;
+    }
+}
+
+@media (min-width: 800px) {
+	div.mainblock
+	{
+	    height: 400px;
+	    width: 800px;
+	    margin: 0px auto;
+	}
+}
