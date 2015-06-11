@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test CSS</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            div
+            {
+                border-style: solid;
+                border-width: 2px;
+            }
+            
+            div.face, #lefteye, #righteye, #lefteyecenter, #righteyecenter
+            {
+                border-radius: 100%;
+            }
+            
+            div.face
+            {
+                width: 600px;
+                height: 600px;
+                background-color: #FFAAAA;
+                margin: auto;
+                position:relative
+            }
+            
+            #lefteye, #righteye
+            {
+                width: 120px;
+                height: 100px;
+                background-color: #FFFFFF;
+                position: absolute;
+                top: 200px;
+            }
+            
+            #lefteye
+            {
+                left: 150px;
+            }
+            
+            #righteye
+            {
+                right: 150px;
+            }
+            
+            #lefteyecenter, #righteyecenter
+            {
+                width: 30px;
+                height: 30px;
+                background-color: #000000;
+                margin: auto;
+                position: relative;
+                top: 60px;
+            }
+            
+            #lefteyecenter
+            {
+                left: 30px;
+            }
+            
+            #righteyecenter
+            {
+                right: 30px;
+            }
+              
+            
+            div.nose
+            {
+                width: 100px;
+                height: 100px;
+                background-color: #FF0000;
+                margin: auto;
+                border-radius: 50px;
+                position: absolute;
+                top: 250px;
+                left: 250px;
+                z-index: 500;
+            }
+              
+            
+            div.mouth
+            {
+                width: 400px;
+                height: 50px;
+                background-color: #FFFFFF;
+                margin: auto;
+                position: absolute;
+                top: 350px;
+                left: 100px;
+            }
+            
+            hr 
+            {
+                position: relative;
+                top: 25px;
+            }
+            
+            
+        </style>
+    </head>
+    <body>
+        <div class="face">
+            <div id="lefteye" class="inline">
+                <div id="lefteyecenter"></div>
+            </div>
+            <div id="righteye" class="inline">
+                <div id="righteyecenter"></div>
+            </div>
+            <div class="mouth"><hr/></div>
+            <div class="nose"></div>
+        </div>
+    </body>
+</html>
+
