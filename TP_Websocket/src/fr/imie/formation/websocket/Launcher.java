@@ -9,6 +9,7 @@ import java.net.ServerSocket;
  * 
  */
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * @author imie
@@ -27,26 +28,24 @@ public class Launcher {
      * @param args
      */
     public static void main(String[] args) {
-
         /* Code Serveur */
-        try (ServerSocket hostServer = new ServerSocket(1234)) {
-            hostServer.setSoTimeout(60000);  // Timeout 1 minute
-            try (Socket socketServer = hostServer.accept()) {
-                System.out.println("Client connecté: " + socketServer.getInetAddress());
-                listen(socketServer);
-            }
-        } catch (Exception e) {
-            System.out.println("Error during connection");
+        SocketReader soReader = new SocketReader();
+        Thread listenThread = new Thread(soReader);
+        try {
+            listenThread.start();
+            listenThread.join();
         }
-
-        /* Code Client */
-        try (Socket socketCustomer = new Socket("10.0.10.98", 1234)){
-            System.out.println("Socket créé avec " + socketCustomer.getInetAddress());
-            send(socketCustomer, "Hello Eric");
-        } catch (Exception e) {
-            System.out.println("Error during connection");
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
+        /* Code Client */
+        //        try (Socket socketCustomer = new Socket("10.0.10.98", 1234)){
+        //            System.out.println("Socket créé avec " + socketCustomer.getInetAddress());
+        //            send(socketCustomer, "Hello Eric");
+        //        } catch (Exception e) {
+        //            System.out.println("Error during connection");
+        //            e.printStackTrace();
+        //        }
     }
     
     /**
@@ -55,7 +54,6 @@ public class Launcher {
     public static void listen(final Socket socket) {
         try (BufferedReader in = new BufferedReader(new
                 InputStreamReader(socket.getInputStream()))) {
-            while (!in.ready());
             String s = in.readLine();
             System.out.println(s);
         } catch (IOException e) {
