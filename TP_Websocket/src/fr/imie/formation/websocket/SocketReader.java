@@ -23,28 +23,28 @@ public class SocketReader implements Runnable {
         stop = false;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Runnable#run()
-     */
+    @SuppressWarnings("javadoc")
     @Override
     public void run() {
-        try (ServerSocket hostServer = new ServerSocket(1234)) {
-            hostServer.setSoTimeout(60000);  // Timeout 1 minute
-            try (Socket socketServer = hostServer.accept()) {
-                System.out.println("Client connecté: " + socketServer.getInetAddress());
-                try (BufferedReader in = new BufferedReader(new
-                        InputStreamReader(socketServer.getInputStream()))) {
-                    while (true) {
-                       String s = in.readLine();
-                       if (s == null) {
-                           break;
-                       } else {
-                           System.out.println(s);
-                       }
-                    }
-                } catch (IOException e) {
-                    System.out.println("Error during listening");
-                    e.printStackTrace();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        try (Socket socket = new Socket("10.0.10.75", 1234)) {
+        
+        //try (ServerSocket hostServer = new ServerSocket(1234);
+        //     Socket socket = hostServer.accept()) {
+            try (BufferedReader in = new BufferedReader(new
+                    InputStreamReader(socket.getInputStream()))) {
+                while (!stop) {
+                   String s = in.readLine();
+                   if (s == null) {
+                       stop = true;
+                   } else {
+                       System.out.format("%s: %s\n", socket.getInetAddress(), s);
+                   }
                 }
             }
         } catch (Exception e) {
@@ -57,33 +57,4 @@ public class SocketReader implements Runnable {
     {
         stop = true;
     }
-    
-    /**
-    * @param socket
-    */
-   public void listen(final Socket socket) {
-       try (BufferedReader in = new BufferedReader(new
-               InputStreamReader(socket.getInputStream()))) {
-           String s = in.readLine();
-           System.out.println(s);
-       } catch (IOException e) {
-           System.out.println("Error during listening");
-           e.printStackTrace();
-       }
-   }
-   
-   /**
-    * @param socket
-    * @param message
-    */
-   public void send(final Socket socket, final String message) {
-       try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-           out.println(message);
-           out.flush();
-       }  catch (Exception e) {
-           System.out.println("Error during sending");
-           e.printStackTrace();
-       }
-   }
-
 }
