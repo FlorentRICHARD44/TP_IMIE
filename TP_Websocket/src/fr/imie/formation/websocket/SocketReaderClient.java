@@ -33,30 +33,33 @@ public class SocketReaderClient implements Runnable {
     @SuppressWarnings("javadoc")
     @Override
     public void run() {
-        try (ServerSocket hostServer = new ServerSocket(4321)) {
-            Socket socket = hostServer.accept();
-        
-        //try (ServerSocket hostServer = new ServerSocket(1234);
-        //     Socket socket = hostServer.accept()) {
-            try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                 ServiceData servData = new ServiceData();) {
-                while (!stop) {
-                   Object o = in.readObject();
-                   if (o == null) {
-                       stop = true;
-                   } else {
-                       if (o instanceof String) {
-                           System.out.format("%s: %s\n", socket.getInetAddress(), o);
-                           
-                       } else if (o instanceof ArrayList) {
-                           for (Usager u: (ArrayList<Usager>) o) {
-                               System.out.println(u.getFirstName() + " " + u.getName());
-                           }
+        try {
+            SocketProperties props = new SocketProperties();
+            try (ServerSocket hostServer = new ServerSocket(props.getServerToCustomerPort())) {
+                Socket socket = hostServer.accept();
+            
+            //try (ServerSocket hostServer = new ServerSocket(1234);
+            //     Socket socket = hostServer.accept()) {
+                try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                     ServiceData servData = new ServiceData();) {
+                    while (!stop) {
+                       Object o = in.readObject();
+                       if (o == null) {
+                           stop = true;
                        } else {
-                           System.out.println("other");
+                           if (o instanceof String) {
+                               System.out.format("%s: %s\n", socket.getInetAddress(), o);
+                               
+                           } else if (o instanceof ArrayList) {
+                               for (Usager u: (ArrayList<Usager>) o) {
+                                   System.out.println(u.getFirstName() + " " + u.getName());
+                               }
+                           } else {
+                               System.out.println("other");
+                           }
+                           
                        }
-                       
-                   }
+                    }
                 }
             }
         } catch (Exception e) {
