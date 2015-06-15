@@ -21,25 +21,24 @@ import fr.imie.formation.jdbc.services.ServiceData;
  * @author imie
  *
  */
-public class SocketReader implements Runnable {
+public class SocketReaderClient implements Runnable {
     private boolean stop;
     /**
      * 
      */
-    public SocketReader() {
+    public SocketReaderClient() {
         stop = false;
     }
 
     @SuppressWarnings("javadoc")
     @Override
     public void run() {
-        try (Socket socket = new Socket("10.0.10.75", 1234);
-             Socket socket2 = new Socket("10.0.10.75", 4321)) {
+        try (ServerSocket hostServer = new ServerSocket(4321)) {
+            Socket socket = hostServer.accept();
         
         //try (ServerSocket hostServer = new ServerSocket(1234);
         //     Socket socket = hostServer.accept()) {
             try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                 ObjectOutputStream out = new ObjectOutputStream(socket2.getOutputStream());
                  ServiceData servData = new ServiceData();) {
                 while (!stop) {
                    Object o = in.readObject();
@@ -48,13 +47,7 @@ public class SocketReader implements Runnable {
                    } else {
                        if (o instanceof String) {
                            System.out.format("%s: %s\n", socket.getInetAddress(), o);
-                           switch((String) o) {
-                           case "usagers": ArrayList<Usager> listU = (ArrayList<Usager>) servData.selectAllUsagers();
-                                           out.writeObject(listU);
-                                           out.flush();
-                                           break;
-                           default: break;
-                           }
+                           
                        } else if (o instanceof ArrayList) {
                            for (Usager u: (ArrayList<Usager>) o) {
                                System.out.println(u.getFirstName() + " " + u.getName());

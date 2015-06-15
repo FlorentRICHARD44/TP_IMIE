@@ -3,6 +3,7 @@
 	<name>TP_Websocket</name>
 	<comment></comment>
 	<projects>
+		<project>TP_JDBC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
