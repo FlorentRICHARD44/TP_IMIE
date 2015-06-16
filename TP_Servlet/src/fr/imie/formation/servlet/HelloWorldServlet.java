@@ -46,13 +46,25 @@ public class HelloWorldServlet extends HttpServlet {
         if (request.getParameter("color") != null) {
             color = request.getParameter("color");
         }
-        out.write("<html>");
-        out.write(String.format("<style type=\"text/css\">*{color:%s;}</style>", color));
-        out.write("<h1>Hello the world!</h1>");
+        out.write("<!DOCTYPE html>");
+        out.write("<html lang=\"en\">");
+        out.write("<header>");
+        out.write("<meta charset=\"utf-8\">");
+        out.write(String.format("<style type=\"text/css\">h1, em{color:%s;}</style>", color));
+        out.write("<title>HelloWorld</title>");
+        out.write("</header>");
+        out.write("<body>");
+        out.write("<h1>HELLO THE WORLD!</h1>");
         out.write("<em>2 lignes en JavaEE</em><br/>");
         out.write("<em>1 troisieme lignes en JavaEE</em><br/>");
-        out.write("<a href=\"HelloWorldServlet?color=grey\">Same page in grey</a><br/>");
-        out.write("<a href=\"HelloWorldServlet?color=magenta\">Same page in magenta</a><br/>");
+        out.write(String.format("<a href=\"%s\" style=\"color:%s\">Same page in normal color</a><br/>", request.getRequestURI(), getInitParameter("color")));
+        out.write(String.format("<a href=\"%s?color=black\" style=\"color:black\">Same page in black</a><br/>", request.getRequestURI()));
+        out.write(String.format("<a href=\"%s?color=grey\" style=\"color:grey\">Same page in grey</a><br/>", request.getRequestURI()));
+        out.write(String.format("<a href=\"%s?color=magenta\" style=\"color:magenta\">Same page in magenta</a><br/>", request.getRequestURI()));
+        out.write(String.format("<a href=\"%s?color=yellow\" style=\"color:yellow\">Same page in yellow</a><br/>", request.getRequestURI()));
+        out.write(String.format("<a href=\"%s?color=green\" style=\"color:green\">Same page in green</a><br/>", request.getRequestURI()));
+        out.write(String.format("<a href=\"%s?color=%%231C325B\" style=\"color:#1C325B \">Same page in cyberbase blue</a><br/>", request.getRequestURI()));
+        out.write("</body>");
         out.write("</html>");
     }
 
