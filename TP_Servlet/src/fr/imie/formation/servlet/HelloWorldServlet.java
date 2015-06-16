@@ -64,6 +64,7 @@ public class HelloWorldServlet extends HttpServlet {
         out.write(String.format("<a href=\"%s?color=yellow\" style=\"color:yellow\">Same page in yellow</a><br/>", request.getRequestURI()));
         out.write(String.format("<a href=\"%s?color=green\" style=\"color:green\">Same page in green</a><br/>", request.getRequestURI()));
         out.write(String.format("<a href=\"%s?color=%%231C325B\" style=\"color:#1C325B \">Same page in cyberbase blue</a><br/>", request.getRequestURI()));
+        out.write(String.format("<form method=\"get\" action=\"%s\"><label for=\"colortext\">Entrer la couleur</label><input type=\"text\" id=\"colortext\" name=\"color\"/><input type=\"submit\"/></form>", request.getRequestURI()));
         out.write("</body>");
         out.write("</html>");
     }
