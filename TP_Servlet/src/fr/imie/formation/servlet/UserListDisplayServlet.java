@@ -32,7 +32,7 @@ public class UserListDisplayServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    Writer out = response.getWriter();
-        response.setContentType("text/html; charset=utf-8");
+        //response.setContentType("text/html; charset=utf-8");
         out.write("<!DOCTYPE html>");
         out.write("<html lang=\"fr\">");
         out.write("<header>");
