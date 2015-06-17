@@ -3,6 +3,7 @@ package fr.imie.formation.servlet;
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -50,11 +51,14 @@ public class HelloWorldServlet extends HttpServlet {
         out.write("<html lang=\"en\">");
         out.write("<header>");
         out.write("<meta charset=\"utf-8\">");
+        out.write("<link rel=\"stylesheet\" href=\"CSS/tpservlet.css\"/>");
         out.write(String.format("<style type=\"text/css\">h1, em{color:%s;}</style>", color));
         out.write("<title>HelloWorld</title>");
         out.write("</header>");
         out.write("<body>");
         out.write("<h1>HELLO THE WORLD!</h1>");
+        RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
+        rd.include(request, response);
         out.write("<em>2 lignes en JavaEE</em><br/>");
         out.write("<em>1 troisieme lignes en JavaEE</em><br/>");
         out.write(String.format("<a href=\"%s\" style=\"color:%s\">Same page in normal color</a><br/>", request.getRequestURI(), getInitParameter("color")));

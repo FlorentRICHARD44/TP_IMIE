@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,11 +42,13 @@ public class UserListDisplayServlet extends HttpServlet {
         out.write("<!DOCTYPE html>");
         out.write("<html lang=\"fr\">");
         out.write("<header>");
-        out.write("<style type=\"text/css\">table td, table th{border: solid 1px black;}table tr:nth-of-type(even){background-color:#CCCCCC;}</style>");
+        out.write("<link rel=\"stylesheet\" href=\"CSS/tpservlet.css\"/>");
         out.write("<title>User List</title>");
         out.write("</header>");
         out.write("<body>");
         out.write("<h1>Liste des Utilisateurs</h1>");
+        RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
+        rd.include(request, response);
         out.write("<table>");
         out.write("<tr><th>Nom</th><th>Prénom</th><th></th></tr>");
         Integer userNb = 1;

@@ -2,8 +2,10 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,16 +49,24 @@ public class UserViewServlet extends HttpServlet {
             out.write("<!DOCTYPE html>");
             out.write("<html lang=\"fr\">");
             out.write("<header>");
-            out.write("<style type=\"text/css\">fieldset{border: solid 1px black; border-radius:5px; width:400px;}input, select{width: 100%;}</style>");
+            out.write("<link rel=\"stylesheet\" href=\"CSS/tpservlet.css\"/>");
             out.write("<title>User View</title>");
             out.write("</header>");
             out.write("<body>");
             out.write(String.format("<h1>Utilisateur %s %s</h1>", user.getFirstName(), user.getName()));
+            RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
+            rd.include(request, response);
             out.write("<form>");
             out.write("<fieldset>");
             out.write("<table>");
+            String strDate = "--/--/----";
+            if (user.getDateBirth() != null) {
+                strDate = new SimpleDateFormat("yyyy-MM-dd").format(user.getDateBirth());
+            }
             out.write(String.format("<tr><td><label for=\"name\">Nom</label></td><td><input id=\"name\" type=\"text\" required value=\"%s\" placeholder=\"NOM\"/></td></tr>", user.getName()));
             out.write(String.format("<tr><td><label for=\"firstname\">Prénom</label></td><td><input id=\"firstname\" type=\"text\" required value=\"%s\" placeholder=\"Prénom\"/></td></tr>", user.getFirstName()));
+            out.write(String.format("<tr><td><label for=\"birth\">Date de Naissance</label></td><td><input id=\"birth\" type=\"date\" value=\"%s\" /></td></tr>", strDate));
+            
             String strSite = "Aucun";
             if (user.getInscrSite() != null) {
                 strSite = user.getInscrSite().getName();

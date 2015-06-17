@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+
+body
+{
+	margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
+h1
+{
+	margin: 0px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
+	color: #1C325B;
+    text-align: center;
+}
+
+nav
+{
+	text-align: center;
+	padding: 10px 0px 10px 0px;
+	margin: 0px 0px 20px 0px;
+    background-color: #1C325B;
+    box-shadow: 0px 5px 4px black;
+}
+
+nav div
+{
+    display: inline-block;
+    margin: 0px 20px 0px 20px
+}
+
+nav div a
+{
+	color: white;
+	text-decoration: none;
+	font-width: large;
+}
+
+fieldset
+{
+	border: solid 1px black;
+	border-radius:5px;
+	width: 500px;
+    position: relative;
+    margin: 0px auto;
+}
+
+input
+{
+	display: inline-block;
+	width: 300px;
+}
+
+select
+{
+    display: inline-block;
+    width: 308px;
+}
