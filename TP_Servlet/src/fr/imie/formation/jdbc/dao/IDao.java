@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import fr.imie.formation.jdbc.NullFilterException;
-import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Defines the interface for Dao.
  * @author Florent RICHARD

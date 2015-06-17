@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
 import fr.imie.formation.jdbc.data.Usager;
-import fr.imie.formation.jdbc.data.Utilisateur;
 import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
@@ -22,8 +20,12 @@ import fr.imie.formation.jdbc.services.ServiceData;
  */
 @WebServlet("/UserListGetterServlet")
 public class UserListGetterServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2417900212257871777L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */

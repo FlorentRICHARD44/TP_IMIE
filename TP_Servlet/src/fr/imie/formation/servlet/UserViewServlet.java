@@ -20,8 +20,11 @@ import fr.imie.formation.jdbc.services.ServiceData;
  */
 @WebServlet("/UserViewServlet")
 public class UserViewServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     */
+    private static final long serialVersionUID = -3127154382281252028L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -44,7 +47,7 @@ public class UserViewServlet extends HttpServlet {
             out.write("<!DOCTYPE html>");
             out.write("<html lang=\"fr\">");
             out.write("<header>");
-            out.write("<style type=\"text/css\">fieldset{border: solid 1px black; border-radius:5px; width:500px;}input, select{width: 100%;}</style>");
+            out.write("<style type=\"text/css\">fieldset{border: solid 1px black; border-radius:5px; width:400px;}input, select{width: 100%;}</style>");
             out.write("<title>User View</title>");
             out.write("</header>");
             out.write("<body>");

@@ -17,8 +17,11 @@ import fr.imie.formation.jdbc.data.Usager;
  */
 @WebServlet("/UserControllerServlet")
 public class UserControllerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     */
+    private static final long serialVersionUID = -2424743228153264811L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,6 +35,7 @@ public class UserControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
+        @SuppressWarnings("unchecked")
         List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
         Usager user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
         session.setAttribute("user", user);

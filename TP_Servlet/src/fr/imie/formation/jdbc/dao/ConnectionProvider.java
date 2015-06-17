@@ -46,6 +46,8 @@ public final class ConnectionProvider {
     /** Returns the connection to Database.
      * @return Connection to database.
      * @throws SQLException Case of error during connection.
+     * @throws DAOConfigurationException Error during configuration of DAO
+     * @throws IOException Input Output Exception
      */
     public Connection getConnection() throws SQLException, DAOConfigurationException, IOException {
         Connection connection = null;

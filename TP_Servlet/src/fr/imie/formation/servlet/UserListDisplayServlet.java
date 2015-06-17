@@ -11,15 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.formation.jdbc.data.Usager;
-import fr.imie.formation.jdbc.data.Utilisateur;
 
 /**
  * Servlet implementation class UserListDisplayServlet
  */
 @WebServlet("/UserListDisplayServlet")
 public class UserListDisplayServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 285827893122301426L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,7 +34,8 @@ public class UserListDisplayServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@SuppressWarnings("unchecked")
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    Writer out = response.getWriter();
         response.setContentType("text/html; charset=utf-8");
         out.write("<!DOCTYPE html>");
