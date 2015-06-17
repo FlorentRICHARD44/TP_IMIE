@@ -25,7 +25,7 @@ nav
     box-shadow: 0px 5px 4px black;
 }
 
-nav div
+nav div.menuitem
 {
     display: inline-block;
     margin: 0px 20px 0px 20px
@@ -36,6 +36,14 @@ nav div a
 	color: white;
 	text-decoration: none;
 	font-width: large;
+}
+
+nav div.splitter
+{
+    display: inline-block;
+	witdh: 2px;
+	height: 15px;
+	border: solid 1px white;
 }
 
 fieldset
@@ -57,4 +65,39 @@ select
 {
     display: inline-block;
     width: 308px;
+}
+
+table.listing
+{
+	border: solid 2px black;
+	padding: 0px 0px 0px 0px;
+	border-collapse: collapse;
+    position: relative;
+    margin: 0px auto;
+}
+
+table.listing tr
+{
+    border-bottom: solid 1px black;
+    padding: 5px 10px 5px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+table.listing tr:nth-of-type(even)
+{
+    background-color: #CCCCCC;
+}
+table.listing tr:nth-of-type(odd)
+{
+    background-color: #F0F0F0;
+}
+table.listing tr th
+{
+	background-color: #333333;
+    padding: 5px 10px 5px 10px;
+	color: white;
+}
+table.listing tr td
+{
+	padding: 5px 10px 5px 10px;
 }

@@ -8,24 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
- * Servlet implementation class UserControllerServlet
+ * Servlet implementation class UserDeleteServlet
  */
-@WebServlet("/UserControllerServlet")
-public class UserControllerServlet extends HttpServlet {
+@WebServlet("/UserDeleteServlet")
+public class UserDeleteServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
        
-    /**
-     */
-    private static final long serialVersionUID = -2424743228153264811L;
-
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserControllerServlet() {
+    public UserDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,17 +31,17 @@ public class UserControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    HttpSession session = request.getSession();
-        Usager user = null;
-        if (request.getParameter("user").equals("new")) {
-            user = new Usager();
-        } else {
-            @SuppressWarnings("unchecked")
-            List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-            user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
-        }
-        session.setAttribute("user", user);
-        response.sendRedirect("/TP_Servlet/UserViewServlet");
+		Usager user = (Usager) request.getSession().getAttribute("user");
+		if (user == null) {
+		    user = ((List<Usager>) request.getSession().getAttribute("userlist")).get(Integer.valueOf(request.getParameter("user")) - 1);
+		}
+		try (ServiceData servData = new ServiceData();) {
+        	servData.delete(user);
+            response.sendRedirect("/TP_Servlet/UserListGetterServlet");
+		} catch (Exception e) {
+		    throw new ServletException(e);
+		}
+		
 	}
 
 	/**

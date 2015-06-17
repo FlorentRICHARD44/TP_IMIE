@@ -30,9 +30,12 @@ public class MenuViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    Writer out = response.getWriter();
         response.setContentType("text/html; charset=utf-8");
-        out.write("<nav>");
+        out.write("<nav>\n");
+        out.write("<div class=\"splitter\"></div>");
         out.write("<div class=\"menuitem\"><a href=\"/TP_Servlet/HelloWorldServlet\">Helloworld</a></div>");
+        out.write("<div class=\"splitter\"></div>");
         out.write("<div class=\"menuitem\"><a href=\"/TP_Servlet/UserListGetterServlet\">Liste des Usagers</a></div>");
+        out.write("<div class=\"splitter\"></div>");
         out.write("</nav>");
 	}
 
