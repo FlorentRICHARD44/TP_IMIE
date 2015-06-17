@@ -45,13 +45,16 @@ public class UserListGetterServlet extends HttpServlet {
 	    //        u2.setName("DUPONT");
 	    //        u2.setFirstName("Jean");
 	    //        userList.add(u2);
-        ServiceData servData = new ServiceData();
-        userList = servData.selectAllUsagers();
-        request.setAttribute("userlist", userList);
-        HttpSession session = request.getSession();
-        session.setAttribute("userlist", userList);
-	    RequestDispatcher rd = request.getRequestDispatcher("/UserListDisplayServlet");
-	    rd.forward(request, response);
+        try (ServiceData servData = new ServiceData();) {
+            userList = servData.selectAllUsagers();
+            request.setAttribute("userlist", userList);
+            HttpSession session = request.getSession();
+            session.setAttribute("userlist", userList);
+    	    RequestDispatcher rd = request.getRequestDispatcher("/UserListDisplayServlet");
+    	    rd.forward(request, response);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
 	}
 
 	/**
