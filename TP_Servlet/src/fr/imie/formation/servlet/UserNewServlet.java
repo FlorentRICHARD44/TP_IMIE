@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,6 +55,9 @@ public class UserNewServlet extends HttpServlet {
                 user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
             }
             servData.insert(user);
+            request.setAttribute("user", user);
+            RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
+            rd.forward(request, response);
 		}
 
         response.sendRedirect("/TP_Servlet/UserViewServlet");

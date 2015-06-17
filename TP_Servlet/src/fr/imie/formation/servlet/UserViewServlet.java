@@ -42,8 +42,7 @@ public class UserViewServlet extends HttpServlet {
 	    try (ServiceData servData = new ServiceData();) {
     	    List<Site> siteList = servData.selectAllSites();
     	    
-    	    HttpSession session = request.getSession();
-            Usager user = (Usager) session.getAttribute("user");
+            Usager user = (Usager) request.getAttribute("user");
             Writer out = response.getWriter();
             response.setContentType("text/html; charset=utf-8");
             out.write("<!DOCTYPE html>");
@@ -53,7 +52,11 @@ public class UserViewServlet extends HttpServlet {
             out.write("<title>User View</title>");
             out.write("</header>");
             out.write("<body>");
-            out.write(String.format("<h1>Utilisateur %s %s</h1>", user.getFirstName(), user.getName()));
+            if (user.getId() == null) {
+                out.write("<h1>Nouvel Utilisateur</h1>");
+            } else {
+                out.write(String.format("<h1>Utilisateur %s %s</h1>", user.getFirstName(), user.getName()));
+            }
             RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
             rd.include(request, response);
             out.write(String.format("<form method=\"get\" action=\"/TP_Servlet/UserNewServlet\">", request.getRequestURL()));

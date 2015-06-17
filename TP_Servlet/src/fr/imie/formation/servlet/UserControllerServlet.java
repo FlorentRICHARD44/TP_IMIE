@@ -3,6 +3,7 @@ package fr.imie.formation.servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +44,9 @@ public class UserControllerServlet extends HttpServlet {
             List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
             user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
         }
-        session.setAttribute("user", user);
-        response.sendRedirect("/TP_Servlet/UserViewServlet");
+        request.setAttribute("user", user);
+        RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
+        rd.forward(request, response);
 	}
 
 	/**
