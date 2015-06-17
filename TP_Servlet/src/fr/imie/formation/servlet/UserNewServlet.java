@@ -42,9 +42,9 @@ public class UserNewServlet extends HttpServlet {
             if (request.getParameter("email") != null) {
                 user.setEmail(request.getParameter("email"));
             }
-            if (request.getParameter("datebirth") != null) {
+            if (request.getParameter("birthdate") != null) {
                 try {
-                    user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("datebirth")));
+                    user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
                 } catch (ParseException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
