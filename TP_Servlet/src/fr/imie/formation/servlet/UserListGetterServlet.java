@@ -10,8 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
+import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.data.Utilisateur;
+import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
  * Servlet implementation class UserListGetterServlet
@@ -32,15 +35,17 @@ public class UserListGetterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Utilisateur> userList = new ArrayList<Utilisateur>();
-		Utilisateur u1 = new Utilisateur();
-	    u1.setName("RICHARD");
-	    u1.setFirstName("Florent");
-	    userList.add(u1);
-	    Utilisateur u2 = new Utilisateur();
-        u2.setName("DUPONT");
-        u2.setFirstName("Jean");
-        userList.add(u2);
+		List<Usager> userList = new ArrayList<Usager>();
+//		Usager u1 = new Usager();
+//	    u1.setName("RICHARD");
+//	    u1.setFirstName("Florent");
+//	    userList.add(u1);
+//	    Usager u2 = new Usager();
+//        u2.setName("DUPONT");
+//        u2.setFirstName("Jean");
+//        userList.add(u2);
+        ServiceData servData = new ServiceData();
+		userList = servData.selectAllUsagers();
 	    request.setAttribute("userlist", userList);
 	    RequestDispatcher rd = request.getRequestDispatcher("/UserListDisplayServlet");
 	    rd.forward(request, response);
