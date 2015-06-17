@@ -54,7 +54,7 @@ public class UserNewServlet extends HttpServlet {
             if (request.getParameter("inscrsite") != null) {
                 user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
             }
-            servData.insert(user);
+            user = servData.insert(user);
             request.setAttribute("user", user);
             RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
             rd.forward(request, response);
