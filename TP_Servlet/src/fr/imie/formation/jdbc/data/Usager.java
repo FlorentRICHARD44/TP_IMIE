@@ -1,11 +1,15 @@
 package fr.imie.formation.jdbc.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /** Class represents an Usager.
  * @author Florent RICHARD
  */
-public class Usager {
+public class Usager implements Serializable {
+    /** Serial UID.
+     */
+    private static final long serialVersionUID = 9047810626273129384L;
     /** Id of usager.
      */
     private Integer id;

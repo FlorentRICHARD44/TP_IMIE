@@ -1,5 +1,6 @@
 package fr.imie.formation.jdbc.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ public class DaoSite implements IDao<DtoSite> {
     public DaoSite() {
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-        } catch (SQLException e) {
+        } catch (SQLException | DAOConfigurationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

@@ -1,9 +1,14 @@
 package fr.imie.formation.jdbc.data;
 
+import java.io.Serializable;
+
 /** Represents a Site (Applicative).
  * @author Florent RICHARD
  */
-public class Site {
+public class Site implements Serializable {
+    /** Serial Version UID.
+     */
+    private static final long serialVersionUID = 3725127086998171558L;
     /** Id of the Site.
      */
     private Integer id;

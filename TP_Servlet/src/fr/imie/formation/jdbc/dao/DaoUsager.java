@@ -1,5 +1,6 @@
 package fr.imie.formation.jdbc.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -26,7 +27,7 @@ public class DaoUsager implements IDao<DtoUsager> {
     public DaoUsager() {
         try {
             connection = ConnectionProvider.getInstance().getConnection();
-        } catch (SQLException e) {
+        } catch (SQLException | DAOConfigurationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
