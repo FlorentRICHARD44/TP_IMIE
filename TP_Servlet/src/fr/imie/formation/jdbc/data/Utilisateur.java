@@ -1,6 +1,5 @@
 package fr.imie.formation.jdbc.data;
 
-import java.util.Date;
 
 /** Class represents an Utilisateur.
  * @author Florent RICHARD
@@ -113,17 +112,46 @@ public class Utilisateur {
         this.nbConnection = uNbConnection;
     }
 
-    /** Accessor to the inscription site.
-     * @return the inscrSite
+    /** Accessor to the attachement site.
+     * @return the attachementSite
      */
-    public final Site getInscrSite() {
+    public final Site getAttachementSite() {
         return attachementSite;
     }
 
-    /** Mutator for the inscription site.
-     * @param uInscrSite the inscrSite to set
+    /** Mutator for the attachement site.
+     * @param uAttachementSite the attachementSite to set
      */
-    public final void setInscrSite(final Site uInscrSite) {
-        this.attachementSite = uInscrSite;
+    public final void setInscrSite(final Site uAttachementSite) {
+        this.attachementSite = uAttachementSite;
+    }
+
+    /**
+     * @return the login
+     */
+    public final String getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public final void setLogin(String login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the password
+     */
+    public final String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public final void setPassword(String password) {
+        this.password = password;
+
     }
 }

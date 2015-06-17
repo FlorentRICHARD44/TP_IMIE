@@ -43,9 +43,10 @@ public class UserListDisplayServlet extends HttpServlet {
         out.write("<body>");
         out.write("<h1>Liste des Utilisateurs</h1>");
         out.write("<table>");
-        out.write("<tr><th>Nom</th><th>Prénom</th></tr>");
+        out.write("<tr><th>Nom</th><th>Prénom</th><th></th></tr>");
+        Integer userNb = 1;
         for (Usager u: (List<Usager>) request.getAttribute("userlist")) {
-            out.write(String.format("<tr><td>%s</td><td>%s</td></tr>", u.getName(), u.getFirstName()));
+            out.write(String.format("<tr><td>%s</td><td>%s</td><td><a href=\"/TP_Servlet/UserControllerServlet?user=%d\">Voir en détails</a></td></tr>", u.getName(), u.getFirstName(), userNb++));
         }
         out.write("</table>");
         out.write("</body>");
