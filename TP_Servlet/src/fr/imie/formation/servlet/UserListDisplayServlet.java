@@ -54,7 +54,7 @@ public class UserListDisplayServlet extends HttpServlet {
         out.write("<tr><th>Nom</th><th>Prénom</th><th></th></tr>");
         Integer userNb = 1;
         for (Usager u: (List<Usager>) request.getAttribute("userlist")) {
-            out.write(String.format("<tr><td>%s</td><td>%s</td><td><a class=\"action\" href=\"/TP_Servlet/UserControllerServlet?user=%d\"><img alt=\"Détails\" src=\"IMG/loupe.jpeg\"/></a><a class=\"action\" href=\"/TP_Servlet/UserModifyServlet?delete=index&index=%d\"><img alt=\"Supprimer\" src=\"IMG/delete.jpeg\"/></a></td></tr>", u.getName(), u.getFirstName(), userNb, userNb++));
+            out.write(String.format("<tr><td>%s</td><td>%s</td><td><a class=\"action\" href=\"/TP_Servlet/UserControllerServlet?user=%d\"><img alt=\"Détails\" src=\"IMG/loupe.png\"/></a><a class=\"action\" href=\"/TP_Servlet/UserModifyServlet?delete=index&index=%d\"><img alt=\"Supprimer\" src=\"IMG/delete.png\"/></a></td></tr>", u.getName(), u.getFirstName(), userNb, userNb++));
         }
         out.write("</table></section>");
         out.write("</body>");
