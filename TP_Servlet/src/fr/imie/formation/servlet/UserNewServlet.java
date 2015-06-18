@@ -51,15 +51,10 @@ public class UserNewServlet extends HttpServlet {
                 if (request.getParameter("email") != null) {
                     user.setEmail(request.getParameter("email"));
                 }
-                if (request.getParameter("birthdate").equals("--/--/----")) {
+                try {
+                    user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
+                } catch (ParseException e) {
                     user.setDateBirth(null);
-                } else {
-                    try {
-                        user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
-                    } catch (ParseException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
                 }
                 if (request.getParameter("inscrsite") != null) {
                     user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));

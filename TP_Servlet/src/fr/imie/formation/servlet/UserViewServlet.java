@@ -60,15 +60,23 @@ public class UserViewServlet extends HttpServlet {
             }
             RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
             rd.include(request, response);
-            out.write(String.format("<form method=\"get\" action=\"/TP_Servlet/UserNewServlet\">", request.getRequestURL()));
+            out.write(String.format("<section><form method=\"get\" action=\"/TP_Servlet/UserNewServlet\">", request.getRequestURL()));
             out.write("<fieldset>");
             out.write("<table>");
+            String strName = "";
+            if (user.getName() != null) {
+                strName = user.getName();
+            }
+            out.write(String.format("<tr><td><label for=\"name\">Nom</label></td><td><input id=\"name\" name=\"name\" type=\"text\" required value=\"%s\" placeholder=\"NOM\"/></td></tr>", strName));
+            String strFirstName = "";
+            if (user.getFirstName() != null) {
+                strFirstName = user.getFirstName();
+            }
+            out.write(String.format("<tr><td><label for=\"firstname\">Prénom</label></td><td><input id=\"firstname\" name=\"firstname\" type=\"text\" required value=\"%s\" placeholder=\"Prénom\"/></td></tr>", strFirstName));
             String strDate = "--/--/----";
             if (user.getDateBirth() != null) {
                 strDate = new SimpleDateFormat("dd/MM/yyyy").format(user.getDateBirth());
             }
-            out.write(String.format("<tr><td><label for=\"name\">Nom</label></td><td><input id=\"name\" name=\"name\" type=\"text\" required value=\"%s\" placeholder=\"NOM\"/></td></tr>", user.getName()));
-            out.write(String.format("<tr><td><label for=\"firstname\">Prénom</label></td><td><input id=\"firstname\" name=\"firstname\" type=\"text\" required value=\"%s\" placeholder=\"Prénom\"/></td></tr>", user.getFirstName()));
             out.write(String.format("<tr><td><label for=\"birth\">Date de Naissance</label></td><td><input id=\"birth\" name=\"birthdate\" type=\"text\" value=\"%s\" /></td></tr>", strDate));
             
             String strSite = "Aucun";
@@ -98,12 +106,13 @@ public class UserViewServlet extends HttpServlet {
             out.write(String.format("<tr><td><label for=\"email\">Email</label></td><td><input id=\"email\" name=\"email\" type=\"email\" value=\"%s\" placeholder=\"xxxxxx@yyyyy.zzz\"/></td></tr>", strEmail));
             out.write(String.format("<tr><td><label for=\"nbcon\">Nombre de connexions</label></td><td><input id=\"nbcon\" name=\"nbcon\" type=\"number\" disabled value=\"%d\"/></td></tr>", user.getNbConnection()));
             out.write("</table>");
+            out.write("<div class=\"buttonline\">");
             if (user.getId() != null) { // Can't delete on usager creation
 
-                out.write("<a href=\"/TP_Servlet/UserDeleteServlet\">Supprimer</a>");
+                out.write("<a class=\"button\" id=\"deleteuser\" href=\"/TP_Servlet/UserDeleteServlet\">Supprimer</a>");
             }
-            out.write("<input type=\"submit\" name=\"save\"/>");
-            out.write("</fieldset>");
+            out.write("<input class=\"button\" id=\"saveuser\" type=\"submit\" name=\"save\"/></div>");
+            out.write("</fieldset></form></section>");
             out.write("</body>");
             out.write("</html>");
     	} catch (Exception e) {

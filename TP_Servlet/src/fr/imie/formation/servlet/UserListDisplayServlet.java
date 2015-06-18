@@ -49,14 +49,14 @@ public class UserListDisplayServlet extends HttpServlet {
         out.write("<h1>Liste des Utilisateurs</h1>");
         RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
         rd.include(request, response);
-        out.write("<table class=\"listing\">");
+        out.write("<section><table class=\"listing\">");
+        out.write("<div class=\"buttonline\"><a class=\"button\" id=\"addnewuser\" href=\"/TP_Servlet/UserControllerServlet?user=new\">Ajouter un usager</a></div>");
         out.write("<tr><th>Nom</th><th>Prénom</th><th></th></tr>");
         Integer userNb = 1;
         for (Usager u: (List<Usager>) request.getAttribute("userlist")) {
-            out.write(String.format("<tr><td>%s</td><td>%s</td><td><a href=\"/TP_Servlet/UserControllerServlet?user=%d\"><img alt=\"Détails\" src=\"IMG/loupe.jpeg\"/></a><a href=\"/TP_Servlet/UserDeleteServlet?user=%d\">Supprimer</a></td></tr>", u.getName(), u.getFirstName(), userNb, userNb++));
+            out.write(String.format("<tr><td>%s</td><td>%s</td><td><a class=\"action\" href=\"/TP_Servlet/UserControllerServlet?user=%d\"><img alt=\"Détails\" src=\"IMG/loupe.jpeg\"/></a><a class=\"action\" href=\"/TP_Servlet/UserDeleteServlet?user=%d\"><img alt=\"Supprimer\" src=\"IMG/delete.jpeg\"/></a></td></tr>", u.getName(), u.getFirstName(), userNb, userNb++));
         }
-        out.write("</table>");
-        out.write("<a href=\"/TP_Servlet/UserControllerServlet?user=new\">Ajouter un usager</a>");
+        out.write("</table></section>");
         out.write("</body>");
         out.write("</html>");
 	}
