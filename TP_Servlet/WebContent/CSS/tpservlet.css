@@ -25,30 +25,43 @@ h1
 nav
 {
 	text-align: center;
-	padding: 10px 0px 10px 0px;
 	margin: 0px 0px 20px 0px;
+    padding: 0px 0px 0px 0px;
     background-color: #1C325B;
-    box-shadow: 0px 5px 4px black;
+    box-shadow: 0px 5px 5px black;
+    height: 40px;
 }
 
 nav div.menuitem
 {
     display: inline-block;
-    margin: 0px 20px 0px 20px
+    vertical-align: top;
+    height: 100%:
+}
+
+nav div.menuitem:hover
+{
+	background-color: #F37605;
 }
 
 nav div a
 {
+    padding: 10px 20px 10px 20px;
 	color: white;
 	text-decoration: none;
 	font-width: large;
+	display: inline-block;
+	
 }
 
 nav div.splitter
 {
     display: inline-block;
+    padding: 0px;
+    margin: 0px;
 	witdh: 2px;
-	height: 15px;
+	height: 100%;
+    display: inline-block;
 	border: solid 1px white;
 }
 
@@ -130,8 +143,8 @@ a.action
 }
 a.action img
 {
-	width: 32px;
-	height: 32px;
+	width: 25px;
+	height: 25px;
 }
 
 .buttonline
