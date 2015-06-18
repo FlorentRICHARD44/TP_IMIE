@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
@@ -60,7 +59,7 @@ public class UserViewServlet extends HttpServlet {
             }
             RequestDispatcher rd= request.getServletContext().getRequestDispatcher("/MenuViewServlet");
             rd.include(request, response);
-            out.write(String.format("<section><form method=\"get\" action=\"/TP_Servlet/UserNewServlet\">", request.getRequestURL()));
+            out.write(String.format("<section><form method=\"get\" action=\"/TP_Servlet/UserModifyServlet\">", request.getRequestURL()));
             out.write("<fieldset>");
             out.write("<table>");
             String strName = "";
@@ -109,9 +108,9 @@ public class UserViewServlet extends HttpServlet {
             out.write("<div class=\"buttonline\">");
             if (user.getId() != null) { // Can't delete on usager creation
 
-                out.write("<a class=\"button\" id=\"deleteuser\" href=\"/TP_Servlet/UserDeleteServlet\">Supprimer</a>");
+                out.write("<input class=\"button\" id=\"deleteuser\" type=\"submit\" name=\"delete\" value=\"Supprimer\"/>");
             }
-            out.write("<input class=\"button\" id=\"saveuser\" type=\"submit\" name=\"save\"/></div>");
+            out.write("<input class=\"button\" id=\"saveuser\" type=\"submit\" name=\"save\" value=\"Enregistrer\"/></div>");
             out.write("</fieldset></form></section>");
             out.write("</body>");
             out.write("</html>");

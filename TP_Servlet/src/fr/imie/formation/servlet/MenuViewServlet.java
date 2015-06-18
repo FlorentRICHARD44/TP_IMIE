@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/MenuViewServlet")
 public class MenuViewServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3646621314880086294L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */

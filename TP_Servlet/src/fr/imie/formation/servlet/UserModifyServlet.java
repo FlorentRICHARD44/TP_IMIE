@@ -17,10 +17,10 @@ import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
- * Servlet implementation class UserNewServlet
+ * Servlet implementation class UserModifyServlet
  */
-@WebServlet("/UserNewServlet")
-public class UserNewServlet extends HttpServlet {
+@WebServlet("/UserModifyServlet")
+public class UserModifyServlet extends HttpServlet {
        
     /**
      * 
@@ -30,7 +30,7 @@ public class UserNewServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserNewServlet() {
+    public UserModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +38,8 @@ public class UserNewServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@SuppressWarnings("unchecked")
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 	    if (request.getParameter("save") != null) {
 		    Usager user = (Usager) request.getSession().getAttribute("user");
@@ -68,6 +69,20 @@ public class UserNewServlet extends HttpServlet {
             } catch(Exception e) {
                 throw new ServletException(e);
             }
+		} else if (request.getParameter("delete") != null) {
+		    Usager user = (Usager) request.getSession().getAttribute("user");
+		    if (request.getParameter("delete").equals("index")) {  // Delete from list view
+		        user = ((List<Usager>) request.getSession().getAttribute("userlist")).get(Integer.valueOf(request.getParameter("index")) - 1);
+		    } else {  // Delete from user view
+    		    user = (Usager) request.getSession().getAttribute("user");
+    	    }
+	        try (ServiceData servData = new ServiceData();) {
+	            servData.delete(user);
+	            RequestDispatcher rd = request.getRequestDispatcher("/UserListGetterServlet");
+	            rd.forward(request, response);
+	        } catch (Exception e) {
+	            throw new ServletException(e);
+	        }
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
         rd.forward(request, response);
