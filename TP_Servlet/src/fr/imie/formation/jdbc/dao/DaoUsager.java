@@ -60,6 +60,7 @@ public class DaoUsager implements IDao<DtoUsager> {
             dtoSite = null;
         }
         usager.setInscrSite(dtoSite);
+        usager.setPassword(res.getString("password"));
         return usager;
     }
 

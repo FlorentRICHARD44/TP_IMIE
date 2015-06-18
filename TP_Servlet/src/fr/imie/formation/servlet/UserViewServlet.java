@@ -110,6 +110,7 @@ public class UserViewServlet extends HttpServlet {
 
                 out.write("<input class=\"button\" id=\"deleteuser\" type=\"submit\" name=\"delete\" value=\"Supprimer\"/>");
             }
+            out.write("<input class=\"button\" id=\"init\" type=\"reset\" value=\"Réinitialiser\"/>");
             out.write("<input class=\"button\" id=\"saveuser\" type=\"submit\" name=\"save\" value=\"Enregistrer\"/></div>");
             out.write("</fieldset></form></section>");
             out.write("</body>");

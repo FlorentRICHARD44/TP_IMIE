@@ -201,6 +201,7 @@ public class ServiceData implements AutoCloseable {
         dtoUsager.setId(usager.getId());
         dtoUsager.setName(usager.getName());
         dtoUsager.setFirstName(usager.getFirstName());
+        dtoUsager.setPassword(usager.getPassword());
         dtoUsager.setDateBirth(usager.getDateBirth());
         dtoUsager.setEmail(usager.getEmail());
         dtoUsager.setNbConnection(usager.getNbConnection());
@@ -221,6 +222,7 @@ public class ServiceData implements AutoCloseable {
         usager.setId(dtoUsager.getId());
         usager.setName(dtoUsager.getName());
         usager.setFirstName(dtoUsager.getFirstName());
+        usager.setPassword(dtoUsager.getPassword());
         usager.setDateBirth(dtoUsager.getDateBirth());
         usager.setEmail(dtoUsager.getEmail());
         usager.setNbConnection(dtoUsager.getNbConnection());

@@ -27,6 +27,9 @@ public class DtoUsager {
     /** Inscription site.
      */
     private DtoSite inscrSite;
+    /** Password.
+     */
+    private String password;
 
     /** Constructor.
      */
@@ -129,5 +132,19 @@ public class DtoUsager {
      */
     public final void setInscrSite(final DtoSite uInscrSite) {
         this.inscrSite = uInscrSite;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -31,6 +31,9 @@ public class Usager implements Serializable {
     /** Inscription site.
      */
     private Site inscrSite;
+    /** Mot de passe.
+     */
+    private String password;
 
     /** Constructor.
      */
@@ -140,5 +143,19 @@ public class Usager implements Serializable {
      */
     public final void setInscrSite(final Site uInscrSite) {
         this.inscrSite = uInscrSite;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
