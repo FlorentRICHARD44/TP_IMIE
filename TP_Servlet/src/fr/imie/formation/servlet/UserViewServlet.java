@@ -72,11 +72,11 @@ public class UserViewServlet extends HttpServlet {
                 strFirstName = user.getFirstName();
             }
             out.write(String.format("<tr><td><label for=\"firstname\">Prénom</label></td><td><input id=\"firstname\" name=\"firstname\" type=\"text\" required value=\"%s\" placeholder=\"Prénom\"/></td></tr>", strFirstName));
-            String strDate = "--/--/----";
+            String strDate = "";
             if (user.getDateBirth() != null) {
                 strDate = new SimpleDateFormat("dd/MM/yyyy").format(user.getDateBirth());
             }
-            out.write(String.format("<tr><td><label for=\"birth\">Date de Naissance</label></td><td><input id=\"birth\" name=\"birthdate\" type=\"text\" value=\"%s\" /></td></tr>", strDate));
+            out.write(String.format("<tr><td><label for=\"birth\">Date de Naissance</label></td><td><input id=\"birth\" name=\"birthdate\" type=\"text\" value=\"%s\" placeholder=\"JJ/MM/AAAA\" /></td></tr>", strDate));
             
             String strSite = "Aucun";
             if (user.getInscrSite() != null) {

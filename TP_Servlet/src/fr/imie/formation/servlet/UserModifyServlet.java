@@ -52,10 +52,12 @@ public class UserModifyServlet extends HttpServlet {
                 if (request.getParameter("email") != null) {
                     user.setEmail(request.getParameter("email"));
                 }
-                try {
-                    user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
-                } catch (ParseException e) {
-                    user.setDateBirth(null);
+                if (request.getParameter("birthdate") != null) {
+                    try {
+                        user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
+                    } catch (ParseException e) {
+                        user.setDateBirth(null);
+                    }
                 }
                 if (request.getParameter("inscrsite") != null) {
                     user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
