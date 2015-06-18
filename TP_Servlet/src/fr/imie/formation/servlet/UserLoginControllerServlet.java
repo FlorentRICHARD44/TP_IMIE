@@ -60,7 +60,7 @@ public class UserLoginControllerServlet extends HttpServlet {
             }
 		}
 		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
-		    response.sendRedirect("Login");
+		    response.sendRedirect("Login?error=true");
             request.getSession().removeAttribute("userconnected");
 		} else {
 	        request.getSession().setAttribute("userconnected", user);

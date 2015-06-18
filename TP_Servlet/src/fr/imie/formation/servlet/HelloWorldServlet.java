@@ -41,6 +41,7 @@ public class HelloWorldServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Writer out = response.getWriter();
+        response.setContentType("text/html; charset=utf-8");
         // Get Init value of color
         String color = getInitParameter("color");
         // Get value specified in parameter if defined in the GET

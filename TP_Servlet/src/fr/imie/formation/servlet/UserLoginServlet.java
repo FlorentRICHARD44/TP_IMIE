@@ -47,8 +47,13 @@ public class UserLoginServlet extends HttpServlet {
         out.write("<body>");
         out.write("<h1>Authentification</h1>");
         out.write("<section><form method=\"post\" action=\"/TP_Servlet/UserLoginControllerServlet\"><fieldset><table>");
-        out.write("<tr><td><label for=\"login\">Login (Prénom NOM)</label></td><td><input id=\"login\" type=\"text\" placeholder=\"Entrer votre login\" name=\"login\"/></td></tr>");
-        out.write("<tr><td><label for=\"pwd\">Mot de Passe</label></td><td><input id=\"pwd\" type=\"password\" placeholder=\"Mot de passe\" name=\"pwd\"/></td></tr>");
+        out.write("<tr><td><label for=\"login\">Login (Prénom NOM)</label></td><td><input id=\"login\" type=\"text\" required placeholder=\"Entrer votre login\" name=\"login\"/></td></tr>");
+        out.write("<tr><td><label for=\"pwd\">Mot de Passe</label></td><td><input id=\"pwd\" type=\"password\" required placeholder=\"Mot de passe\" name=\"pwd\"/></td></tr>");
+        String show = "";
+        if (request.getParameter("error") == null) {
+            show = " hidden";
+        }
+        out.write(String.format("<tr><td colspan=\"2\"><p class=\"error\"%s>Erreur de login et/ou de mot de passe</p></tr>", show));
         out.write("</table><div class=\"buttonline\">");
         out.write("<input class=\"button\" type=\"submit\" value=\"Connexion\"/></div>");
         out.write("</fieldset></form></section>");
