@@ -21,8 +21,12 @@ import fr.imie.formation.jdbc.services.ServiceData;
  */
 @WebServlet("/UserNewServlet")
 public class UserNewServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2374434696632053831L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,32 +39,43 @@ public class UserNewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("savenew") != null) {
-            ServiceData servData = new ServiceData();
-		    Usager user = new Usager();
-		    user.setName(request.getParameter("name"));
-            user.setFirstName(request.getParameter("firstname"));
-            if (request.getParameter("email") != null) {
-                user.setEmail(request.getParameter("email"));
-            }
-            if (request.getParameter("birthdate") != null) {
-                try {
-                    user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+		request.setCharacterEncoding("UTF-8");
+	    if (request.getParameter("save") != null) {
+		    Usager user = (Usager) request.getSession().getAttribute("user");
+		    if (user == null) { // New Usager to create
+                user = new Usager();
+		    } // User to modify
+            try (ServiceData servData = new ServiceData();) {
+    		    user.setName(request.getParameter("name"));
+                user.setFirstName(request.getParameter("firstname"));
+                if (request.getParameter("email") != null) {
+                    user.setEmail(request.getParameter("email"));
                 }
+                if (request.getParameter("birthdate").equals("--/--/----")) {
+                    user.setDateBirth(null);
+                } else {
+                    try {
+                        user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                if (request.getParameter("inscrsite") != null) {
+                    user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
+                }
+                if (user.getId() == null) { // New Usager to create
+                    user = servData.insert(user);
+                } else {  // User to modify
+                    servData.update(user);
+                }
+                request.getSession().setAttribute("user", user);
+            } catch(Exception e) {
+                throw new ServletException(e);
             }
-            if (request.getParameter("inscrsite") != null) {
-                user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
-            }
-            user = servData.insert(user);
-            request.setAttribute("user", user);
-            RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
-            rd.forward(request, response);
 		}
-
-        response.sendRedirect("/TP_Servlet/UserViewServlet");
+		RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
+        rd.forward(request, response);
 	}
 
 	/**

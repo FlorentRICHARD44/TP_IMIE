@@ -44,7 +44,7 @@ public class UserControllerServlet extends HttpServlet {
             List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
             user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
         }
-        request.setAttribute("user", user);
+        request.getSession().setAttribute("user", user);
         RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
         rd.forward(request, response);
 	}

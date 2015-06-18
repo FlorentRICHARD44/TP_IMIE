@@ -42,12 +42,13 @@ public class UserViewServlet extends HttpServlet {
 	    try (ServiceData servData = new ServiceData();) {
     	    List<Site> siteList = servData.selectAllSites();
     	    
-            Usager user = (Usager) request.getAttribute("user");
+            Usager user = (Usager) request.getSession().getAttribute("user");
             Writer out = response.getWriter();
             response.setContentType("text/html; charset=utf-8");
             out.write("<!DOCTYPE html>");
             out.write("<html lang=\"fr\">");
             out.write("<header>");
+            out.write("<meta charset=\"utf-8\">");
             out.write("<link rel=\"stylesheet\" href=\"CSS/tpservlet.css\"/>");
             out.write("<title>User View</title>");
             out.write("</header>");
@@ -97,8 +98,11 @@ public class UserViewServlet extends HttpServlet {
             out.write(String.format("<tr><td><label for=\"email\">Email</label></td><td><input id=\"email\" name=\"email\" type=\"email\" value=\"%s\" placeholder=\"xxxxxx@yyyyy.zzz\"/></td></tr>", strEmail));
             out.write(String.format("<tr><td><label for=\"nbcon\">Nombre de connexions</label></td><td><input id=\"nbcon\" name=\"nbcon\" type=\"number\" disabled value=\"%d\"/></td></tr>", user.getNbConnection()));
             out.write("</table>");
-            out.write("<a href=\"/TP_Servlet/UserDeleteServlet\">Supprimer</a>");
-            out.write("<input type=\"submit\" name=\"savenew\"/>");
+            if (user.getId() != null) { // Can't delete on usager creation
+
+                out.write("<a href=\"/TP_Servlet/UserDeleteServlet\">Supprimer</a>");
+            }
+            out.write("<input type=\"submit\" name=\"save\"/>");
             out.write("</fieldset>");
             out.write("</body>");
             out.write("</html>");

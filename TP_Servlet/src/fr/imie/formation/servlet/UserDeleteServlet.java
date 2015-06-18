@@ -3,6 +3,7 @@ package fr.imie.formation.servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,8 @@ public class UserDeleteServlet extends HttpServlet {
 		}
 		try (ServiceData servData = new ServiceData();) {
         	servData.delete(user);
-            response.sendRedirect("/TP_Servlet/UserListGetterServlet");
+            RequestDispatcher rd = request.getRequestDispatcher("/UserListGetterServlet");
+            rd.forward(request, response);
 		} catch (Exception e) {
 		    throw new ServletException(e);
 		}
