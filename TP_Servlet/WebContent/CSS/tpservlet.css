@@ -32,9 +32,12 @@ nav
     height: 40px;
 }
 
+nav div
+{
+	display: inline-block;
+}
 nav div.menuitem
 {
-    display: inline-block;
     vertical-align: top;
     height: 38px:
 }
@@ -56,7 +59,6 @@ nav div a
 
 nav div.splitter
 {
-    display: inline-block;
     padding: 0px;
     margin: 0px;
 	witdh: 2px;
@@ -187,4 +189,48 @@ a.action img
 .button#saveuser
 {
 	right: 5px;
+}
+
+p.error
+{
+	font-weight: bold;
+	color: red;
+	text-align: center;
+	
+}
+
+header
+{
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+}
+
+header figure, header section
+{
+    display: inline-block;
+    height: 70px;
+    position: absolute;
+    top: 10px;
+}
+
+header figure
+{
+    left: 30px;
+}
+
+header section
+{
+    right: 30px;
+}
+
+header section div.line p, header section form
+{
+    display: inline-block;
+    width: inherit;
+    line-height: 0%;
+}
+
+header section form input
+{
+	width: 100px;
 }
