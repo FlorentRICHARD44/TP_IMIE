@@ -14,7 +14,7 @@
 			<p class="data"><%= user.getFirstName() %> <%= user.getName() %></p>
 		</div>
 		<div class="line">
-			<p class="data"><%= application.getAttribute("nbvisitors") %> Visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p>
+			<p class="data"><%= application.getAttribute("nbvisitors") %> visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p>
 		</div>
 		<div class="line">
 			<form method="post" action="Logout" >
