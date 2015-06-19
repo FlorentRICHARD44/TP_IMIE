@@ -6,7 +6,7 @@
 <%! SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); %>
 <header>
     <% Usager user = (Usager) session.getAttribute("userconnected"); %>
-        <section id="info_connection"><div class="line"><p class="data"><%= simpleDateFormat.format(new Date()) %></p></div><div class="line"><p class="data"><%= user.getFirstName() %> <%= user.getName() %></p></div><div class="line"><p class="data"><%= String.format("%d", (Integer) application.getAttribute("nbconnections")) %></p></div><div class="line"><form method="post" action="Logout"><input type="submit" value="Déconnexion" name="logout"/></form></div>
+        <section id="info_connection"><div class="line"><p class="data"><%= simpleDateFormat.format(new Date()) %></p></div><div class="line"><p class="data"><%= user.getFirstName() %> <%= user.getName() %></p></div><div class="line"><p class="data">Visiteurs: <%= application.getAttribute("nbvisitors") %>, dont <%= application.getAttribute("nbloggedusers") %> connectés</p></div><div class="line"><form method="post" action="Logout"><input type="submit" value="Déconnexion" name="logout"/></form></div>
     </section>
 </header>
 <nav>

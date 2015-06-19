@@ -6,16 +6,16 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 /**
- * Application Lifecycle Listener implementation class ActiveConnectionsListener
+ * Application Lifecycle Listener implementation class VisitorsListener
  *
  */
 @WebListener
-public class ActiveConnectionsListener implements HttpSessionListener {
+public class VisitorsListener implements HttpSessionListener {
 
     /**
      * Default constructor. 
      */
-    public ActiveConnectionsListener() {
+    public VisitorsListener() {
         
         // TODO Auto-generated constructor stub
     }
@@ -25,10 +25,10 @@ public class ActiveConnectionsListener implements HttpSessionListener {
      */
     public void sessionCreated(HttpSessionEvent event)  { 
         ServletContext context = event.getSession().getServletContext(); 
-        if (context.getAttribute("nbconnections") == null) {
-            context.setAttribute("nbconnections", 0);
+        if (context.getAttribute("nbvisitors") == null) {
+            context.setAttribute("nbvisitors", 0);
         }
-        context.setAttribute("nbconnections", (Integer) context.getAttribute("nbconnections") + 1);
+        context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") + 1);
         
     }
 
@@ -37,8 +37,8 @@ public class ActiveConnectionsListener implements HttpSessionListener {
      */
     public void sessionDestroyed(HttpSessionEvent event)  { 
         ServletContext context = event.getSession().getServletContext();
-        if (context.getAttribute("nbconnections") != null) {
-            context.setAttribute("nbconnections", (Integer) context.getAttribute("nbconnections") - 1);
+        if (context.getAttribute("nbvisitors") != null) {
+            context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") - 1);
         }
     }
 	
