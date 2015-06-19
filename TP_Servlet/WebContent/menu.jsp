@@ -3,12 +3,10 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="fr.imie.formation.jdbc.data.Usager" %>
+<%! SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); %>
 <header>
-    <section id="info_connection">
-	    <div class="line"><p class="data"><%= new SimpleDateFormat("dd/MM/yyyy").format(new Date()) %></p></div>
-	    <% Usager user = (Usager) session.getAttribute("userconnected"); %>
-	    <div class="line"><p class="data"><%= user.getFirstName() %> <%= user.getName() %></p></div>
-	    <div class="line"><form method="post" action="Logout"><input type="submit" value="Déconnexion" name="logout"/></form></div>
+    <% Usager user = (Usager) session.getAttribute("userconnected"); %>
+        <section id="info_connection"><div class="line"><p class="data"><%= simpleDateFormat.format(new Date()) %></p></div><div class="line"><p class="data"><%= user.getFirstName() %> <%= user.getName() %></p></div><div class="line"><p class="data"><%= String.format("%d", (Integer) application.getAttribute("nbconnections")) %></p></div><div class="line"><form method="post" action="Logout"><input type="submit" value="Déconnexion" name="logout"/></form></div>
     </section>
 </header>
 <nav>
