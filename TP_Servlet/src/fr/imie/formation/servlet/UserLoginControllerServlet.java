@@ -42,29 +42,37 @@ public class UserLoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServiceData servData = new ServiceData();
-		Usager filter = new Usager();
-		String login = request.getParameter("login");
-		Usager user = null;
-        if (login.contains(" ")) {
-    		filter.setName(login.split(" ")[1]);
-            filter.setFirstName(login.split(" ")[0]);
-            filter.setDateBirth(null);
-            filter.setEmail(null);
-            filter.setInscrSite(null);
-            filter.setPassword(null);
-            try {
-                user = servData.selectFiltered(filter).get(0);
-            } catch (Exception e) {
-                user = null;
-            }
-		}
-		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
-		    response.sendRedirect("Login?error=true");
-            request.getSession().removeAttribute("userconnected");
-		} else {
-	        request.getSession().setAttribute("userconnected", user);
-	        response.sendRedirect("UserListGetterServlet");
-		}
+		try (ServiceData servData = new ServiceData();) {
+    		Usager filter = new Usager();
+    		String login = request.getParameter("login");
+    		Usager user = null;
+            if (login.contains(" ")) {
+        		filter.setName(login.split(" ")[1]);
+                filter.setFirstName(login.split(" ")[0]);
+                filter.setDateBirth(null);
+                filter.setEmail(null);
+                filter.setInscrSite(null);
+                filter.setPassword(null);
+                try {
+                    user = servData.selectFiltered(filter).get(0);
+                } catch (Exception e) {
+                    user = null;
+                }
+    		}
+    		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
+    		    response.sendRedirect("Login?error=true");
+                request.getSession().removeAttribute("userconnected");
+    		} else {
+    	        request.getSession().setAttribute("userconnected", user);
+    	        if (request.getSession().getAttribute("pathURI") == null) {
+    	            response.sendRedirect("UserListGetterServlet");
+    	        } else {
+    	            response.sendRedirect((String) request.getSession().getAttribute("pathURI")); 
+    	            request.getSession().removeAttribute("pathURI");
+    	        }
+    		}
+		} catch (Exception e) {
+		    throw new ServletException(e);
+		} 
 	}
 }

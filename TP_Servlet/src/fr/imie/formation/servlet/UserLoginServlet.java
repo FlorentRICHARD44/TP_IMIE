@@ -53,8 +53,8 @@ public class UserLoginServlet extends HttpServlet {
         if (request.getParameter("error") == null) {
             show = " hidden";
         }
-        out.write(String.format("<tr><td colspan=\"2\"><p class=\"error\"%s>Erreur de login et/ou de mot de passe</p></tr>", show));
-        out.write("</table><div class=\"buttonline\">");
+        out.write(String.format("</table><p class=\"error\"%s>Erreur de login et/ou de mot de passe</p>", show));
+        out.write("<div class=\"buttonline\">");
         out.write("<input class=\"button\" type=\"submit\" value=\"Connexion\"/></div>");
         out.write("</fieldset></form></section>");
         out.write("</body>");
