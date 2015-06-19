@@ -44,10 +44,25 @@ public class ConnectionFilter implements Filter {
 		String path = req.getRequestURI();
 		if ((user != null) || (path.contains("Login") || (path.contains("IMG/") || path.contains("CSS/")))) {
 		    chain.doFilter(req, resp);
+		    if (req.getParameter("done")!= null && req.getParameter("done").equals("true")) {
+		        String nextURI = (String) req.getSession().getAttribute("pathURI");
+		        if (nextURI == null) {
+		            resp.sendRedirect("HelloWorldServlet");
+		        } else {
+		            resp.sendRedirect(nextURI);
+		        }
+	            req.getSession().removeAttribute("pathURI");
+	        }
 		} else {
-		    req.getSession().setAttribute("pathURI", req.getRequestURI().concat("?".concat(req.getQueryString())));
+		    String uri = req.getRequestURI();
+		    if (req.getQueryString() != null) {
+		        uri = uri.concat("?").concat(req.getQueryString());
+		    }
+		    req.getSession().setAttribute("pathURI", uri);
             resp.sendRedirect("Login");
 		}
+		
+		
 	}
 
 	/**

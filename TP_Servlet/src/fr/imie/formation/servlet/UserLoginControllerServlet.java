@@ -64,12 +64,7 @@ public class UserLoginControllerServlet extends HttpServlet {
                 request.getSession().removeAttribute("userconnected");
     		} else {
     	        request.getSession().setAttribute("userconnected", user);
-    	        if (request.getSession().getAttribute("pathURI") == null) {
-    	            response.sendRedirect("UserListGetterServlet");
-    	        } else {
-    	            response.sendRedirect((String) request.getSession().getAttribute("pathURI")); 
-    	            request.getSession().removeAttribute("pathURI");
-    	        }
+    	        response.sendRedirect("Login?done=true");
     		}
 		} catch (Exception e) {
 		    throw new ServletException(e);
