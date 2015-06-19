@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/Logout")
 public class UserLogoutServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6192859875940250945L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */

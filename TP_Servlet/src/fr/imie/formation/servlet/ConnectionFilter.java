@@ -42,12 +42,12 @@ public class ConnectionFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		Usager user = (Usager) req.getSession().getAttribute("userconnected");
 		String path = req.getRequestURI();
-		if ((user != null) || (path.contains("Login") || (path.contains("IMG/") || path.contains("CSS/")))) {
+		if ((user != null) || (path.contains("login") || (path.contains("IMG/") || path.contains("CSS/")))) {
 		    chain.doFilter(req, resp);
 		    if (req.getParameter("done")!= null && req.getParameter("done").equals("true")) {
 		        String nextURI = (String) req.getSession().getAttribute("pathURI");
 		        if (nextURI == null) {
-		            resp.sendRedirect("HelloWorldServlet");
+		            resp.sendRedirect("HelloWorld.jsp");
 		        } else {
 		            resp.sendRedirect(nextURI);
 		        }
@@ -59,7 +59,7 @@ public class ConnectionFilter implements Filter {
 		        uri = uri.concat("?").concat(req.getQueryString());
 		    }
 		    req.getSession().setAttribute("pathURI", uri);
-            resp.sendRedirect("Login");
+            resp.sendRedirect("login.jsp");
 		}
 		
 		

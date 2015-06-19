@@ -60,7 +60,7 @@ public class UserModifyServlet extends HttpServlet {
                     }
                 }
                 if (request.getParameter("inscrsite") != null) {
-                    user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite"))));
+                    user.setInscrSite(((List<Site>) request.getSession().getAttribute("sitelist")).get(Integer.valueOf(request.getParameter("inscrsite")) - 1));
                 }
                 if (user.getId() == null) { // New Usager to create
                     user = servData.insert(user);
@@ -75,9 +75,7 @@ public class UserModifyServlet extends HttpServlet {
 		    Usager user = (Usager) request.getSession().getAttribute("user");
 		    if (request.getParameter("delete").equals("index")) {  // Delete from list view
 		        user = ((List<Usager>) request.getSession().getAttribute("userlist")).get(Integer.valueOf(request.getParameter("index")) - 1);
-		    } else {  // Delete from user view
-    		    user = (Usager) request.getSession().getAttribute("user");
-    	    }
+		    }
 	        try (ServiceData servData = new ServiceData();) {
 	            servData.delete(user);
 	            RequestDispatcher rd = request.getRequestDispatcher("/UserListGetterServlet");
@@ -86,7 +84,7 @@ public class UserModifyServlet extends HttpServlet {
 	            throw new ServletException(e);
 	        }
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
+		RequestDispatcher rd = request.getRequestDispatcher("userview.jsp");
         rd.forward(request, response);
 	}
 

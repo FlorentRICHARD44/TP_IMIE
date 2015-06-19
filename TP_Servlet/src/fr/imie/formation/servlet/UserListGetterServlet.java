@@ -53,7 +53,7 @@ public class UserListGetterServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("userlist", userList);
             session.removeAttribute("user");
-    	    RequestDispatcher rd = request.getRequestDispatcher("/UserListDisplayServlet");
+    	    RequestDispatcher rd = request.getRequestDispatcher("userlisting.jsp");
     	    rd.forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);

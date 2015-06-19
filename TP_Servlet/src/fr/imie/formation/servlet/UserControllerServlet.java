@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
  * Servlet implementation class UserControllerServlet
@@ -37,16 +39,22 @@ public class UserControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
         Usager user = null;
-        if (request.getParameter("user").equals("new")) {
-            user = new Usager();
-        } else {
-            @SuppressWarnings("unchecked")
-            List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-            user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
+        try (ServiceData servData = new ServiceData();) {
+            List<Site> siteList = servData.selectAllSites();
+            if (request.getParameter("user").equals("new")) {
+                user = new Usager();
+            } else {
+                @SuppressWarnings("unchecked")
+                List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
+                user = userList.get(Integer.valueOf(request.getParameter("user")) - 1);
+            }
+            session.setAttribute("user", user);
+            session.setAttribute("sitelist", siteList);
+            RequestDispatcher rd = request.getRequestDispatcher("userview.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
-        request.getSession().setAttribute("user", user);
-        RequestDispatcher rd = request.getRequestDispatcher("/UserViewServlet");
-        rd.forward(request, response);
 	}
 
 	/**

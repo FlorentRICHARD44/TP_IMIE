@@ -2,7 +2,6 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,7 @@ import fr.imie.formation.jdbc.services.ServiceData;
 /**
  * Servlet implementation class UserLoginControllerServlet
  */
-@WebServlet("/UserLoginControllerServlet")
+@WebServlet("/loginctrl")
 public class UserLoginControllerServlet extends HttpServlet {
        
     /**
@@ -60,11 +59,11 @@ public class UserLoginControllerServlet extends HttpServlet {
                 }
     		}
     		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
-    		    response.sendRedirect("Login?error=true");
+    		    response.sendRedirect("login.jsp?error=true");
                 request.getSession().removeAttribute("userconnected");
     		} else {
     	        request.getSession().setAttribute("userconnected", user);
-    	        response.sendRedirect("Login?done=true");
+    	        response.sendRedirect("login.jsp?done=true");
     		}
 		} catch (Exception e) {
 		    throw new ServletException(e);
