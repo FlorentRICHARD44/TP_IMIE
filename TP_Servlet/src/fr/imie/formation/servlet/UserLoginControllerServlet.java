@@ -46,19 +46,11 @@ public class UserLoginControllerServlet extends HttpServlet {
     		String login = request.getParameter("login");
     		Usager user = null;
             if (login.contains(" ") && login.split(" ").length > 1) {
-        		filter.setName(login.split(" ")[1]);
+                filter.setName(login.split(" ")[1]);
                 filter.setFirstName(login.split(" ")[0]);
-                filter.setDateBirth(null);
-                filter.setEmail(null);
-                filter.setInscrSite(null);
-                filter.setPassword(null);
-                try {
-                    user = servData.selectFiltered(filter).get(0);
-                } catch (Exception e) {
-                    user = null;
-                }
-    		}
-    		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
+                user = servData.checkUsagerPassword(filter, request.getParameter("pwd"));
+         	}
+    		if (user == null) {
     		    request.getRequestDispatcher("/WEB-INF/login.jsp?error=true").forward(request, response);
                 request.getSession().removeAttribute("userconnected");
     		} else {

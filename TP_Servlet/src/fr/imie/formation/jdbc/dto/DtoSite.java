@@ -6,10 +6,10 @@ package fr.imie.formation.jdbc.dto;
 public class DtoSite {
     /** Id of the site.
      */
-    private Integer id;
+    private Integer id = null;
     /** Name of the Site.
      */
-    private String name;
+    private String name = null;
 
     /** Constructor.
      */

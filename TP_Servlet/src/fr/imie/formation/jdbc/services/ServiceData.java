@@ -63,7 +63,7 @@ public class ServiceData implements AutoCloseable {
     public final Usager getById(final Integer id) {
         Usager usager = null;
         DtoUsager dtoUsager = daoUsager.getById(id);
-        if (dtoUsager == null) {
+        if (dtoUsager != null) {
             usager = dtoToData(dtoUsager);
         }
         return usager;
@@ -190,6 +190,31 @@ public class ServiceData implements AutoCloseable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    /** Check if the proposed password of Usager is correct.
+     * The Usager is identified by its name and firstname.
+     * @param usager Usager to check
+     * @param password Proposed password.
+     * @return the Usager correctly identified or null (if password is not correct)
+     */
+    public Usager checkUsagerPassword(final Usager usager, final String password) {
+        Usager identifiedUsager = null;
+        DtoUsager filter = new DtoUsager();
+        filter.setName(usager.getName());
+        filter.setFirstName(usager.getFirstName());
+        DtoUsager dtoUsager = null;
+        try {
+            dtoUsager = daoUsager.selectFiltered(filter).get(0);
+        } catch (NullFilterException e) {
+            /* Nothing to do:
+             * if return null, returned Usager is null
+             */
+        }
+        if (dtoUsager != null && dtoUsager.getPassword().equals(password)) {
+            identifiedUsager = dtoToData(dtoUsager);
+        }
+        return identifiedUsager;
     }
 
     /** Convert from Usager to DtoUsager.

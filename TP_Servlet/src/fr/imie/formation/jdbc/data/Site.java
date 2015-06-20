@@ -11,10 +11,10 @@ public class Site implements Serializable {
     private static final long serialVersionUID = 3725127086998171558L;
     /** Id of the Site.
      */
-    private Integer id;
+    private Integer id = null;
     /** Name of the Site.
      */
-    private String name;
+    private String name = null;
 
     /** Constructor.
      */

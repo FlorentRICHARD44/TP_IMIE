@@ -12,13 +12,13 @@ public class Usager implements Serializable {
     private static final long serialVersionUID = 9047810626273129384L;
     /** Id of usager.
      */
-    private Integer id;
+    private Integer id = null;
     /** Name of usager.
      */
-    private String name;
+    private String name = null;
     /** First name of usager.
      */
-    private String firstName;
+    private String firstName = null;
     /** Date of Birth of the usager.
      */
     private Date dateBirth = null;
@@ -27,13 +27,13 @@ public class Usager implements Serializable {
     private String email = null;
     /** Number of connections realized by the usager.
      */
-    private Integer nbConnection = 0;
+    private Integer nbConnection = null;
     /** Inscription site.
      */
-    private Site inscrSite;
+    private Site inscrSite = null;
     /** Mot de passe.
      */
-    private String password;
+    private String password = null;
 
     /** Constructor.
      */

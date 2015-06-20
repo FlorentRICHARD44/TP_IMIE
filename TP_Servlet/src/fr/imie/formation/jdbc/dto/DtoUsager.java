@@ -8,13 +8,13 @@ import java.util.Date;
 public class DtoUsager {
     /** Id of usager.
      */
-    private Integer id;
+    private Integer id = null;
     /** Name of usager.
      */
-    private String name;
+    private String name = null;
     /** First name of usager.
      */
-    private String firstName;
+    private String firstName = null;
     /** Date of Birth of the usager.
      */
     private Date dateBirth = null;
@@ -23,13 +23,13 @@ public class DtoUsager {
     private String email = null;
     /** Number of connections realized by the usager.
      */
-    private Integer nbConnection = 0;
+    private Integer nbConnection = null;
     /** Inscription site.
      */
-    private DtoSite inscrSite;
+    private DtoSite inscrSite = null;
     /** Password.
      */
-    private String password;
+    private String password = null;
 
     /** Constructor.
      */
