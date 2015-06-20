@@ -78,7 +78,7 @@ public class UserModifyServlet extends HttpServlet {
 		    }
 	        try (ServiceData servData = new ServiceData();) {
 	            servData.delete(user);
-	            RequestDispatcher rd = request.getRequestDispatcher("/UserListGetterServlet");
+	            RequestDispatcher rd = request.getRequestDispatcher("userlist");
 	            rd.forward(request, response);
 	        } catch (Exception e) {
 	            throw new ServletException(e);

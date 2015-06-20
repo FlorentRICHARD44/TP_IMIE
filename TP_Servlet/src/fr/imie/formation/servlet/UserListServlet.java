@@ -16,10 +16,10 @@ import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
 /**
- * Servlet implementation class UserListGetterServlet
+ * Servlet implementation class UserListServlet
  */
-@WebServlet("/UserListGetterServlet")
-public class UserListGetterServlet extends HttpServlet {
+@WebServlet("/userlist")
+public class UserListServlet extends HttpServlet {
        
     /**
      * 
@@ -29,7 +29,7 @@ public class UserListGetterServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserListGetterServlet() {
+    public UserListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,21 +39,13 @@ public class UserListGetterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    List<Usager> userList = new ArrayList<Usager>();
-	    //      Usager u1 = new Usager();
-	    //      u1.setName("RICHARD");
-	    //      u1.setFirstName("Florent");
-	    //      userList.add(u1);
-	    //      Usager u2 = new Usager();
-	    //        u2.setName("DUPONT");
-	    //        u2.setFirstName("Jean");
-	    //        userList.add(u2);
         try (ServiceData servData = new ServiceData();) {
             userList = servData.selectAllUsagers();
             request.setAttribute("userlist", userList);
             HttpSession session = request.getSession();
             session.setAttribute("userlist", userList);
             session.removeAttribute("user");
-    	    RequestDispatcher rd = request.getRequestDispatcher("userlisting.jsp");
+    	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/userlisting.jsp");
     	    rd.forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);

@@ -27,6 +27,6 @@
        <form method="post" action="helloworld"><label for="colortext">Entrer la couleur</label><input type="text" id="colortext" name="color"/><input type="submit"/></form>
        <hr/>
        <h2>Affichage des usagers en Forward</h2>
-       <a href="/TP_Servlet/UserListGetterServlet">Affichage des utilisateurs en forward</a>
+       <a href="userlist">Affichage des utilisateurs en forward</a>
     </body>
 </html>

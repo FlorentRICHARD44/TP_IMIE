@@ -29,7 +29,7 @@
                         <% if (user.getName() != null) {%>
                             <% strName = user.getName();}%>
                         <tr><td><label for="name">Nom</label></td>
-                            <td><input id="name" name="name" type="text" required value="<%= user.getName() %>" placeholder="NOM"/></td></tr>
+                            <td><input id="name" name="name" type="text" required value="<%= strName %>" placeholder="NOM"/></td></tr>
                         <% String strFirstName = ""; %>
                         <% if (user.getFirstName() != null) {%>
                             <% strFirstName = user.getFirstName();}%>

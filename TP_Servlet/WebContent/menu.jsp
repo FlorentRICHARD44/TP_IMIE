@@ -34,7 +34,7 @@
 	</div>
 	<div class="splitter"></div>
 	<div class="menuitem">
-		<a href="UserListGetterServlet">Liste des Usagers</a>
+		<a href="userlist">Liste des Usagers</a>
 	</div>
 	<div class="splitter"></div>
 </nav>

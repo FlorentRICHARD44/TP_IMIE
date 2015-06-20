@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>Liste des Utilisateurs</h1>
-        <jsp:include page="menu.jsp" />
+        <jsp:include page="/menu.jsp" />
         <section>
             <div class="buttonline"><a class="button" id="addnewuser" href="/TP_Servlet/UserControllerServlet?user=new">Ajouter un usager</a></div>
             <table class="listing">

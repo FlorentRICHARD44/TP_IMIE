@@ -8,7 +8,7 @@
         <dependent-module archiveName="postgresql.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Doc Florent/Travail/IMIE - Formation CDI/GIT/TP_IMIE/common/postgresql.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="TP_Servlet"/>
         <property name="java-output-path" value="/TP_Servlet/build/classes"/>
+        <property name="context-root" value="app"/>
     </wb-module>
 </project-modules>
