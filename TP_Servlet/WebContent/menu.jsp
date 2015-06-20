@@ -26,6 +26,10 @@
 <nav>
 	<div class="splitter"></div>
 	<div class="menuitem">
+		<a href="home">Accueil</a>
+	</div>
+	<div class="splitter"></div>
+	<div class="menuitem">
 		<a href="HelloWorld.jsp">Helloworld</a>
 	</div>
 	<div class="splitter"></div>

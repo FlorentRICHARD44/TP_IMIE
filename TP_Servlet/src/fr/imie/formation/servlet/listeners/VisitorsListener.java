@@ -1,4 +1,4 @@
-package fr.imie.formation.servlet;
+package fr.imie.formation.servlet.listeners;
 
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;

@@ -1,4 +1,4 @@
-package fr.imie.formation.servlet;
+package fr.imie.formation.servlet.filters;
 
 import java.io.IOException;
 

@@ -21,6 +21,12 @@ h1
 	color: #1C325B;
     text-align: center;
 }
+h2
+{
+	margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+}
 
 nav
 {
