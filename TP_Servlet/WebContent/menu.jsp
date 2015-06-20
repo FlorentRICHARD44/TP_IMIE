@@ -30,7 +30,7 @@
 	</div>
 	<div class="splitter"></div>
 	<div class="menuitem">
-		<a href="HelloWorld.jsp">Helloworld</a>
+		<a href="helloworld">Helloworld</a>
 	</div>
 	<div class="splitter"></div>
 	<div class="menuitem">
