@@ -17,7 +17,7 @@
 			<p class="data"><%= application.getAttribute("nbvisitors") %> visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p>
 		</div>
 		<div class="line">
-			<form method="post" action="Logout" >
+			<form method="post" action="logout" >
 				<input type="submit" value="Déconnexion" name="logout" />
 			</form>
 		</div>
