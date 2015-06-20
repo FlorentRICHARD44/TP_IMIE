@@ -14,7 +14,7 @@ import fr.imie.formation.jdbc.services.ServiceData;
 /**
  * Servlet implementation class UserLoginControllerServlet
  */
-@WebServlet("/loginctrl")
+@WebServlet("/login")
 public class UserLoginControllerServlet extends HttpServlet {
        
     /**
@@ -34,7 +34,7 @@ public class UserLoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 
 	/**
@@ -59,12 +59,11 @@ public class UserLoginControllerServlet extends HttpServlet {
                 }
     		}
     		if ((user == null) || !request.getParameter("pwd").equals(user.getPassword())) {
-    		    response.sendRedirect("login.jsp?error=true");
+    		    request.getRequestDispatcher("/WEB-INF/login.jsp?error=true").forward(request, response);
                 request.getSession().removeAttribute("userconnected");
     		} else {
     	        request.getSession().setAttribute("userconnected", user);
-    	        response.sendRedirect("login.jsp?done=true");
-    		}
+    	    }
 		} catch (Exception e) {
 		    throw new ServletException(e);
 		} 

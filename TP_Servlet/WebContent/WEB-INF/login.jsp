@@ -10,7 +10,7 @@
     <body>
         <h1>Authentification</h1>
         <section>
-            <form method="post" action="/TP_Servlet/loginctrl">
+            <form method="post" action="login">
                 <fieldset>
                     <table>
                         <tr><td><label for="login">Login (Prénom NOM)</label></td>

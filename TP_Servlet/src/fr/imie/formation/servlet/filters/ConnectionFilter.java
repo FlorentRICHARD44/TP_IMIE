@@ -44,10 +44,10 @@ public class ConnectionFilter implements Filter {
 		String path = req.getRequestURI();
 		if ((user != null) || (path.contains("login") || (path.contains("IMG/") || path.contains("CSS/")))) {
 		    chain.doFilter(req, resp);
-		    if (req.getParameter("done")!= null && req.getParameter("done").equals("true")) {
+		    if (user == null && req.getSession().getAttribute("userconnected") != null) { // Just logged in
 		        String nextURI = (String) req.getSession().getAttribute("pathURI");
 		        if (nextURI == null) {
-		            resp.sendRedirect("HelloWorld.jsp");
+		            resp.sendRedirect("home");
 		        } else {
 		            resp.sendRedirect(nextURI);
 		        }
@@ -59,7 +59,7 @@ public class ConnectionFilter implements Filter {
 		        uri = uri.concat("?").concat(req.getQueryString());
 		    }
 		    req.getSession().setAttribute("pathURI", uri);
-            resp.sendRedirect("login.jsp");
+            resp.sendRedirect("login");
 		}
 		
 		
