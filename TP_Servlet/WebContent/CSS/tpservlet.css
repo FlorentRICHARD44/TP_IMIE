@@ -68,6 +68,13 @@ nav
     text-align: center;
 }
 
+nav h1
+{
+	color: white;
+	font-size: large;
+	padding: 5px 0px 5px 0px;
+}
+
 nav div.menuitem
 {
     display: inline-block;
@@ -100,6 +107,64 @@ div.main
 	background-color: #F3F5F4;
 	heigkt: 100%;
 	margin: 10px 10px 10px 10px;
+}
+
+/* Formulaire de login */
+form.login
+{
+    position:relative;
+    top: 100px;
+    margin: auto;
+    width: 350px;
+}
+
+form.login fieldset
+{
+    height: 150px;
+    border: solid 2px #1C325B;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px 10px 10px 10px;
+}
+
+form.login div.formline
+{
+    padding: 5px 0px 5px 0px;
+    position: relative;
+}
+
+form.login input.input
+{
+    position:absolute;
+    right: 10px;
+}
+
+form.login label
+{
+    position: relative;
+    left: 10px;
+}
+
+form.login p
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+
+form.login div.formline:last-child
+{
+    text-align: center;
+}
+
+form.login input.button
+{
+    width: 120px;
+    padding: 5px 20px 5px 20px;
+    margin: 0px auto;
 }
 /*
 nav h1

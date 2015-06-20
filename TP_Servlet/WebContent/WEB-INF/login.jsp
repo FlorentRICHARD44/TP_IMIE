@@ -8,26 +8,25 @@
         <title>Authentification</title>
     </head>
     <body>
-        <h1>Authentification</h1>
-        <section>
-            <form method="post" action="login">
+    	<header>
+            <img alt="Logo Cyberbase" src="/TP_Servlet/IMG/Logo_Cyberbase.gif">
+        </header>
+        <nav>
+            <h1>Authentification</h1>
+        </nav>
+        <div class="main">
+            <form class="login" method="post" action="login">
                 <fieldset>
-                    <table>
-                        <tr><td><label for="login">Login (Prénom NOM)</label></td>
-                            <td><input id="login" type="text" required placeholder="Entrer votre login" name="login"/></td></tr>
-                        <tr><td><label for="pwd">Mot de Passe</label></td>
-                            <td><input id="pwd" type="password" required placeholder="Mot de passe" name="pwd"/></td></tr>
-                    </table>
+                    <div class="formline"><label for="login">Login</label><input id="login" class="input" type="text" required placeholder="Entrer votre login" name="login"/></div>
+                    <div class="formline"><label for="pwd">Mot de Passe</label><input id="pwd" class="input" type="password" required placeholder="Mot de passe" name="pwd"/></div>
                     <% String show = "";
                        if (request.getParameter("error") == null) {
                            show = " hidden";
                        } %>
-                    <p class="error" <%= show %>>Erreur de login et/ou de mot de passe</p>
-                    <div class="buttonline">
-                        <input class="button" type="submit" value="Connexion"/>
-                    </div>
+                    <div class="formline"><p class="error" <%= show %>>Erreur de login et/ou de mot de passe</p></div>
+                    <div class="formline"><input class="button" type="submit" value="Connexion"/></div>
                 </fieldset>
             </form>
-       </section>
+        </div>
     </body>
 </html>

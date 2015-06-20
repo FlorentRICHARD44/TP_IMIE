@@ -45,7 +45,7 @@ public class UserLoginControllerServlet extends HttpServlet {
     		Usager filter = new Usager();
     		String login = request.getParameter("login");
     		Usager user = null;
-            if (login.contains(" ")) {
+            if (login.contains(" ") && login.split(" ").length > 1) {
         		filter.setName(login.split(" ")[1]);
                 filter.setFirstName(login.split(" ")[0]);
                 filter.setDateBirth(null);
