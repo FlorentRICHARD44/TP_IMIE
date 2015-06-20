@@ -6,35 +6,14 @@
 <%! SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); %> <%-- Déclaration d'un objet de portée application --%>
 <header>
 	<% Usager user = (Usager) session.getAttribute("userconnected"); %>
+	<img alt="Logo Cyberbase" src="/TP_Servlet/IMG/Logo_Cyberbase.gif">
+	<h1><%= (String) request.getAttribute("title") %></h1>
 	<section id="info_connection">
-		<div class="line">
-			<p class="data"><%= simpleDateFormat.format(new Date()) %></p>
-		</div>
-		<div class="line">
-			<p class="data"><%= user.getFirstName() %> <%= user.getName() %></p>
-		</div>
-		<div class="line">
-			<p class="data"><%= application.getAttribute("nbvisitors") %> visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p>
-		</div>
-		<div class="line">
-			<form method="post" action="logout" >
-				<input type="submit" value="Déconnexion" name="logout" />
-			</form>
-		</div>
+		<div class="line"><p class="data"><%= simpleDateFormat.format(new Date()) %></p></div>
+		<div class="line"><p class="data"><%= user.getFirstName() %> <%= user.getName() %></p></div>
+		<div class="line"><p class="data"><%= application.getAttribute("nbvisitors") %> visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p></div>
 	</section>
 </header>
-<nav>
-	<div class="splitter"></div>
-	<div class="menuitem">
-		<a href="home">Accueil</a>
-	</div>
-	<div class="splitter"></div>
-	<div class="menuitem">
-		<a href="helloworld">Helloworld</a>
-	</div>
-	<div class="splitter"></div>
-	<div class="menuitem">
-		<a href="userlist">Liste des Usagers</a>
-	</div>
-	<div class="splitter"></div>
+<nav><div class="menu"><div class="menuitem"><a href="home">Accueil</a></div><div class="menuitem"><a href="helloworld">Helloworld</a></div><div class="menuitem"><a href="userlist">Liste des Usagers</a></div></div>
+	<form method="post" action="logout" ><input type="submit" value="Déconnexion" name="logout" /></form>
 </nav>

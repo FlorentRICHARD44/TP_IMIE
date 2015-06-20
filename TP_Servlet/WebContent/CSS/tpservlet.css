@@ -1,25 +1,134 @@
 @CHARSET "UTF-8";
 
-
-*, input
+*
 {
-	font-family: Verdana;
+    font-family: Arial;
 	font-size: normal;
+    color: #1C325B;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 body
 {
-	margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
+    background-color: #F3F5F4;
+}
+
+header
+{
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+    position: relative;
+    height: 100px;
+}
+
+header img, header section, header h1
+{
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    
+}
+
+header img
+{
+	left: 30px;
+}
+
+header section
+{
+	right: 30px;
+}
+header section div.line p
+{
+    display: inline-block;
+    width: inherit;
+    line-height: 0%;
+}
+
+p.label
+{
+    font-weight: bold;
+    text-align: right;
 }
 
 
-h1
+header h1
 {
-	margin: 0px 0px 20px 0px;
-    padding: 10px 0px 10px 0px;
 	color: #1C325B;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+}
+
+nav
+{
+    position: relative;
+    background-color: #1C325B;
     text-align: center;
+}
+
+nav div.menuitem
+{
+    display: inline-block;
+    padding: 5px 0px 5px 0px;
+}
+
+
+nav div.menuitem a
+{
+    text-decoration: none;
+    color: white;
+    padding: 5px 15px 5px 15px;
+    font-size: large;
+}
+nav div.menuitem a:hover
+{	
+	background-color: #F16800;
+}
+
+nav form
+{
+	display: inline-block;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+}
+
+div.main
+{
+	background-color: #F3F5F4;
+	heigkt: 100%;
+	margin: 10px 10px 10px 10px;
+}
+/*
+nav h1
+{
+    font-size: large;
+    padding: 5px 0px 5px 0px;
+    color: white;
+}
+
+nav div.menuitem
+{
+    display: inline-block;
+    padding: 5px 0px 5px 0px;
+}
+
+
+nav div.menuitem a
+{
+    text-decoration: none;
+    color: white;
+    margin: 0px 15px 0px 15px;
+    font-size: large;
+}
+
+nav button
+{
+    position: absolute;
+    top: 5px;
+    right: 10px;
 }
 h2
 {
@@ -28,40 +137,6 @@ h2
     text-align: center;
 }
 
-nav
-{
-	text-align: center;
-	margin: 0px 0px 20px 0px;
-    padding: 0px 0px 0px 0px;
-    background-color: #1C325B;
-    box-shadow: 0px 5px 5px black;
-    height: 40px;
-}
-
-nav div
-{
-	display: inline-block;
-}
-nav div.menuitem
-{
-    vertical-align: top;
-    height: 38px:
-}
-
-nav div.menuitem:hover
-{
-	background-color: #F37605;
-}
-
-nav div a
-{
-    padding: 10px 20px 10px 20px;
-	color: white;
-	text-decoration: none;
-	font-width: large;
-	display: inline-block;
-	
-}
 
 nav div.splitter
 {
@@ -265,3 +340,4 @@ input.del
 {	
 	background-image:url(../IMG/delete.png);
 }
+*/

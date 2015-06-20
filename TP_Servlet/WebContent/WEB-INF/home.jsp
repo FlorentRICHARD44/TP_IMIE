@@ -8,10 +8,12 @@
 		<title>Accueil</title>
 	</head>
 	<body>
-		<h1>Accueil</h1>
+	   <% request.setAttribute("title", "Accueil"); %>
 		<jsp:include page="menu.jsp" />
-	  	<section>
-	  		<h2>Bienvenue dans le premier site JavaEE fait par Florent RICHARD</h2>
-	  	</section>
+		<div class="main">
+		  	<section>
+		  		<h2>Bienvenue dans le premier site JavaEE fait par Florent RICHARD</h2>
+		  	</section>
+	  	</div>
 	</body>
 </html>
