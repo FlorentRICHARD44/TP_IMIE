@@ -244,3 +244,24 @@ header section form input
 {
 	width: 100px;
 }
+
+input.btn
+{
+	width: 25px;
+	height: 25px;
+	background-size : 25px 25px;
+	background-repeat: no-repeat;
+	background-color : transparent;
+	border: none;
+	color: transparent;
+}
+
+input.view
+{
+	background-image:url(../IMG/loupe.png);
+	
+}
+input.del
+{	
+	background-image:url(../IMG/delete.png);
+}

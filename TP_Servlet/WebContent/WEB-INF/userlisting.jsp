@@ -13,16 +13,18 @@
         <h1>Liste des Utilisateurs</h1>
         <jsp:include page="/menu.jsp" />
         <section>
-            <div class="buttonline"><a class="button" id="addnewuser" href="/TP_Servlet/UserControllerServlet?user=new">Ajouter un usager</a></div>
+            <div class="buttonline"><form method="post" action="userview"><input class="button" type="submit" name="new" value="Ajouter un Usager"/></form></div>
             <table class="listing">
                 <tr><th>Nom</th><th>Prénom</th><th></th></tr>
                 <% Integer userNb = 1; %>
-                <% for (Usager u: (List<Usager>) request.getAttribute("userlist")) { %>
+                <% for (Usager u: (List<Usager>) session.getAttribute("userlist")) { %>
                     <tr><td><%= u.getName() %></td><td><%= u.getFirstName() %></td>
-                        <td><a class="action" href="/TP_Servlet/UserControllerServlet?user=<%= userNb %>">
-                            <img alt="Détails" src="IMG/loupe.png"/></a>
-                            <a class="action" href="/TP_Servlet/UserModifyServlet?delete=index&index=<%= userNb++ %>">
-                            <img alt="Supprimer" src="IMG/delete.png"/></a></td></tr>
+                        <td><form method="post" action="userview">
+                        		<input type="hidden" name="numligne" value="<%= userNb++ %>"/>
+                        		<input type="submit" class="btn view" name="view" />
+                            	<input type="submit" class="btn del" name="delete"/>
+                        	</form>
+                        </td></tr>
                 <% } %>
             </table>
         </section>

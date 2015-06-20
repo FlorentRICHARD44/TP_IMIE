@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
@@ -39,14 +40,15 @@ public class UserListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    List<Usager> userList = new ArrayList<Usager>();
+	    List<Site> siteList = new ArrayList<Site>();
         try (ServiceData servData = new ServiceData();) {
             userList = servData.selectAllUsagers();
-            request.setAttribute("userlist", userList);
+            siteList = servData.selectAllSites();
             HttpSession session = request.getSession();
             session.setAttribute("userlist", userList);
-            session.removeAttribute("user");
-    	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/userlisting.jsp");
-    	    rd.forward(request, response);
+            session.setAttribute("sitelist", siteList);
+            //session.removeAttribute("user");
+    	    request.getRequestDispatcher("/WEB-INF/userlisting.jsp").forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);
         }
