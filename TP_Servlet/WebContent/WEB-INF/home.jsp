@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<h1>Accueil</h1>
-		<jsp:include page="/menu.jsp" />
+		<jsp:include page="menu.jsp" />
 	  	<section>
 	  		<h2>Bienvenue dans le premier site JavaEE fait par Florent RICHARD</h2>
 	  	</section>

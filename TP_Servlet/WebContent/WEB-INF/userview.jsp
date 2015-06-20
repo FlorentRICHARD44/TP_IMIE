@@ -20,7 +20,7 @@
         <% } else { %>
             <h1>Utilisateur <%= user.getFirstName() %> <%= user.getName() %></h1>
         <% } %>
-        <jsp:include page="/menu.jsp" />
+        <jsp:include page="menu.jsp" />
         <section>
             <form method="post" action="userview">
                 <fieldset>

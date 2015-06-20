@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>Liste des Utilisateurs</h1>
-        <jsp:include page="/menu.jsp" />
+        <jsp:include page="menu.jsp" />
         <section>
             <div class="buttonline"><form method="post" action="userview"><input class="button" type="submit" name="new" value="Ajouter un Usager"/></form></div>
             <table class="listing">

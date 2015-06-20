@@ -15,7 +15,7 @@
 	</head>
 	<body>
 	   <h1>HELLO THE WORLD!</h1>
-	   <jsp:include page="/menu.jsp" />
+	   <jsp:include page="menu.jsp" />
 	   <em>2 lignes en JavaEE</em><br/>
 	   <em>1 troisieme lignes en JavaEE</em><br/>
 	   <a href="helloworld">Same page in normal color</a><br/>
