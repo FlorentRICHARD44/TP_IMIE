@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Usager;
 
@@ -40,18 +41,32 @@ public class ConnectionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
+		HttpSession session = req.getSession();
 		Usager user = (Usager) req.getSession().getAttribute("userconnected");
 		String path = req.getRequestURI();
 		if ((user != null) || (path.contains("login") || (path.contains("IMG/") || path.contains("CSS/")))) {
 		    chain.doFilter(req, resp);
-		    if (user == null && req.getSession().getAttribute("userconnected") != null) { // Just logged in
-		        String nextURI = (String) req.getSession().getAttribute("pathURI");
-		        if (nextURI == null) {
-		            resp.sendRedirect("home");
-		        } else {
-		            resp.sendRedirect(nextURI);
+		    if (user == null && session.getAttribute("userconnected") != null) { // Just logged in
+		        String nextURI = (String) session.getAttribute("pathURI");
+		        String lastURI = (String) session.getAttribute("logoutPathURI");
+		        Usager lastConnectedUser = (Usager) session.getAttribute("lastconnecteduser");
+		        System.out.println(nextURI);
+		        System.out.println(lastURI);
+		        if (lastConnectedUser != null) {
+		            System.out.println(lastConnectedUser.getFirstName());
 		        }
-	            req.getSession().removeAttribute("pathURI");
+		        if (nextURI != null) {
+                    resp.sendRedirect(nextURI);
+		        } else if (lastConnectedUser != null
+		                && lastConnectedUser.getId() == ((Usager) session.getAttribute("userconnected")).getId()
+		                && lastURI != null) {
+                    resp.sendRedirect(lastURI);
+		        } else {
+                    resp.sendRedirect("home");
+		        }
+	            session.removeAttribute("pathURI");
+                session.removeAttribute("logoutPathURI");
+                session.removeAttribute("lastconnecteduser");
 	        }
 		} else {
 		    String uri = req.getRequestURI();
