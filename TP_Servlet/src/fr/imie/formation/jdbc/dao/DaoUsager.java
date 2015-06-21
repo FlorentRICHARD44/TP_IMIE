@@ -161,7 +161,7 @@ public class DaoUsager implements IDao<DtoUsager> {
     @Override
     public final void update(final DtoUsager user) {
         try (PreparedStatement pst = connection.prepareStatement(
-                "UPDATE usager SET nom = ?, prenom = ?, datenaissance = ?, email = ?, nb_connexion = ?, si_id = ? WHERE id = ?")) {
+                "UPDATE usager SET nom = ?, prenom = ?, datenaissance = ?, email = ?, nb_connexion = ?, si_id = ?, password = ? WHERE id = ?")) {
             pst.setString(1, user.getName());
             pst.setString(2, user.getFirstName());
             if (user.getDateBirth() == null) {
@@ -180,7 +180,12 @@ public class DaoUsager implements IDao<DtoUsager> {
             } else {
                 pst.setInt(6, user.getInscrSite().getId());
             }
-            pst.setInt(7, user.getId());
+            if (user.getPassword() == null) {
+                pst.setNull(7, java.sql.Types.VARCHAR);
+            } else {
+                pst.setString(7, user.getPassword());
+            }
+            pst.setInt(8, user.getId());
 
             pst.executeUpdate();
 

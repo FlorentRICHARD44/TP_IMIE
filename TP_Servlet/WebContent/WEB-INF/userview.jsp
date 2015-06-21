@@ -74,6 +74,31 @@
 	                        <input class="button action" id="saveuser" type="submit" name="save" value="Enregistrer"/></div>
 	                </fieldset>
 	            </form>
+	            <form method="post" action="userview">
+	                <% if (user.getId() == ((Usager) session.getAttribute("userconnected")).getId()) {%>
+		                <fieldset>
+		                	<div class="formline"><label>Modification du mot de passe</label></div>
+		                	<div class="formline"><label for="oldpwd">Ancien mot de passe</label>
+		                						  <input type="password" id="oldpwd" name="oldpwd" class="input" placeholder="Ancien mot de passe" required/></div>
+		                	<div class="formline"><label for="newpwd">Nouveau mot de passe</label>
+		                						  <input type="password" id="newpwd" name="newpwd" class="input" placeholder="Nouveau mot de passe" required/></div>
+		                	<div class="formline"><label for="confirmnewpwd">Confirmer le nouveau mot de passe</label>
+		                						  <input type="password" id="confirmnewpwd" name="confnewpwd" class="input" placeholder="Confirmer le nouveau mot de passe" required/></div>
+		                	<% String errorMsg = "";
+		                	   if (request.getAttribute("error") != null) {
+		                           if (request.getAttribute("error").equals("old")) {
+		                               errorMsg = "Ancien mot de passe incorrect";
+		                           } else if (request.getAttribute("error").equals("confnew")) {
+		                               errorMsg = "Le nouveau mot de passe et le confirmé sont différents";
+		                           } else if (request.getAttribute("error").equals("newshort")) {
+		                               errorMsg = "Le nouveau mot de passe est trop court";
+		                           }
+		                       } %>
+		                	<div class="formline"><p class="error"><%= errorMsg %></p></div>
+		                	<div class="formline"><input type="submit" class="action" name="modifpwd" value="Enregistrer" /></div>
+		                </fieldset>
+	                <% } %>
+	            </form>
 	        </section>
 	    </div>
     </body>

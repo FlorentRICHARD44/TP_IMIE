@@ -34,7 +34,8 @@ public class UserViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Not used.
+	    // return to the user list, because access from an URL (not an action)
+        response.sendRedirect("userlist");
 	}
 
 	/**
@@ -54,14 +55,14 @@ public class UserViewServlet extends HttpServlet {
 		    }
 
 		    // Add a new user
-    	    if (request.getParameter("new") != null) {
+		    if (request.getParameter("new") != null) {
     	        user = new Usager();
     	        request.getSession().setAttribute("user", user);
     	        request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
     		}
 
     	    // Delete selected user
-    	    if (request.getParameter("delete") != null) {  
+		    if (request.getParameter("delete") != null) {  
     		    if (session.getAttribute("user") == null) {  // From userlist
     		        List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
     		        user = userList.get(Integer.valueOf(request.getParameter("numligne")) - 1);
@@ -75,7 +76,7 @@ public class UserViewServlet extends HttpServlet {
     		}
 
     	    // Save current user
-    	    if (request.getParameter("save") != null) {  
+		    if (request.getParameter("save") != null) {  
     	        user = (Usager) session.getAttribute("user");
                 if (user == null) { // New Usager to create
                     user = new Usager();
@@ -103,9 +104,24 @@ public class UserViewServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
     		}
+    	    
+    	    // Modification of the password.
+		    if (request.getParameter("modifpwd") != null) {
+    	        user = (Usager) session.getAttribute("user");
+    	        if (servData.checkUsagerPassword(user, request.getParameter("oldpwd")) == null) {
+    	            request.setAttribute("error", "old");
+    	        } else if (!request.getParameter("newpwd").equals(request.getParameter("confnewpwd"))) {
+    	            request.setAttribute("error", "confnew");
+    	        } else if( ((String) request.getParameter("newpwd")).length() < 4) {
+    	            request.setAttribute("error", "newshort");
+    	        }
+    	        else { // OK, can save new password
+    	            servData.modifyUsagerPassword(user, request.getParameter("newpwd"));
+    	        }
+    	        request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+    	    }
 		} catch (Exception e) {
 		    throw new ServletException(e);
 		}
 	}
-
 }

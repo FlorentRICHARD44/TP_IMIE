@@ -217,6 +217,14 @@ public class ServiceData implements AutoCloseable {
         return identifiedUsager;
     }
 
+    public void modifyUsagerPassword(Usager user, String newPassword) {
+        DtoUsager dtoUsager = daoUsager.getById(user.getId());
+        if (dtoUsager != null) {
+            dtoUsager.setPassword(newPassword);
+            daoUsager.update(dtoUsager);
+        }
+    }
+
     /** Convert from Usager to DtoUsager.
      * @param usager Usager in input
      * @return DtoUsager in output
