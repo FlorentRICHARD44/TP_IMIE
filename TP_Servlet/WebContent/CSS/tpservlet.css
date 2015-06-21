@@ -14,6 +14,18 @@ body
     background-color: #F3F5F4;
 }
 
+ul 
+{
+    list-style-type: none;
+    overflow: auto;
+}
+
+p.error
+{
+    color: red;
+    font-weight: bold;
+}
+
 header
 {
     background-color: white;
@@ -102,13 +114,43 @@ nav form
 	right: 10px;
 }
 
+/* Path part. */
+.path{
+    position: absolute;
+    left: 10px;
+}
+
+.path a{
+    color: #F16800;
+    text-decoration: none;
+}
+
 div.main
 {
 	background-color: #F3F5F4;
-	heigkt: 100%;
 	margin: 10px 10px 10px 10px;
+	position: absolute;
+	top: 150px;
+	bottom: 20px;
+	right: 0px;
+	left: 0px;
+}
+/* Footer part */
+footer
+{
+    background-color: #1C325B;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 20px;
 }
 
+footer em
+{
+    color: white;
+    font-size: small;
+}
 /* Formulaire de login */
 form.login
 {
@@ -127,19 +169,19 @@ form.login fieldset
     padding: 10px 10px 10px 10px;
 }
 
-form.login div.formline
+div.formline
 {
     padding: 5px 0px 5px 0px;
     position: relative;
 }
 
-form.login input.input
+div.formline input.input
 {
     position:absolute;
     right: 10px;
 }
 
-form.login label
+div.formline label
 {
     position: relative;
     left: 10px;
@@ -151,11 +193,9 @@ form.login p
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    color: red;
-    font-weight: bold;
 }
 
-form.login div.formline:last-child
+form.login div.formline.centered
 {
     text-align: center;
 }
@@ -184,90 +224,98 @@ input.action:hover
 	background-color: #F16800;
 	color: white;
 }
-/*
-nav h1
-{
-    font-size: large;
-    padding: 5px 0px 5px 0px;
-    color: white;
-}
 
-nav div.menuitem
+/** Aside - Menu Latéral **/
+aside#menulocal
 {
-    display: inline-block;
-    padding: 5px 0px 5px 0px;
-}
-
-
-nav div.menuitem a
-{
-    text-decoration: none;
-    color: white;
-    margin: 0px 15px 0px 15px;
-    font-size: large;
-}
-
-nav button
-{
+    width: 250px;
+    border: solid 2px #1C325B;
+    border-radius: 10px;
+    background-color: white;
     position: absolute;
-    top: 5px;
-    right: 10px;
-}
-h2
-{
-	margin: 10px 0px 10px 0px;
-    padding: 10px 0px 10px 0px;
-    text-align: center;
+    top: 30px;
+    left: 0px;
+    bottom: 0px;
 }
 
-
-nav div.splitter
+aside#menulocal h2
 {
-    padding: 0px;
-    margin: 0px;
-	witdh: 2px;
-	height: 38px;
-    display: inline-block;
-	border: solid 1px white;
+    background-color: #1C325B;
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+    padding: 5px 5px 5px 5px;
 }
 
-section
+aside#menulocal li
 {
-    position: relative;
-    margin: 0px auto;
-    padding: 0px;
-    text-align: right;
+    padding: 5px 5px 5px 5px;
+    font-weight: bold;
 }
 
-fieldset
+aside a
 {
-    border: solid 1px black;
-    border-radius:5px;
-    margin: 0px auto;
-    width: 520px;
+	text-decoration: none;
 }
 
-input
+aside#menulocal ul ul li
 {
-	display: inline-block;
-	width: 300px;
+    padding: 5px 5px 5px 25px;
+    font-weight: normal;
 }
 
-select
+aside#menulocal ul input
 {
-    display: inline-block;
-    width: 308px;
+	background: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+	font: inherit;
+	padding: 0px;
+	margin: 0px;
+	border: 
+}
+div.main section
+{
+    border: solid 2px #1C325B;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px 10px 10px 10px;
+	position: absolute;
+	top: 30px;
+	left: 270px;
+	right: 0px;
+	bottom: 0px;
 }
 
-fieldset label
+div.main section.nolocalmenu
 {
-	width: 250px;
+	left: 0px;  /* Override  "classic" section property*/
 }
 
-table td
+/** Buttons icons **/
+input.btn
 {
-	text-align: left;
+	width: 25px;
+	height: 25px;
+	background-size : 25px 25px;
+	background-repeat: no-repeat;
+	background-color : transparent;
+	border: none;
+	color: transparent;
+	cursor: pointer;
+	margin: 0px 5px 0px 5px;
 }
+
+input.view
+{
+	background-image:url(../IMG/loupe.png);
+	
+}
+input.del
+{	
+	background-image:url(../IMG/delete.png);
+}
+
 
 table.listing
 {
@@ -303,124 +351,98 @@ table.listing tr td
 	padding: 5px 10px 5px 10px;
 }
 
-a.action
-{
-	margin: 5px 5px 5px 5px;
-}
-a.action img
-{
-	width: 25px;
-	height: 25px;
-}
-
-.buttonline
-{
-	text-align: center;
-	padding: 10px 10px 10px 10px;
-    margin: 10px 10px 10px 10px;
-}
-
-.button
-{
-	background-color: #1C325B;
-	border: solid 1px #1C325B;
-	border-radius: 5px;
-	margin: 10px 10px 10px 10px;
-	padding: 5px 10px 5px 10px;
-	text-decoration: none;
-	color: white;
-	width: 120px;
-	height: 30px;
-	font-size: 14px;
-}
-
-.button:hover
-{
-    background-color: #F37605;
-    border: solid 1px #F37605;
-}
-
-.button#addnewuser
-{
-	text-align: center;
-}
-
-.button#deleteuser
-{
-	left: 5px;
-}
-
-.button#saveuser
-{
-	right: 5px;
-}
-
-p.error
-{
-	font-weight: bold;
-	color: red;
-	text-align: center;
-	
-}
-
-header
-{
-    background-color: white;
-    padding: 10px 30px 10px 30px;
-}
-
-header figure, header section
+ul#listelocale, div.actionzone
 {
     display: inline-block;
-    height: 70px;
+}
+
+ul#listelocale
+{
+    width: 250px;
+    border: solid 2px #1C325B;
+    padding: 0px 0px 0px 0px;
     position: absolute;
+    bottom: 10px;
+    left: 10px;
     top: 10px;
 }
 
-header figure
+ul#listelocale li
 {
-    left: 30px;
+    padding: 5px 5px 5px 5px;
+    border-bottom: solid 1px #1C325B;
 }
 
-header section
+div.actionzone
 {
-    right: 30px;
+    position: absolute;
+    top: 10px;
+    bottom: 0px;
+    left: 280px;
+    right: 0px;
 }
 
-header section div.line p, header section form
+div.actionzone h1
 {
-    display: inline-block;
-    width: inherit;
-    line-height: 0%;
-    padding: 0px;
-    margin: 0px;
-    height: 10px;
-    border: solid 1px red;
+    position: absolute;
+    top: 0px;
+    left: 10px;
+}
+input#new
+{
+	position: absolute;
+    top: 5px;
+    right: 10px;
 }
 
-header section form input
+div.main div.displayzone
 {
-	width: 100px;
+    position: absolute;
+    top: 40px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    border: solid 2px #1C325B;
+    border-radius: 10px;
 }
 
-input.btn
+div.displayzone fieldset
 {
-	width: 25px;
-	height: 25px;
-	background-size : 25px 25px;
-	background-repeat: no-repeat;
-	background-color : transparent;
-	border: none;
-	color: transparent;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: solid 2px #1C325B;
+    border-radius: 5px 5px 0px 0px;
+    padding: 5px 5px 5px 5px;
 }
 
-input.view
+
+div.displayzone table caption
 {
-	background-image:url(../IMG/loupe.png);
-	
+    text-align: left;
+    font-weight: bold;
+    padding: 0px 0px 10px 5px;
 }
-input.del
-{	
-	background-image:url(../IMG/delete.png);
+
+div.displayzone td
+{
+    padding: 5px 5px 5px 5px;
 }
-*/
+div.displayzone td input
+{
+	margin-right: 10px;
+}
+
+input#del
+{
+	position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+div.displayzone form.bottom
+{
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}

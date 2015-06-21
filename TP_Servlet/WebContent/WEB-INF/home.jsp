@@ -11,9 +11,13 @@
 	   <% request.setAttribute("title", "Accueil"); %>
 		<jsp:include page="menu.jsp" />
 		<div class="main">
-		  	<section>
+			<div class="path">  <!-- Chemin de la page actuelle dans le site -->
+                <a href="home">Accueil</a>
+            </div>
+		  	<section class="nolocalmenu">
 		  		<h2>Bienvenue dans le premier site JavaEE fait par Florent RICHARD</h2>
 		  	</section>
 	  	</div>
+	   <jsp:include page="footer.jspf" />
 	</body>
 </html>

@@ -13,8 +13,18 @@
 	   <% request.setAttribute("title", "Liste des Usagers"); %>
         <jsp:include page="menu.jsp" />
         <div class="main">
+        	<div class="path">  <!-- Chemin de la page actuelle dans le site -->
+                <a href="home">Accueil</a> > <a href="userlist"> Liste Usagers</a>
+            </div>
+            <aside id="menulocal">  <!-- Menu local -->
+                <h2>Base Usagers</h2>
+                <ul>
+                    <li><a href="userlist">Liste des Usagers</a></li>
+                    <li><form method="post" action="userview"><input class="localmenu" type="submit" name="new" value="Ajouter un Usager"/></form></li>
+                </ul>
+            </aside>
+            
 	        <section>
-	            <div class="buttonline"><form method="post" action="userview"><input class="button action" type="submit" name="new" value="Ajouter un Usager"/></form></div>
 	            <table class="listing">
 	                <tr><th>Nom</th><th>Prénom</th><th></th></tr>
 	                <% Integer userNb = 1; %>
@@ -22,13 +32,13 @@
 	                    <tr><td><%= u.getName() %></td><td><%= u.getFirstName() %></td>
 	                        <td><form method="post" action="userview">
 	                        		<input type="hidden" name="numligne" value="<%= userNb++ %>"/>
-	                        		<input type="submit" class="btn view" name="view" />
-	                            	<input type="submit" class="btn del" name="delete"/>
+	                        		<input type="submit" class="btn view" name="view" /><input type="submit" class="btn del" name="delete"/>
 	                        	</form>
 	                        </td></tr>
 	                <% } %>
 	            </table>
 	        </section>
 	    </div>
+	   <jsp:include page="footer.jspf" />
     </body>
 </html>
