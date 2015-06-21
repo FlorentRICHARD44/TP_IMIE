@@ -40,8 +40,9 @@ public class UserLogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    HttpSession session = request.getSession();
+	    session.setAttribute("pathURI", request.getHeader("referer"));
 	    session.removeAttribute("userconnected");
-	    session.invalidate();
-        response.sendRedirect("login");
+	    System.out.println(request.getHeader("referer"));
+	    response.sendRedirect("login");
 	}
 }

@@ -160,11 +160,29 @@ form.login div.formline:last-child
     text-align: center;
 }
 
-form.login input.button
+form.login input.action
 {
     width: 120px;
     padding: 5px 20px 5px 20px;
     margin: 0px auto;
+}
+
+/* Button for actions */
+input.action
+{
+    padding: 5px 5px 5px 5px;
+    background-color: #1C325B;
+    color: white;
+    border-radius: 3px;
+    border-width: 0px;
+    box-shadow: 2px 2px 2px #444444;
+}
+
+input.action:hover
+{
+    cursor: pointer;
+	background-color: #F16800;
+	color: white;
 }
 /*
 nav h1

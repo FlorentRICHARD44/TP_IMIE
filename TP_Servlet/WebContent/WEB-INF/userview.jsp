@@ -68,10 +68,10 @@
 	                    </table>
 	                    <div class="buttonline">
 	                        <% if (user.getId() != null) { // Can't delete on usager creation %>
-	                            <input class="button" id="deleteuser" type="submit" name="delete" value="Supprimer"/>
+	                            <input class="button action" id="deleteuser" type="submit" name="delete" value="Supprimer"/>
 	                        <% } %>
-	                        <input class="button" id="init" type="reset" value="Réinitialiser"/>
-	                        <input class="button" id="saveuser" type="submit" name="save" value="Enregistrer"/></div>
+	                        <input class="button action" id="init" type="reset" value="Réinitialiser"/>
+	                        <input class="button action" id="saveuser" type="submit" name="save" value="Enregistrer"/></div>
 	                </fieldset>
 	            </form>
 	        </section>

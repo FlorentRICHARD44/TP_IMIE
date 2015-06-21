@@ -24,7 +24,7 @@
                            show = " hidden";
                        } %>
                     <div class="formline"><p class="error" <%= show %>>Erreur de login et/ou de mot de passe</p></div>
-                    <div class="formline"><input class="button" type="submit" value="Connexion"/></div>
+                    <div class="formline centered"><input class="action" type="submit" value="Connexion"/></div>
                 </fieldset>
             </form>
         </div>

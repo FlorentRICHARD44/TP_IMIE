@@ -14,7 +14,7 @@
         <jsp:include page="menu.jsp" />
         <div class="main">
 	        <section>
-	            <div class="buttonline"><form method="post" action="userview"><input class="button" type="submit" name="new" value="Ajouter un Usager"/></form></div>
+	            <div class="buttonline"><form method="post" action="userview"><input class="button action" type="submit" name="new" value="Ajouter un Usager"/></form></div>
 	            <table class="listing">
 	                <tr><th>Nom</th><th>Prénom</th><th></th></tr>
 	                <% Integer userNb = 1; %>
