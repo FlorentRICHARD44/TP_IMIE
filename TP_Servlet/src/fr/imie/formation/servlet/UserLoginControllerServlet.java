@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
-/**
+/** Servlet to control the login of an usager.
  * Servlet implementation class UserLoginControllerServlet
  */
 @WebServlet("/login")
@@ -27,7 +27,6 @@ public class UserLoginControllerServlet extends HttpServlet {
      */
     public UserLoginControllerServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

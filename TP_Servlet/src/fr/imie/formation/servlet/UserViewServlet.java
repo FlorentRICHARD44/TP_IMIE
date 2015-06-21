@@ -16,7 +16,7 @@ import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
-/**
+/** Servlet to control manipulation on an Usager (view, create, update, delete).
  * Servlet implementation class UserViewServlet
  */
 @WebServlet("/userview")
@@ -28,20 +28,20 @@ public class UserViewServlet extends HttpServlet {
      */
     public UserViewServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// Not used.
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@SuppressWarnings("unchecked")
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 	    Usager user = null;
 		try (ServiceData servData = new ServiceData();) {

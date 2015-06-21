@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
+/** Servlet to Control logout of an Usager.
  * Servlet implementation class UserLogoutServlet
  */
 @WebServlet("/logout")
@@ -25,14 +25,13 @@ public class UserLogoutServlet extends HttpServlet {
      */
     public UserLogoutServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// Not used.
 	}
 
 	/**

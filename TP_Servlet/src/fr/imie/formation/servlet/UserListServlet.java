@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +15,7 @@ import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.ServiceData;
 
-/**
+/** Servlet Controller to generate list of Usagers.
  * Servlet implementation class UserListServlet
  */
 @WebServlet("/userlist")
@@ -32,7 +31,6 @@ public class UserListServlet extends HttpServlet {
      */
     public UserListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -58,7 +56,7 @@ public class UserListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// Not used.
 	}
 
 }

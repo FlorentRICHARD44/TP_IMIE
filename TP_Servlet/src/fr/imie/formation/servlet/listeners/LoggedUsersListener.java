@@ -5,9 +5,8 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
-/**
+/** Counts the number of Usager logged in the website.
  * Application Lifecycle Listener implementation class LoggedUsersListener
- *
  */
 @WebListener
 public class LoggedUsersListener implements HttpSessionAttributeListener {
@@ -16,7 +15,7 @@ public class LoggedUsersListener implements HttpSessionAttributeListener {
      * Default constructor. 
      */
     public LoggedUsersListener() {
-        // TODO Auto-generated constructor stub
+        super();
     }
 
 	/**
@@ -48,7 +47,7 @@ public class LoggedUsersListener implements HttpSessionAttributeListener {
      * @see HttpSessionAttributeListener#attributeReplaced(HttpSessionBindingEvent)
      */
     public void attributeReplaced(HttpSessionBindingEvent arg0)  { 
-         // TODO Auto-generated method stub
+         // Not used.
     }
 	
 }

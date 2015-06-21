@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-/**
+/** Listener to count the number of visitors (actives sessions).
  * Application Lifecycle Listener implementation class VisitorsListener
  *
  */
@@ -16,8 +16,7 @@ public class VisitorsListener implements HttpSessionListener {
      * Default constructor. 
      */
     public VisitorsListener() {
-        
-        // TODO Auto-generated constructor stub
+        super();
     }
 
 	/**

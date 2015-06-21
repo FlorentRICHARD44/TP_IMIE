@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/** Servlet to controle the helloworld page.
  * Servlet implementation class HelloWorldServlet
  */
 @WebServlet("/helloworld")
@@ -19,7 +19,6 @@ public class HelloWorldServlet extends HttpServlet {
      */
     public HelloWorldServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

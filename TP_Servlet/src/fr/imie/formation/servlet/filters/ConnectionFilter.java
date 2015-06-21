@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Usager;
 
-/**
+/** Filter to secured all the pages via login/password.
+ * The elements not filtered are: login page, IMG and CSS.
  * Servlet Filter implementation class ConnectionFilter
  */
 @WebFilter("/*")
@@ -25,14 +26,13 @@ public class ConnectionFilter implements Filter {
      * Default constructor. 
      */
     public ConnectionFilter() {
-        // TODO Auto-generated constructor stub
+        super();
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -50,11 +50,6 @@ public class ConnectionFilter implements Filter {
 		        String nextURI = (String) session.getAttribute("pathURI");
 		        String lastURI = (String) session.getAttribute("logoutPathURI");
 		        Usager lastConnectedUser = (Usager) session.getAttribute("lastconnecteduser");
-		        System.out.println(nextURI);
-		        System.out.println(lastURI);
-		        if (lastConnectedUser != null) {
-		            System.out.println(lastConnectedUser.getFirstName());
-		        }
 		        if (nextURI != null) {
                     resp.sendRedirect(nextURI);
 		        } else if (lastConnectedUser != null
@@ -84,7 +79,6 @@ public class ConnectionFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }
