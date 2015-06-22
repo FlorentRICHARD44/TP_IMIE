@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="fr.imie.formation.jdbc.data.Usager" %>
 <%@ page import="fr.imie.formation.jdbc.data.Site" %>
+<%@ page import="fr.imie.formation.jdbc.data.Usager" %>
 <%@ page import="fr.imie.formation.jdbc.services.ServiceData" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +14,8 @@
     </head>
     <body>
         <% List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-        	Usager user = (Usager) session.getAttribute("user");
-        	if (user.getId() == null) {
+            Usager user = (Usager) session.getAttribute("user");        
+         	if (user.getId() == null) {
 	   			request.setAttribute("title", "Nouvel Usager");
         	} else {
 	   			request.setAttribute("title", String.format("Usager %s %s", user.getFirstName(), user.getName()));

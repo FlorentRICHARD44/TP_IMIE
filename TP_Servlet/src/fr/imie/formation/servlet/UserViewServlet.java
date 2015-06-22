@@ -57,7 +57,7 @@ public class UserViewServlet extends HttpServlet {
 		    // Add a new user
 		    if (request.getParameter("new") != null) {
     	        user = new Usager();
-    	        request.getSession().setAttribute("user", user);
+    	        session.setAttribute("user", user);
     	        request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
     		}
 
