@@ -9,6 +9,8 @@
         <title>Usager</title>
     </head>
     <body>
+        <fmt:setLocale value="${lang }"/>
+        <fmt:setBundle basename="fr.imie.formation.servlet.userview" var="propertie"/>
         <c:choose>
             <c:when test="${empty user }"><c:set var="title" scope="request" value="Nouvel Usager"/></c:when>
             <c:otherwise><c:set var="title" scope="request" value="Usager ${user.firstName } ${user.name }" /></c:otherwise>
@@ -39,9 +41,9 @@
 			                <fieldset>
 			                    <table>
 			                    	<caption>Modification des informations usager</caption>
-			                        <tr><td><label for="name">Nom</label></td>
+			                        <tr><td><label for="name"><fmt:message key="usager.lastname" bundle="${propertie}"/></label></td>
 			                            <td><input id="name" name="name" type="text" required value="${user.name}" placeholder="NOM"/></td></tr>
-			                        <tr><td><label for="firstname">Prénom</label></td>
+			                        <tr><td><label for="firstname"><fmt:message key="usager.firstname" bundle="${propertie}"/></label></td>
 			                            <td><input id="firstname" name="firstname" type="text" required value="${user.firstName}" placeholder="Prénom"/></td></tr>
 			                        <tr><td><label for="birth">Date de Naissance</label></td>
 			                            <td><input id="birth" name="birthdate" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${user.dateBirth}" />" placeholder="JJ/MM/AAAA" /></td></tr>
