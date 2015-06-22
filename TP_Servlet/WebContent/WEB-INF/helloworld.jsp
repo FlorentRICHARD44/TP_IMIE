@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -8,13 +8,13 @@
 		<style type="text/css">
 		  h1, em
 		  {
-		      color:<%= request.getParameter("color")%>;
+		      color:<c:out value="${param.color}"/>;
 		  }
 		</style>
 		<title>HelloWorld</title>
 	</head>
 	<body>
-	   <% request.setAttribute("title", "Hello the World!"); %>
+	   <c:set var="title" scope="request" value="Hello the World!" /> 
 	   <jsp:include page="menu.jsp" />
 	   <div class="main">
 	   		<div class="path">  <!-- Chemin de la page actuelle dans le site -->

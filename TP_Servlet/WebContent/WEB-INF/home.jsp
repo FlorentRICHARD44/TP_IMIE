@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,7 +8,7 @@
 		<title>Accueil</title>
 	</head>
 	<body>
-	   <% request.setAttribute("title", "Accueil"); %>
+	    <c:set var="title" scope="request" value="Accueil" /> 
 		<jsp:include page="menu.jsp" />
 		<div class="main">
 			<div class="path">  <!-- Chemin de la page actuelle dans le site -->

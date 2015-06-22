@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,11 +20,11 @@
                     <div class="formline"><label for="login">Login</label><input id="login" class="input" type="text" required placeholder="Entrer votre login" name="login"/></div>
                     <div class="formline"><label for="pwd">Mot de Passe</label><input id="pwd" class="input" type="password" required placeholder="Mot de passe" name="pwd"/></div>
                     <div class="formline centered"><input class="action" type="submit" value="Connexion"/></div>
-                	<% String show = "";
-                       if (request.getParameter("error") == null) {
-                           show = " hidden";
-                       } %>
-                    <div class="formline"><p class="error" <%= show %>>Erreur de login et/ou de mot de passe</p></div>
+                	<div class="formline">
+                        <c:if test="${param.error != null }">
+                            <p class="error" >Erreur de login et/ou de mot de passe</p>
+                        </c:if>
+                    </div>
                 </fieldset>
             </form>
         </div>
