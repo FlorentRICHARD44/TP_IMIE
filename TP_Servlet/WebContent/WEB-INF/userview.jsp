@@ -14,7 +14,7 @@
     </head>
     <body>
         <% List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-            Usager user = (Usager) session.getAttribute("user");        
+            Usager user = (Usager) session.getAttribute("user");   
          	if (user.getId() == null) {
 	   			request.setAttribute("title", "Nouvel Usager");
         	} else {
@@ -47,16 +47,10 @@
 			                <fieldset>
 			                    <table>
 			                    	<caption>Modification des informations usager</caption>
-			                        <% String strName = ""; %>
-			                        <% if (user.getName() != null) {%>
-			                            <% strName = user.getName();}%>
 			                        <tr><td><label for="name">Nom</label></td>
-			                            <td><input id="name" name="name" type="text" required value="<%= strName %>" placeholder="NOM"/></td></tr>
-			                        <% String strFirstName = ""; %>
-			                        <% if (user.getFirstName() != null) {%>
-			                            <% strFirstName = user.getFirstName();}%>
+			                            <td><input id="name" name="name" type="text" required value="${user.name}" placeholder="NOM"/></td></tr>
 			                        <tr><td><label for="firstname">Prénom</label></td>
-			                            <td><input id="firstname" name="firstname" type="text" required value="<%= strFirstName %>" placeholder="Prénom"/></td></tr>
+			                            <td><input id="firstname" name="firstname" type="text" required value="${user.firstName}" placeholder="Prénom"/></td></tr>
 			                        <% String strDate = ""; %>
 			                        <% if (user.getDateBirth() != null) { %>
 			                            <% strDate = new SimpleDateFormat("dd/MM/yyyy").format(user.getDateBirth()); } %> 
@@ -79,11 +73,8 @@
 					                                <option<%= selected %> value="<%= sitenb++ %>"><%= s.getName() %></option>
 					                            <% } %>
 				                            </select></td></tr>
-						            <% String strEmail = ""; %>
-						            <% if (user.getEmail() != null) { %>
-						                <% strEmail = user.getEmail(); } %>
 			                        <tr><td><label for="email">Email</label></td>
-			                            <td><input id="email" name="email" type="email" value="<%= strEmail %>" placeholder="xxxxxx@yyyyy.zzz"/></td></tr>
+			                            <td><input id="email" name="email" type="email" value="${user.email}" placeholder="xxxxxx@yyyyy.zzz"/></td></tr>
 			                        <tr><td><label for="nbcon">Nombre de connexions</label></td>
 			                            <td><input id="nbcon" name="nbcon" type="number" disabled value="<%= user.getNbConnection() %>"/></td></tr>
 			                    	<tr><td colspan="2"><p class="error"><%= " " %></p></td></tr>

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="fr.imie.formation.jdbc.data.Usager" %>
 <%! SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); %> <%-- Déclaration d'un objet de portée application --%>
 <header>
 	<jsp:useBean id="userconnected" scope="session" class="fr.imie.formation.jdbc.data.Usager" />
@@ -10,7 +9,7 @@
 	<h1><%= (String) request.getAttribute("title") %></h1>
 	<section id="info_connection">
 		<div class="line"><p class="data"><%= simpleDateFormat.format(new Date()) %></p></div>
-		<div class="line"><p class="data"><jsp:getProperty property="firstName" name="userconnected"/> <jsp:getProperty property="name" name="userconnected"/></p></div>
+		<div class="line"><p class="data">${userconnected.firstName} ${userconnected.name}</p></div>
 		<div class="line"><p class="data"><%= application.getAttribute("nbvisitors") %> visiteur(s), dont <%= application.getAttribute("nbloggedusers") %> connecté(s)</p></div>
 	</section>
 </header>
