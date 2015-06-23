@@ -1,10 +1,10 @@
-<%@tag description="ComboBox Tag" pageEncoding="UTF-8"%>
-<%@attribute name="cbname" required="true"%>
-<%@attribute name="cbselected" required="true"%>
-<%@attribute name="cbitems" required="true"%>
+<%@tag description="ComboBox Tag - Display a ComboBox with List elements (preceded by a 'Aucun' unselectable element). Values can't be retrieved from 1 to n" pageEncoding="UTF-8"%>
+<%@attribute name="cbname" required="true" description="name of the ComboBox as used in forms"%>
+<%@attribute name="cbselected" required="true" description="String equals to the string of the selected elements"%>
+<%@attribute name="cbitems" required="true" type="java.util.List" description="Items listed in the ComboBox."%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<select id="site" name="${cbname }">
+<select name="${cbname }">
     <c:set var="selected" scope="page" value=""/>
     <c:if test="${empty cbselected}">
         <c:set var="selected" scope="page" value=" selected"/>
