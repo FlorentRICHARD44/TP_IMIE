@@ -39,20 +39,8 @@
                             <tr><td><label for="birth">Date de Naissance</label></td>
                                 <td><input id="birth" name="birthdate" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${user.dateBirth}" />" placeholder="JJ/MM/AAAA" /></td></tr>
                             <tr><td><label for="site">Site d'inscription</label></td>
-                                <td><select id="site" name="inscrsite">
-                                        <c:set var="selected" scope="page" value=""/>
-                                        <c:if test="${empty user.inscrSite}">
-                                            <c:set var="selected" scope="page" value=" selected"/>
-                                        </c:if>
-                                        <option disabled <c:out value="${selected}"/>>Aucun</option>
-                                        <c:forEach var="site" items="${sitelist}" varStatus="loop">
-                                              <c:set var="selected" scope="page" value=""/>
-                                              <c:if test="${site.name eq user.inscrSite.name }">
-                                                  <c:set var="selected" scope="page" value=" selected"/>
-                                              </c:if>
-                                              <option <c:out value="${selected}"/> value="${loop.count}"><c:out value="${site.name}"></c:out></option>
-                                        </c:forEach>
-                                    </select></td></tr>
+                                <td><t:combobox cbselected="${user.inscrSite }" cbitems="${sitelist}" cbname="inscrsite"></t:combobox>
+                                </td></tr>
                             <tr><td><label for="email">Email</label></td>
                                 <td><input id="email" name="email" type="email" value="${user.email}" placeholder="xxxxxx@yyyyy.zzz"/></td></tr>
                             <tr><td><label for="nbcon">Nombre de connexions</label></td>

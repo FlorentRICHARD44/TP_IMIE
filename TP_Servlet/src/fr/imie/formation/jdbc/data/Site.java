@@ -48,4 +48,12 @@ public class Site implements Serializable {
     public final void setId(final Integer sId) {
         this.id = sId;
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
