@@ -2,9 +2,6 @@
     <wb-module deploy-name="TP_Servlet">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="postgresql-9.4-1201.jdbc41.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//opt/lib/postgresql-9.4-1201.jdbc41.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="postgresql.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Doc Florent/Travail/IMIE - Formation CDI/GIT/TP_IMIE/common/postgresql.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
