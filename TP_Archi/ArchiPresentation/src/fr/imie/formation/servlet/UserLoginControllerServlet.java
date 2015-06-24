@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
-import fr.imie.formation.jdbc.services.ServiceData;
+import fr.imie.formation.transverse.Factory;
 
 /** Servlet to control the login of an usager.
  * Servlet implementation class UserLoginControllerServlet
@@ -41,7 +41,7 @@ public class UserLoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try (IService servData = new ServiceData();) {
+		try (IService servData = ((Factory) request.getServletContext().getAttribute("factory")).getService();) {
     		Usager filter = new Usager();
     		String login = request.getParameter("login");
     		Usager user = null;

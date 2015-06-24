@@ -7,13 +7,12 @@ import java.util.List;
 
 import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.ConnectionProvider;
-import fr.imie.formation.jdbc.dao.DaoSite;
-import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
+import fr.imie.formation.transverse.IFactory;
 
 /** Service to access the data from DAO.
  * @author Florent RICHARD
@@ -27,9 +26,9 @@ public class ServiceData implements IService {
     private IDao<DtoSite> daoSite;
     /** Constructor.
      */
-    public ServiceData() {
-        daoUsager = new DaoUsager();
-        daoSite = new DaoSite();
+    public ServiceData(IFactory factory) {
+        daoUsager = factory.getUsagerDao();
+        daoSite = factory.getSiteDao();
     }
 
     /** Return the list of all Usagers.
