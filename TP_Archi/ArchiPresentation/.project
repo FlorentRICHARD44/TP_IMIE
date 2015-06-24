@@ -7,8 +7,8 @@
 		<project>ArchiPersistance</project>
 		<project>ArchiDTO</project>
 		<project>ArchiService</project>
-		<project>ArchiTransverse</project>
 		<project>ArchiITransverse</project>
+		<project>ArchiTransverse</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -52,9 +52,9 @@ public final class ConnectionProvider {
     public Connection getConnection() throws SQLException, DAOConfigurationException, IOException {
         Connection connection = null;
         Properties properties = new Properties();
-        String url;
-        String username;
-        String password;
+        String url = "";
+        String username = "";
+        String password = "";
         InputStream fichierProperties = getClass().getResourceAsStream( FILE_PROPERTIES );
         if ( fichierProperties == null ) {
             throw new DAOConfigurationException( "Le fichier properties " + FILE_PROPERTIES + " est introuvable." );

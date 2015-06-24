@@ -34,7 +34,7 @@ public class Factory implements IFactory {
      */
     @Override
     public IDao<DtoUsager> getUsagerDao() {
-        return daoUsager;
+        return new DaoUsager();
     }
 
     /* (non-Javadoc)
@@ -42,7 +42,7 @@ public class Factory implements IFactory {
      */
     @Override
     public IDao<DtoSite> getSiteDao() {
-        return daoSite;
+        return new DaoSite();
     }
 
     /* (non-Javadoc)
@@ -50,7 +50,9 @@ public class Factory implements IFactory {
      */
     @Override
     public IService getService() {
-        return serviceData;
+        daoUsager = new DaoUsager();
+        daoSite = new DaoSite();
+        return new ServiceData(this);
     }
 
 }
