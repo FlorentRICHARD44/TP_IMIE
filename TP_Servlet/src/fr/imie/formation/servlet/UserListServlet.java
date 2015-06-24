@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.services.IService;
 import fr.imie.formation.jdbc.services.ServiceData;
 
 /** Servlet Controller to generate list of Usagers.
@@ -39,7 +40,7 @@ public class UserListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    List<Usager> userList = new ArrayList<Usager>();
 	    List<Site> siteList = new ArrayList<Site>();
-        try (ServiceData servData = new ServiceData();) {
+        try (IService servData = new ServiceData();) {
             userList = servData.selectAllUsagers();
             siteList = servData.selectAllSites();
             HttpSession session = request.getSession();

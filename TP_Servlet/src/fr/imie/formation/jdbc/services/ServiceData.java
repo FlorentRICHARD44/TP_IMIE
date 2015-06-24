@@ -18,7 +18,7 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 /** Service to access the data from DAO.
  * @author Florent RICHARD
  */
-public class ServiceData implements AutoCloseable {
+public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
     private IDao<DtoUsager> daoUsager;
@@ -35,6 +35,7 @@ public class ServiceData implements AutoCloseable {
     /** Return the list of all Usagers.
      * @return List of all Usagers.
      */
+    @Override
     public final List<Usager> selectAllUsagers() {
         List<DtoUsager> dtoUsagers = daoUsager.selectAll();
         List<Usager> usagers = new ArrayList<Usager>();
@@ -47,6 +48,7 @@ public class ServiceData implements AutoCloseable {
     /** Return the list of all Sites.
      * @return List of all Sites.
      */
+    @Override
     public final List<Site> selectAllSites() {
         List<DtoSite> dtoSites = daoSite.selectAll();
         List<Site> sites = new ArrayList<Site>();
@@ -60,6 +62,7 @@ public class ServiceData implements AutoCloseable {
      * @param id Id of the usager to return.
      * @return Usager corresponding to the id, null if not existing.
      */
+    @Override
     public final Usager getById(final Integer id) {
         Usager usager = null;
         DtoUsager dtoUsager = daoUsager.getById(id);
@@ -73,6 +76,7 @@ public class ServiceData implements AutoCloseable {
      * @param data usager to add.
      * @return usager added.
      */
+    @Override
     public final Usager insert(final Usager data) {
         return dtoToData(daoUsager.insert(dataToDto(data)));
     }
@@ -81,6 +85,7 @@ public class ServiceData implements AutoCloseable {
      * @param data Site to add.
      * @return Site added.
      */
+    @Override
     public final Site insert(final Site data) {
         return dtoToData(daoSite.insert(dataToDto(data)));
     }
@@ -88,6 +93,7 @@ public class ServiceData implements AutoCloseable {
     /** Remove an usager.
      * @param data usager to remove.
      */
+    @Override
     public final void delete(final Usager data) {
         daoUsager.delete(dataToDto(data));
     }
@@ -96,6 +102,7 @@ public class ServiceData implements AutoCloseable {
      * @param data Site to remove.
      * @throws Exception case of error during delete.
      */
+    @Override
     public final void delete(final Site data) throws Exception {
         DtoUsager usager = new DtoUsager();
         usager.setName(null);
@@ -122,6 +129,7 @@ public class ServiceData implements AutoCloseable {
     /** Modify an usager.
      * @param data Element to modify with new values to apply.
      */
+    @Override
     public final void update(final Usager data) {
         daoUsager.update(dataToDto(data));
     }
@@ -129,6 +137,7 @@ public class ServiceData implements AutoCloseable {
     /** Modify a site.
      * @param data Element to modify with new values to apply.
      */
+    @Override
     public final void update(final Site data) {
         daoSite.update(dataToDto(data));
     }
@@ -139,6 +148,7 @@ public class ServiceData implements AutoCloseable {
      * @return List of elements corresponding to the filter.
      * @throws Exception Case of error during filtering.
      */
+    @Override
     public final List<Usager> selectFiltered(final Usager elementFilter)
             throws Exception {
         List<DtoUsager> dtoUsagers = daoUsager.selectFiltered(
@@ -154,6 +164,7 @@ public class ServiceData implements AutoCloseable {
      * @param site Site to delete.
      * @throws Exception Case of error during delete.
      */
+    @Override
     public final void deleteSiteAndRelatedUsers(final Site site) throws Exception {
         try (Connection connection = ConnectionProvider.getInstance().getConnection()) {
             connection.setAutoCommit(false);
@@ -198,6 +209,7 @@ public class ServiceData implements AutoCloseable {
      * @param password Proposed password.
      * @return the Usager correctly identified or null (if password is not correct)
      */
+    @Override
     public Usager checkUsagerPassword(final Usager usager, final String password) {
         Usager identifiedUsager = null;
         DtoUsager filter = new DtoUsager();
@@ -217,6 +229,7 @@ public class ServiceData implements AutoCloseable {
         return identifiedUsager;
     }
 
+    @Override
     public void modifyUsagerPassword(Usager user, String newPassword) {
         DtoUsager dtoUsager = daoUsager.getById(user.getId());
         if (dtoUsager != null) {

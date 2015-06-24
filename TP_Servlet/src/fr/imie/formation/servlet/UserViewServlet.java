@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.services.IService;
 import fr.imie.formation.jdbc.services.ServiceData;
 
 /** Servlet to control manipulation on an Usager (view, create, update, delete).
@@ -45,7 +46,7 @@ public class UserViewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 	    Usager user = null;
-		try (ServiceData servData = new ServiceData();) {
+		try (IService servData = new ServiceData();) {
 		    // Simple view of the user
 		    if (request.getParameter("view") != null) {
 		        List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
