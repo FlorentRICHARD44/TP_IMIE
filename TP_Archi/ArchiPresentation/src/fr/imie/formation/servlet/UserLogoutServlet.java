@@ -14,9 +14,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/logout")
 public class UserLogoutServlet extends HttpServlet {
-       
-    /**
-     * 
+
+    /** Serial Version UID.
      */
     private static final long serialVersionUID = -6192859875940250945L;
 
@@ -27,21 +26,23 @@ public class UserLogoutServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Not used.
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Not used.
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    HttpSession session = request.getSession();
-	    session.setAttribute("logoutPathURI", request.getHeader("referer"));
-	    session.setAttribute("lastconnecteduser", session.getAttribute("userconnected"));
-	    session.removeAttribute("userconnected");
-	    response.sendRedirect("login");
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("logoutPathURI", request.getHeader("referer"));
+        session.setAttribute("lastconnecteduser", session.getAttribute("userconnected"));
+        session.removeAttribute("userconnected");
+        response.sendRedirect("login");
+    }
 }

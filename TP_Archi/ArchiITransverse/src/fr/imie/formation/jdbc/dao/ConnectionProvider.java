@@ -55,17 +55,17 @@ public final class ConnectionProvider {
         String url = "";
         String username = "";
         String password = "";
-        InputStream fichierProperties = getClass().getResourceAsStream( FILE_PROPERTIES );
-        if ( fichierProperties == null ) {
-            throw new DAOConfigurationException( "Le fichier properties " + FILE_PROPERTIES + " est introuvable." );
+        InputStream fichierProperties = getClass().getResourceAsStream(FILE_PROPERTIES);
+        if (fichierProperties == null) {
+            throw new DAOConfigurationException("Le fichier properties " + FILE_PROPERTIES + " est introuvable.");
         }
         try {
-            properties.load( fichierProperties );
-            url = properties.getProperty( PROPERTY_URL );
-            username = properties.getProperty( PROPERTY_USERNAME );
-            password = properties.getProperty( PROPERTY_PASSWORD );
-        } catch ( IOException e ) {
-            throw new DAOConfigurationException( "Impossible de charger le fichier properties " + FILE_PROPERTIES, e );
+            properties.load(fichierProperties);
+            url = properties.getProperty(PROPERTY_URL);
+            username = properties.getProperty(PROPERTY_USERNAME);
+            password = properties.getProperty(PROPERTY_PASSWORD);
+        } catch (IOException e) {
+            throw new DAOConfigurationException("Impossible de charger le fichier properties " + FILE_PROPERTIES, e);
         }
 
         synchronized (DriverManager.class) {

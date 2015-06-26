@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.imie.formation.jdbc.dao;
 
 /** Class used for Error during Configuration of DAO.
@@ -9,13 +6,11 @@ package fr.imie.formation.jdbc.dao;
  */
 public class DAOConfigurationException extends Exception {
 
-    /**
-     * 
+    /** Serial Version UID.
      */
     private static final long serialVersionUID = -1734033839669163102L;
 
-    /**
-     * 
+    /** Constructor.
      */
     public DAOConfigurationException() {
         super();
@@ -24,14 +19,14 @@ public class DAOConfigurationException extends Exception {
     /**
      * @param arg0
      */
-    public DAOConfigurationException(String arg0) {
+    public DAOConfigurationException(final String arg0) {
         super(arg0);
     }
 
     /**
      * @param arg0
      */
-    public DAOConfigurationException(Throwable arg0) {
+    public DAOConfigurationException(final Throwable arg0) {
         super(arg0);
     }
 
@@ -39,7 +34,7 @@ public class DAOConfigurationException extends Exception {
      * @param arg0
      * @param arg1
      */
-    public DAOConfigurationException(String arg0, Throwable arg1) {
+    public DAOConfigurationException(final String arg0, final Throwable arg1) {
         super(arg0, arg1);
     }
 
@@ -49,8 +44,8 @@ public class DAOConfigurationException extends Exception {
      * @param arg2
      * @param arg3
      */
-    public DAOConfigurationException(String arg0, Throwable arg1, boolean arg2,
-            boolean arg3) {
+    public DAOConfigurationException(final String arg0, final Throwable arg1, final boolean arg2,
+            final boolean arg3) {
         super(arg0, arg1, arg2, arg3);
     }
 }

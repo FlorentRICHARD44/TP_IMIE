@@ -12,8 +12,7 @@ import javax.servlet.http.HttpSessionListener;
 @WebListener
 public class VisitorsListener implements HttpSessionListener {
 
-    /**
-     * Default constructor. 
+    /** Default constructor.
      */
     public VisitorsListener() {
         super();
@@ -22,23 +21,21 @@ public class VisitorsListener implements HttpSessionListener {
 	/**
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
-    public void sessionCreated(HttpSessionEvent event)  { 
-        ServletContext context = event.getSession().getServletContext(); 
+    public final void sessionCreated(HttpSessionEvent event) {
+        ServletContext context = event.getSession().getServletContext();
         if (context.getAttribute("nbvisitors") == null) {
             context.setAttribute("nbvisitors", 0);
         }
         context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") + 1);
-        
     }
 
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
-    public void sessionDestroyed(HttpSessionEvent event)  { 
+    public final void sessionDestroyed(HttpSessionEvent event) {
         ServletContext context = event.getSession().getServletContext();
         if (context.getAttribute("nbvisitors") != null) {
             context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") - 1);
         }
     }
-	
 }

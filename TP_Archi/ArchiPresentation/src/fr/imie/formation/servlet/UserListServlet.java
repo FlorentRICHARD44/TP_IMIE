@@ -21,9 +21,10 @@ import fr.imie.formation.jdbc.services.IService;
  */
 @WebServlet("/userlist")
 public class UserListServlet extends HttpServlet {
-    @Inject IService servData;
-    /**
-     * 
+    /** Service used.
+     */
+    @Inject private IService servData;
+    /** Serial Version UID.
      */
     private static final long serialVersionUID = 2417900212257871777L;
 
@@ -37,7 +38,8 @@ public class UserListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 	    List<Usager> userList = new ArrayList<Usager>();
 	    List<Site> siteList = new ArrayList<Site>();
         try {
@@ -56,8 +58,8 @@ public class UserListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		// Not used.
 	}
-
 }

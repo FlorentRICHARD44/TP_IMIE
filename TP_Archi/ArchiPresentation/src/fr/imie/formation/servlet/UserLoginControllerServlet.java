@@ -17,12 +17,12 @@ import fr.imie.formation.jdbc.services.IService;
  */
 @WebServlet("/login")
 public class UserLoginControllerServlet extends HttpServlet {
-    /**
-     * 
+    /** Serial Version UID.
      */
     private static final long serialVersionUID = 5250812970723215403L;
-
-    @Inject IService servData;
+    /** Service used.
+     */
+    @Inject private IService servData;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,14 +33,16 @@ public class UserLoginControllerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		try {
     		Usager filter = new Usager();
     		String login = request.getParameter("login");
@@ -58,6 +60,6 @@ public class UserLoginControllerServlet extends HttpServlet {
     	    }
 		} catch (Exception e) {
 		    throw new ServletException(e);
-		} 
+		}
 	}
 }

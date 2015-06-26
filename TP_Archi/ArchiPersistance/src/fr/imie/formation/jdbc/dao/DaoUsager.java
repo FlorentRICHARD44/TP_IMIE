@@ -104,7 +104,8 @@ public class DaoUsager implements IDao<DtoUsager> {
     @Override
     public final DtoUsager insert(final DtoUsager usager) {
         DtoUsager newUsager = null;
-        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO usager (nom, prenom, datenaissance, email, si_id) VALUES (?, ?, ?, ?, ?) returning *;")) {
+        try (PreparedStatement pst = connection.prepareStatement(
+                "INSERT INTO usager (nom, prenom, datenaissance, email, si_id) VALUES (?, ?, ?, ?, ?) returning *;")) {
             pst.setString(1, usager.getName());
             pst.setString(2, usager.getFirstName());
             if (usager.getDateBirth() == null) {

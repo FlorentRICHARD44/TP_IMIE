@@ -11,8 +11,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 @WebListener
 public class LoggedUsersListener implements HttpSessionAttributeListener {
 
-    /**
-     * Default constructor. 
+    /** Default constructor.
      */
     public LoggedUsersListener() {
         super();
@@ -21,9 +20,9 @@ public class LoggedUsersListener implements HttpSessionAttributeListener {
 	/**
      * @see HttpSessionAttributeListener#attributeAdded(HttpSessionBindingEvent)
      */
-    public void attributeAdded(HttpSessionBindingEvent event)  {
+    public final void attributeAdded(HttpSessionBindingEvent event)  {
         if (event.getName().equals("userconnected")) {
-            ServletContext context = event.getSession().getServletContext(); 
+            ServletContext context = event.getSession().getServletContext();
             if (context.getAttribute("nbloggedusers") == null) {
                 context.setAttribute("nbloggedusers", 0);
             }
@@ -34,7 +33,7 @@ public class LoggedUsersListener implements HttpSessionAttributeListener {
 	/**
      * @see HttpSessionAttributeListener#attributeRemoved(HttpSessionBindingEvent)
      */
-    public void attributeRemoved(HttpSessionBindingEvent event)  { 
+    public final void attributeRemoved(HttpSessionBindingEvent event) {
         if (event.getName().equals("userconnected")) {
             ServletContext context = event.getSession().getServletContext();
             if (context.getAttribute("nbloggedusers") != null) {
@@ -46,8 +45,7 @@ public class LoggedUsersListener implements HttpSessionAttributeListener {
 	/**
      * @see HttpSessionAttributeListener#attributeReplaced(HttpSessionBindingEvent)
      */
-    public void attributeReplaced(HttpSessionBindingEvent arg0)  { 
+    public final void attributeReplaced(HttpSessionBindingEvent arg0) {
          // Not used.
     }
-	
 }

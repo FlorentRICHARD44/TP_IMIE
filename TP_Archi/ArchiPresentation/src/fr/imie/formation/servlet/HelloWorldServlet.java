@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/helloworld")
 public class HelloWorldServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+
+    /** Serial Version UID.
+     */
+    private static final long serialVersionUID = 4185717569807071863L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -24,14 +27,16 @@ public class HelloWorldServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/helloworld.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 	    request.getRequestDispatcher("/WEB-INF/helloworld.jsp").forward(request, response);
 	}
 

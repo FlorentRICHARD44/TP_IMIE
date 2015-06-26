@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+
+    /** Serial Version UID.
+     */
+    private static final long serialVersionUID = -7858621825720873124L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -21,18 +24,20 @@ public class HomeServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Not used
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Not used
+    }
 
 }

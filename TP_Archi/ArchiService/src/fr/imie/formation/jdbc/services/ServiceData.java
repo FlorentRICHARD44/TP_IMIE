@@ -201,7 +201,7 @@ public class ServiceData implements IService {
             e.printStackTrace();
         }
     }
-    
+
     /** Check if the proposed password of Usager is correct.
      * The Usager is identified by its name and firstname.
      * @param usager Usager to check
@@ -209,7 +209,7 @@ public class ServiceData implements IService {
      * @return the Usager correctly identified or null (if password is not correct)
      */
     @Override
-    public Usager checkUsagerPassword(final Usager usager, final String password) {
+    public final Usager checkUsagerPassword(final Usager usager, final String password) {
         Usager identifiedUsager = null;
         DtoUsager filter = new DtoUsager();
         filter.setName(usager.getName());
@@ -228,8 +228,9 @@ public class ServiceData implements IService {
         return identifiedUsager;
     }
 
+    @SuppressWarnings("javadoc")
     @Override
-    public void modifyUsagerPassword(Usager user, String newPassword) {
+    public final void modifyUsagerPassword(final Usager user, final String newPassword) {
         DtoUsager dtoUsager = daoUsager.getById(user.getId());
         if (dtoUsager != null) {
             dtoUsager.setPassword(newPassword);

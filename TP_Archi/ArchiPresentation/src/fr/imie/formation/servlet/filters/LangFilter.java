@@ -11,14 +11,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-/**
+/** Filter to retrieve the lang defined by the navigator and apply it on all pages.
  * Servlet Filter implementation class LangFilter
  */
 @WebFilter("/*")
 public class LangFilter implements Filter {
 
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public LangFilter() {
         // TODO Auto-generated constructor stub
@@ -34,7 +34,8 @@ public class LangFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	        throws IOException, ServletException {
 	    HttpServletRequest req = (HttpServletRequest) request;
 	    req.setAttribute("lang", (String) req.getLocale().getLanguage());
 
@@ -48,5 +49,4 @@ public class LangFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
-
 }

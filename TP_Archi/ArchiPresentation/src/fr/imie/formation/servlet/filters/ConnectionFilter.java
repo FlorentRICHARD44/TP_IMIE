@@ -22,8 +22,7 @@ import fr.imie.formation.jdbc.data.Usager;
 @WebFilter("/*")
 public class ConnectionFilter implements Filter {
 
-    /**
-     * Default constructor. 
+    /** Default constructor.
      */
     public ConnectionFilter() {
         super();
@@ -38,7 +37,8 @@ public class ConnectionFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	        throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
@@ -71,14 +71,12 @@ public class ConnectionFilter implements Filter {
 		    req.getSession().setAttribute("pathURI", uri);
             resp.sendRedirect("login");
 		}
-		
-		
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
+	public final void init(FilterConfig fConfig) throws ServletException {
 	}
 
 }
