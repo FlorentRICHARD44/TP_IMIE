@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,14 +15,13 @@ import javax.servlet.http.HttpSession;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
-import fr.imie.formation.transverse.Factory;
 
 /** Servlet Controller to generate list of Usagers.
  * Servlet implementation class UserListServlet
  */
 @WebServlet("/userlist")
 public class UserListServlet extends HttpServlet {
-       
+    @Inject IService servData;
     /**
      * 
      */
@@ -40,7 +40,7 @@ public class UserListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    List<Usager> userList = new ArrayList<Usager>();
 	    List<Site> siteList = new ArrayList<Site>();
-        try (IService servData = ((Factory) request.getServletContext().getAttribute("factory")).getService();) {
+        try {
             userList = servData.selectAllUsagers();
             siteList = servData.selectAllSites();
             HttpSession session = request.getSession();

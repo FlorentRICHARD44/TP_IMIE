@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
-import fr.imie.formation.transverse.Factory;
 
 /** Servlet to control manipulation on an Usager (view, create, update, delete).
  * Servlet implementation class UserViewServlet
@@ -23,7 +23,7 @@ import fr.imie.formation.transverse.Factory;
 @WebServlet("/userview")
 public class UserViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    @Inject IService servData;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -46,7 +46,7 @@ public class UserViewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 	    Usager user = null;
-		try (IService servData = ((Factory) request.getServletContext().getAttribute("factory")).getService();) {
+		try {
 		    // Simple view of the user
 		    if (request.getParameter("view") != null) {
 		        List<Usager> userList = (List<Usager>) session.getAttribute("userlist");

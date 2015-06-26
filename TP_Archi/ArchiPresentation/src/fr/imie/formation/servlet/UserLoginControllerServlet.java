@@ -2,6 +2,7 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
-import fr.imie.formation.transverse.Factory;
 
 /** Servlet to control the login of an usager.
  * Servlet implementation class UserLoginControllerServlet
  */
 @WebServlet("/login")
 public class UserLoginControllerServlet extends HttpServlet {
-       
     /**
      * 
      */
     private static final long serialVersionUID = 5250812970723215403L;
 
+    @Inject IService servData;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,7 +41,7 @@ public class UserLoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try (IService servData = ((Factory) request.getServletContext().getAttribute("factory")).getService();) {
+		try {
     		Usager filter = new Usager();
     		String login = request.getParameter("login");
     		Usager user = null;

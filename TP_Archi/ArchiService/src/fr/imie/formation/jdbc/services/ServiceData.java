@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.ConnectionProvider;
 import fr.imie.formation.jdbc.dao.IDao;
@@ -12,7 +14,6 @@ import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
-import fr.imie.formation.transverse.IFactory;
 
 /** Service to access the data from DAO.
  * @author Florent RICHARD
@@ -20,15 +21,14 @@ import fr.imie.formation.transverse.IFactory;
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
-    private IDao<DtoUsager> daoUsager;
+    @Inject private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
-    private IDao<DtoSite> daoSite;
+    @Inject private IDao<DtoSite> daoSite;
+
     /** Constructor.
      */
-    public ServiceData(IFactory factory) {
-        daoUsager = factory.getUsagerDao();
-        daoSite = factory.getSiteDao();
+    public ServiceData() {
     }
 
     /** Return the list of all Usagers.

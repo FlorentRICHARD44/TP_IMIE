@@ -26,7 +26,7 @@ public class Factory implements IFactory {
         super();
         daoUsager = new DaoUsager();
         daoSite = new DaoSite();
-        serviceData = new ServiceData(this);
+        serviceData = new ServiceData();
     }
 
     /* (non-Javadoc)
@@ -52,7 +52,7 @@ public class Factory implements IFactory {
     public IService getService() {
         daoUsager = new DaoUsager();
         daoSite = new DaoSite();
-        return new ServiceData(this);
+        return new ServiceData();
     }
 
 }
