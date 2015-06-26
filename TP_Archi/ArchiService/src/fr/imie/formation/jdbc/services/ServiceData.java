@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.ConnectionProvider;
+import fr.imie.formation.jdbc.dao.DummySite;
+import fr.imie.formation.jdbc.dao.DummyUsager;
 import fr.imie.formation.jdbc.dao.IDao;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
@@ -21,10 +24,10 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
-    @Inject private IDao<DtoUsager> daoUsager;
+    @Inject @DummyUsager private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
-    @Inject private IDao<DtoSite> daoSite;
+    @Inject @DummySite private IDao<DtoSite> daoSite;
 
     /** Constructor.
      */
