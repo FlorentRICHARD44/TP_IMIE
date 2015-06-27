@@ -23,10 +23,10 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
-    @Inject private IDao<DtoUsager> daoUsager;
+    @Inject @DummyUsager private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
-    @Inject private IDao<DtoSite> daoSite;
+    @Inject @DummySite private IDao<DtoSite> daoSite;
 
     /** Constructor.
      */

@@ -2,8 +2,6 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,14 +41,13 @@ public class UserListServlet extends HttpServlet {
     protected final void doGet(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("ready to compare");
         List<Usager> userList = new ArrayList<Usager>();
         List<Site> siteList = new ArrayList<Site>();
-        System.out.println("compare finished");
         try {
             userList = servData.selectAllUsagers();
             siteList = servData.selectAllSites();
             HttpSession session = request.getSession();
+            session.removeAttribute("user");
             session.setAttribute("userlist", userList);
             session.setAttribute("sitelist", siteList);
             //session.removeAttribute("user");

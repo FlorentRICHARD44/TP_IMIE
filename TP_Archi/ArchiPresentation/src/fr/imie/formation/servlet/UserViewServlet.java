@@ -3,7 +3,10 @@ package fr.imie.formation.servlet;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -42,7 +45,7 @@ public class UserViewServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected final void doGet(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
+            throws ServletException, IOException {
         // return to the user list, because access from an URL (not an action)
         response.sendRedirect("userlist");
     }
@@ -51,7 +54,8 @@ public class UserViewServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     @SuppressWarnings("unchecked")
-    protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected final void doPost(HttpServletRequest request,
+                                HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Usager user = null;
@@ -59,22 +63,24 @@ public class UserViewServlet extends HttpServlet {
             // Simple view of the user
             if (request.getParameter("view") != null) {
                 List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-                user = userList.get(Integer.valueOf(request.getParameter("numligne")) - 1);
+                user = userList.get(Integer.valueOf(request.getParameter("view")) - 1);
                 session.setAttribute("user", user);
-                request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/userview.jsp")
+                                .forward(request, response);
             }
             // Add a new user
             if (request.getParameter("new") != null) {
                 user = new Usager();
                 session.setAttribute("user", user);
-                request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/userview.jsp")
+                                .forward(request, response);
             }
 
             // Delete selected user
             if (request.getParameter("delete") != null) {
                 if (session.getAttribute("user") == null) {  // From userlist
                     List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-                    user = userList.get(Integer.valueOf(request.getParameter("numligne")) - 1);
+                    user = userList.get(Integer.valueOf(request.getParameter("delete")) - 1);
                 } else { // From userview
                     user = (Usager) session.getAttribute("user");
                     session.removeAttribute("user");
@@ -97,14 +103,15 @@ public class UserViewServlet extends HttpServlet {
                 }
                 if (request.getParameter("birthdate") != null) {
                     try {
-                        user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("birthdate")));
+                        user.setDateBirth(new SimpleDateFormat("dd/MM/yyyy")
+                                    .parse(request.getParameter("birthdate")));
                     } catch (ParseException e) {
                         user.setDateBirth(null);
                     }
                 }
                 if (request.getParameter("inscrsite") != null) {
                     user.setInscrSite(((List<Site>) session.getAttribute("sitelist")).get(
-                                                Integer.valueOf(request.getParameter("inscrsite")) - 1));
+                            Integer.valueOf(request.getParameter("inscrsite")) - 1));
                 }
                 if (user.getId() == null) { // New Usager to create
                     user = servData.insert(user);
@@ -112,7 +119,8 @@ public class UserViewServlet extends HttpServlet {
                     servData.update(user);
                 }
                 session.setAttribute("user", user);
-                request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/userview.jsp")
+                                .forward(request, response);
             }
 
             // Modification of the password.
@@ -127,7 +135,25 @@ public class UserViewServlet extends HttpServlet {
                 } else { // OK, can save new password
                     servData.modifyUsagerPassword(user, request.getParameter("newpwd"));
                 }
-                request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/userview.jsp")
+                                .forward(request, response);
+            }
+
+            // Delete several usagers.
+            if (request.getParameter("delselected") != null) {
+                Map<String, String[]> reqparams = request.getParameterMap();
+                if (reqparams.get("selected") != null) {  // If at least one entry is selected
+                    List<String> strListId =
+                            Arrays.asList(reqparams.get("selected"));
+                    Collections.reverse(strListId);
+                    for (String s: strListId) {
+                        servData.delete(((List<Usager>)
+                                session.getAttribute("userlist")).get(
+                                        Integer.valueOf(s) - 1));
+                    }
+                }
+                session.removeAttribute("userlist");
+                response.sendRedirect("userlist");
             }
         } catch (Exception e) {
             throw new ServletException(e);

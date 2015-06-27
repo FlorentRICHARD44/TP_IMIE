@@ -24,20 +24,23 @@ public class HelloWorldServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/helloworld.jsp").forward(request, response);
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doGet(HttpServletRequest request,
+                               HttpServletResponse response)
+                    throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/helloworld.jsp")
+                    .forward(request, response);
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    request.getRequestDispatcher("/WEB-INF/helloworld.jsp").forward(request, response);
-	}
-
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doPost(HttpServletRequest request,
+                                HttpServletResponse response)
+                    throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/helloworld.jsp")
+                        .forward(request, response);
+    }
 }

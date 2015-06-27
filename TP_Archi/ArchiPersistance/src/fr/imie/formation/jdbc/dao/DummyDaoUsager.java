@@ -13,7 +13,7 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 /** Dao Site for testing.
  * @author imie
  */
-@Alternative
+@DummyUsager
 public class DummyDaoUsager implements IDao<DtoUsager> {
     /** List of dto for testing.
      */
@@ -90,10 +90,16 @@ public class DummyDaoUsager implements IDao<DtoUsager> {
     @SuppressWarnings("javadoc")
     @Override
     public final void delete(final DtoUsager data) {
+        Integer indexToDel = -1;
         for (DtoUsager u: dto) {
             if (u.getId() == data.getId()) {
-                dto.remove(u);
+                indexToDel = dto.indexOf(u);
+                System.out.println("delete usager: " + u.getFirstName() + " " + u.getName());
+                break;
             }
+        }
+        if (indexToDel > -1) {
+            dto.remove(indexToDel);
         }
     }
 
