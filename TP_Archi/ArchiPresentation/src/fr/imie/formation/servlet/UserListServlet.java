@@ -2,6 +2,8 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,13 +37,16 @@ public class UserListServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected final void doGet(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    List<Usager> userList = new ArrayList<Usager>();
-	    List<Site> siteList = new ArrayList<Site>();
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doGet(HttpServletRequest request,
+                               HttpServletResponse response)
+            throws ServletException, IOException {
+        System.out.println("ready to compare");
+        List<Usager> userList = new ArrayList<Usager>();
+        List<Site> siteList = new ArrayList<Site>();
+        System.out.println("compare finished");
         try {
             userList = servData.selectAllUsagers();
             siteList = servData.selectAllSites();
@@ -49,17 +54,18 @@ public class UserListServlet extends HttpServlet {
             session.setAttribute("userlist", userList);
             session.setAttribute("sitelist", siteList);
             //session.removeAttribute("user");
-    	    request.getRequestDispatcher("/WEB-INF/userlisting.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/userlisting.jsp")
+                            .forward(request, response);
         } catch (Exception e) {
             throw new ServletException(e);
         }
-	}
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected final void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-		// Not used.
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Not used.
+    }
 }

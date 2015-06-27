@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <header>
 	<jsp:useBean id="userconnected" scope="session" class="fr.imie.formation.jdbc.data.Usager" />
-	<img alt="Logo Cyberbase" src="/TP_Servlet/IMG/Logo_Cyberbase.gif">
+	<img alt="Logo Cyberbase" src="/ArchiPresentation/IMG/Logo_Cyberbase.gif">
 	<c:set var="now" value="<%=new java.util.Date()%>" />  
 	<h1><c:out value="${title }"/></h1>
 	<section id="info_connection">

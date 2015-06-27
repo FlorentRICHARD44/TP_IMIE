@@ -148,14 +148,14 @@ public class Usager implements Serializable {
     /**
      * @return the password
      */
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
+    public final void setPassword(final String password) {
         this.password = password;
     }
 }

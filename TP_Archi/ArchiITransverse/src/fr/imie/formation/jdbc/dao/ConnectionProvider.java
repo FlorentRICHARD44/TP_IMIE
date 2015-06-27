@@ -16,7 +16,8 @@ public final class ConnectionProvider {
     private static ConnectionProvider instance;
     /** Properties: file path.
      */
-    private static final String FILE_PROPERTIES       = "/fr/imie/formation/jdbc/database.properties";
+    private static final String FILE_PROPERTIES       =
+            "/fr/imie/formation/jdbc/database.properties";
     /** Properties: url of database.
      */
     private static final String PROPERTY_URL             = "url";

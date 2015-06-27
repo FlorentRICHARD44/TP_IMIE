@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.inject.Alternative;
 import javax.inject.Named;
 
 import fr.imie.formation.jdbc.NullFilterException;
@@ -12,7 +13,7 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 /** Dao Site for testing.
  * @author imie
  */
-@DummyUsager
+@Alternative
 public class DummyDaoUsager implements IDao<DtoUsager> {
     /** List of dto for testing.
      */

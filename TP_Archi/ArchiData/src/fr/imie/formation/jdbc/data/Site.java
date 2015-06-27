@@ -53,7 +53,7 @@ public class Site implements Serializable {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return this.name;
     }
 }

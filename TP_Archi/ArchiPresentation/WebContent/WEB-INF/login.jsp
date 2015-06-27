@@ -9,7 +9,7 @@
     </head>
     <body>
     	<header>
-            <img alt="Logo Cyberbase" src="/TP_Servlet/IMG/Logo_Cyberbase.gif">
+            <img alt="Logo Cyberbase" src="/ArchiPresentation/IMG/Logo_Cyberbase.gif">
         </header>
         <nav>
             <h1>Authentification</h1>
