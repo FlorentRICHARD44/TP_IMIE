@@ -19,7 +19,7 @@ public class ServiceFactory extends AbstractServiceFactory {
         // TODO Auto-generated constructor stub
     }
 
-    /* (non-Javadoc)
+    /**
      * @see fr.imie.formation.transverse.AbstractServiceFactory#getServiceData()
      */
     @Override

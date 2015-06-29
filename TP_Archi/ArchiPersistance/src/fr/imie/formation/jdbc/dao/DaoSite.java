@@ -14,6 +14,7 @@ import fr.imie.formation.jdbc.dto.DtoSite;
 /** DAO to the Site in PostGreSQL.
  * @author Florent RICHARD
  */
+@RealSite
 public class DaoSite implements IDao<DtoSite> {
     /** Connection to Database.
      */
