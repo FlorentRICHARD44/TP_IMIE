@@ -30,8 +30,8 @@ public class Factory implements IFactory {
      */
     public Factory() {
         super();
-        daoUsager = new DummyDaoUsager();
-        daoSite = new DummyDaoSite();
+        daoUsager = new DaoUsager();
+        daoSite = new DaoSite();
         serviceData = new ServiceData();
     }
 
@@ -41,7 +41,7 @@ public class Factory implements IFactory {
     @Override
     @Produces
     public IDao<DtoUsager> getUsagerDao() {
-        return new DummyDaoUsager();
+        return new DaoUsager();
     }
 
     /* (non-Javadoc)
@@ -50,7 +50,7 @@ public class Factory implements IFactory {
     @Override
     @Produces
     public IDao<DtoSite> getSiteDao() {
-        return new DummyDaoSite();
+        return new DaoSite();
     }
 
     /* (non-Javadoc)
@@ -58,8 +58,8 @@ public class Factory implements IFactory {
      */
     @Override
     public IService getService() {
-        daoUsager = new DummyDaoUsager();
-        daoSite = new DummyDaoSite();
+        daoUsager = new DaoUsager();
+        daoSite = new DaoSite();
         return new ServiceData();
     }
 
