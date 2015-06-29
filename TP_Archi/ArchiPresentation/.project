@@ -8,6 +8,7 @@
 		<project>ArchiDTO</project>
 		<project>ArchiService</project>
 		<project>ArchiITransverse</project>
+		<project>ArchiTransverse</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,8 +3,14 @@
  */
 package fr.imie.formation.transverse;
 
+
+
+import javax.enterprise.inject.Produces;
+
 import fr.imie.formation.jdbc.dao.DaoSite;
 import fr.imie.formation.jdbc.dao.DaoUsager;
+import fr.imie.formation.jdbc.dao.DummyDaoSite;
+import fr.imie.formation.jdbc.dao.DummyDaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
 import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
@@ -24,8 +30,8 @@ public class Factory implements IFactory {
      */
     public Factory() {
         super();
-        daoUsager = new DaoUsager();
-        daoSite = new DaoSite();
+        daoUsager = new DummyDaoUsager();
+        daoSite = new DummyDaoSite();
         serviceData = new ServiceData();
     }
 
@@ -33,16 +39,18 @@ public class Factory implements IFactory {
      * @see fr.imie.formation.transverse.IFactory#getUsagerDao()
      */
     @Override
+    @Produces
     public IDao<DtoUsager> getUsagerDao() {
-        return new DaoUsager();
+        return new DummyDaoUsager();
     }
 
     /* (non-Javadoc)
      * @see fr.imie.formation.transverse.IFactory#getSiteDao()
      */
     @Override
+    @Produces
     public IDao<DtoSite> getSiteDao() {
-        return new DaoSite();
+        return new DummyDaoSite();
     }
 
     /* (non-Javadoc)
@@ -50,8 +58,8 @@ public class Factory implements IFactory {
      */
     @Override
     public IService getService() {
-        daoUsager = new DaoUsager();
-        daoSite = new DaoSite();
+        daoUsager = new DummyDaoUsager();
+        daoSite = new DummyDaoSite();
         return new ServiceData();
     }
 
