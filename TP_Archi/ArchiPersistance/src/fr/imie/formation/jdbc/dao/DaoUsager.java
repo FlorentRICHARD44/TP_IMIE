@@ -17,7 +17,7 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
  * @author Florent RICHARD
  *
  */
-@RealUsager
+@Real
 public class DaoUsager implements IDao<DtoUsager> {
     /** Connection to Database.
      */

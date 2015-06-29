@@ -13,7 +13,7 @@ import fr.imie.formation.jdbc.dto.DtoSite;
 /** Dao Site for testing.
  * @author imie
  */
-@DummySite
+@Dummy
 public class DummyDaoSite implements IDao<DtoSite> {
     /** List of Dto used for testing.
      */

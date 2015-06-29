@@ -10,13 +10,13 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
-/** Annotation to select the real site.
+/** Annotation to select the dummy site.
  * @author imie
  *
  */
 @Qualifier
 @Retention(RUNTIME)
 @Target({FIELD, TYPE, METHOD})
-public @interface RealSite {
+public @interface Dummy {
 
 }

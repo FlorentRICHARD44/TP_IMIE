@@ -10,8 +10,7 @@ import javax.inject.Inject;
 import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.ConnectionProvider;
 import fr.imie.formation.jdbc.dao.IDao;
-import fr.imie.formation.jdbc.dao.RealSite;
-import fr.imie.formation.jdbc.dao.RealUsager;
+import fr.imie.formation.jdbc.dao.Real;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.dto.DtoSite;
@@ -23,10 +22,10 @@ import fr.imie.formation.jdbc.dto.DtoUsager;
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
-    @Inject @RealUsager private IDao<DtoUsager> daoUsager;
+    @Inject @Real private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
-    @Inject @RealSite private IDao<DtoSite> daoSite;
+    @Inject @Real private IDao<DtoSite> daoSite;
 
     /** Constructor.
      */
