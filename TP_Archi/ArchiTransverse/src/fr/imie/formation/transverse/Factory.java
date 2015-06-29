@@ -60,8 +60,8 @@ public class Factory implements IFactory {
     @Override
     @Produces
     public IService getService() {
-        daoUsager = new DummyDaoUsager();
-        daoSite = new DummyDaoSite();
+        daoUsager = new DaoUsager();
+        daoSite = new DaoSite();
         IService serv = new ServiceData();
         serv.setDaos(daoUsager, daoSite);
         return serv;

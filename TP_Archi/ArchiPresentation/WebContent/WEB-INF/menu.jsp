@@ -12,6 +12,6 @@
 		<div class="line"><p class="data"><c:out value="${nbvisitors}"/> visiteur(s), dont <c:out value="${nbloggedusers}"/> connecté(s)</p></div>
 	</section>
 </header>
-<nav><div class="menu"><div class="menuitem"><a href="home">Accueil</a></div><div class="menuitem"><a href="helloworld">Helloworld</a></div><div class="menuitem"><a href="userlist">Liste des Usagers</a></div></div>
+<nav><div class="menu"><div class="menuitem"><a href="home">Accueil</a></div><div class="menuitem"><a href="helloworld">Helloworld</a></div><div class="menuitem"><a href="userlist">Liste des Usagers</a></div><div class="menuitem"><a href="sitelist">Liste des Sites</a></div></div>
 	<form method="post" action="logout" ><input type="submit" value="Déconnexion" name="logout" /></form>
 </nav>
