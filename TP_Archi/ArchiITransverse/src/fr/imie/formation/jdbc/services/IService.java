@@ -2,8 +2,11 @@ package fr.imie.formation.jdbc.services;
 
 import java.util.List;
 
+import fr.imie.formation.jdbc.dao.IDao;
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
+import fr.imie.formation.jdbc.dto.DtoSite;
+import fr.imie.formation.jdbc.dto.DtoUsager;
 
 /** Interface for services.
  * @author imie
@@ -85,4 +88,6 @@ public interface IService extends AutoCloseable {
      * @param newPassword New Password to apply to usager.
      */
     void modifyUsagerPassword(Usager user, String newPassword);
+
+    void setDaos(IDao<DtoUsager> daoU, IDao<DtoSite> daoS);
 }

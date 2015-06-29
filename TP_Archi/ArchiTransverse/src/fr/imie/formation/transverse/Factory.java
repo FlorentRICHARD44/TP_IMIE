@@ -6,6 +6,7 @@ package fr.imie.formation.transverse;
 
 
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 
 import fr.imie.formation.jdbc.dao.DaoSite;
 import fr.imie.formation.jdbc.dao.DaoUsager;
@@ -57,10 +58,13 @@ public class Factory implements IFactory {
      * @see fr.imie.formation.transverse.IFactory#getService()
      */
     @Override
+    @Produces
     public IService getService() {
-        daoUsager = new DaoUsager();
-        daoSite = new DaoSite();
-        return new ServiceData();
+        daoUsager = new DummyDaoUsager();
+        daoSite = new DummyDaoSite();
+        IService serv = new ServiceData();
+        serv.setDaos(daoUsager, daoSite);
+        return serv;
     }
 
 }

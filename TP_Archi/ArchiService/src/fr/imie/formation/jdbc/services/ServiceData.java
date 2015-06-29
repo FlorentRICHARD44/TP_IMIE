@@ -20,17 +20,24 @@ import fr.imie.formation.transverse.IFactory;
 /** Service to access the data from DAO.
  * @author Florent RICHARD
  */
+@Real
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
-    @Inject private IDao<DtoUsager> daoUsager;
+    private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
-    @Inject private IDao<DtoSite> daoSite;
+    private IDao<DtoSite> daoSite;
 
     /** Constructor.
      */
     public ServiceData() {
+    }
+    
+    @Override
+    public void setDaos(IDao<DtoUsager> daoU, IDao<DtoSite> daoS) {
+        daoUsager = daoU;
+        daoSite = daoS;
     }
 
     /** Return the list of all Usagers.
