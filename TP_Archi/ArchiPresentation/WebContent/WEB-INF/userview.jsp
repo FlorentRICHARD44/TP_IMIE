@@ -51,13 +51,13 @@
                     </fieldset>
                 </form>
                 <form method="post" action="userview">
-                     <c:if test="${usagerbean.user.id == userconnected.id}">
+                     <c:if test="${usagerbean.user.id == connecteduserbean.user.id}">
                          <fieldset>
                              <c:set var="errormsg" scope="page" value=""/>
                              <c:choose>
-                                 <c:when test="${error eq 'old' }"><c:set var="errormsg" scope="page" value="Ancien mot de passe incorrect"/></c:when>
-                                 <c:when test="${error eq 'confnew' }"><c:set var="errormsg" scope="page" value="Le nouveau mot de passe et le confirmé sont différents"/></c:when>
-                                 <c:when test="${error eq 'newshort' }"><c:set var="errormsg" scope="page" value="Le nouveau mot de passe est trop court"/></c:when>
+                                 <c:when test="${reqerrorbean.error eq 'old' }"><c:set var="errormsg" scope="page" value="Ancien mot de passe incorrect"/></c:when>
+                                 <c:when test="${reqerrorbean.error eq 'confnew' }"><c:set var="errormsg" scope="page" value="Le nouveau mot de passe et le confirmé sont différents"/></c:when>
+                                 <c:when test="${reqerrorbean.error eq 'newshort' }"><c:set var="errormsg" scope="page" value="Le nouveau mot de passe est trop court"/></c:when>
                              </c:choose>
                             <table>
                                 <caption>Modification du mot de passe</caption>

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
+import fr.imie.formation.servlet.reqbeans.RequestErrorBean;
 import fr.imie.formation.sessionbeans.SiteBean;
 import fr.imie.formation.sessionbeans.UsagerBean;
 
@@ -41,6 +42,10 @@ public class UserViewServlet extends HttpServlet {
     /** Bean for site.
      */
     @Inject private SiteBean sitebean;
+    /** Bean for error to be used for view during this request.
+     */
+    @Inject private RequestErrorBean errorbean;
+
     /** Constructor.
      */
     public UserViewServlet() {
@@ -126,13 +131,13 @@ public class UserViewServlet extends HttpServlet {
             if (request.getParameter("modifpwd") != null) {
                 if (servData.checkUsagerPassword(usagerbean.getUser(),
                                 request.getParameter("oldpwd")) == null) {
-                    request.setAttribute("error", "old");
+                    errorbean.setError("old");
                 } else if (!request.getParameter("newpwd").equals(
                             request.getParameter("confnewpwd"))) {
-                    request.setAttribute("error", "confnew");
+                    errorbean.setError("confnew");
                 } else if (((String) request.getParameter("newpwd")).length()
                                 < PASSWORD_MIN_LENGTH) {
-                    request.setAttribute("error", "newshort");
+                    errorbean.setError("newshort");
                 } else { // OK, can save new password
                     servData.modifyUsagerPassword(usagerbean.getUser(),
                                         request.getParameter("newpwd"));
