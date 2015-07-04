@@ -7,7 +7,7 @@
     <c:otherwise><c:set var="pagetitle" scope="page" value="Usager ${usagerbean.user.firstName } ${usagerbean.user.name }" /></c:otherwise>
 </c:choose>
 <t:maintemplate pagetitle="${pagetitle}" tabtitle="Usager">
-    <fmt:setLocale value="${lang }"/>
+    <fmt:setLocale value="${requestheaderbean.lang }"/>
     <fmt:setBundle basename="fr.imie.formation.servlet.userview" var="propertie"/>
     <div class="path">  <!-- Chemin de la page actuelle dans le site -->
         <a href="home">Accueil</a> > <a href="userlist">Liste Usagers</a> > <a href="userview">Vue Usager</a>

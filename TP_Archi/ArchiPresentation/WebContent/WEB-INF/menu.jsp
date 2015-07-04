@@ -9,6 +9,7 @@
 		<div class="line"><p class="data"><fmt:formatDate pattern="dd/MM/yyyy" value="${now}" /></p></div>
 		<div class="line"><p class="data"><c:out value="${connecteduserbean.user.firstName}"/> <c:out value="${connecteduserbean.user.name}"/></p></div>
 		<div class="line"><p class="data"><c:out value="${openconnectionsbean.visitors}"/> visiteur(s), dont <c:out value="${openconnectionsbean.loggedUsers}"/> connecté(s)</p></div>
+		<div class="line"><p class="data"><c:out value="${requestheaderbean.userAgent }"/></p></div>
 	</section>
 </header>
 <nav><div class="menu"><div class="menuitem"><a href="home">Accueil</a></div><div class="menuitem"><a href="helloworld">Helloworld</a></div><div class="menuitem"><a href="userlist">Liste des Usagers</a></div><div class="menuitem"><a href="sitelist">Liste des Sites</a></div></div>

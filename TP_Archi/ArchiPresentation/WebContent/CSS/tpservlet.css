@@ -57,6 +57,9 @@ header section div.line p
     width: inherit;
     line-height: 0%;
 }
+section#info_connection .line {
+    text-align: right;
+}
 
 p.label
 {
