@@ -14,11 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.data.Usager;
 import fr.imie.formation.jdbc.services.IService;
+import fr.imie.formation.sessionbeans.SiteBean;
+import fr.imie.formation.sessionbeans.UsagerBean;
 
 /** Servlet to control manipulation on an Usager (view, create, update, delete).
  * Servlet implementation class UserViewServlet
@@ -35,6 +35,12 @@ public class UserViewServlet extends HttpServlet {
     /** Service Used.
      */
     @Inject private IService servData;
+    /** Bean for usager.
+     */
+    @Inject private UsagerBean usagerbean;
+    /** Bean for site.
+     */
+    @Inject private SiteBean sitebean;
     /** Constructor.
      */
     public UserViewServlet() {
@@ -44,7 +50,8 @@ public class UserViewServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected final void doGet(HttpServletRequest request,
+                               HttpServletResponse response)
             throws ServletException, IOException {
         // return to the user list, because access from an URL (not an action)
         response.sendRedirect("userlist");
@@ -53,46 +60,37 @@ public class UserViewServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    @SuppressWarnings("unchecked")
     protected final void doPost(HttpServletRequest request,
                                 HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Usager user = null;
         try {
             // Simple view of the user
             if (request.getParameter("view") != null) {
-                List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-                user = userList.get(Integer.valueOf(request.getParameter("view")) - 1);
-                session.setAttribute("user", user);
+                usagerbean.setUser(usagerbean.getUserlist().get(
+                        Integer.valueOf(request.getParameter("view")) - 1));
                 request.getRequestDispatcher("/WEB-INF/userview.jsp")
                                 .forward(request, response);
             }
             // Add a new user
             if (request.getParameter("new") != null) {
-                user = new Usager();
-                session.setAttribute("user", user);
+                usagerbean.setUser(new Usager());
                 request.getRequestDispatcher("/WEB-INF/userview.jsp")
                                 .forward(request, response);
             }
 
             // Delete selected user
             if (request.getParameter("delete") != null) {
-                if (session.getAttribute("user") == null) {  // From userlist
-                    List<Usager> userList = (List<Usager>) session.getAttribute("userlist");
-                    user = userList.get(Integer.valueOf(request.getParameter("delete")) - 1);
-                } else { // From userview
-                    user = (Usager) session.getAttribute("user");
-                    session.removeAttribute("user");
+                if (usagerbean.getUser() == null) {  // From userlist
+                    usagerbean.setUser(usagerbean.getUserlist().get(
+                        Integer.valueOf(request.getParameter("delete")) - 1));
                 }
-                servData.delete(user);
-                session.removeAttribute("userlist");
+                servData.delete(usagerbean.getUser());
                 response.sendRedirect("userlist");
             }
 
             // Save current user
             if (request.getParameter("save") != null) {
-                user = (Usager) session.getAttribute("user");
+                Usager user = usagerbean.getUser();
                 if (user == null) { // New Usager to create
                     user = new Usager();
                 } // User to modify
@@ -110,30 +108,34 @@ public class UserViewServlet extends HttpServlet {
                     }
                 }
                 if (request.getParameter("inscrsite") != null) {
-                    user.setInscrSite(((List<Site>) session.getAttribute("sitelist")).get(
-                            Integer.valueOf(request.getParameter("inscrsite")) - 1));
+                    user.setInscrSite(sitebean.getSitelist().get(
+                            Integer.valueOf(
+                                    request.getParameter("inscrsite")) - 1));
                 }
                 if (user.getId() == null) { // New Usager to create
                     user = servData.insert(user);
                 } else {  // User to modify
                     servData.update(user);
                 }
-                session.setAttribute("user", user);
+                usagerbean.setUser(user);
                 request.getRequestDispatcher("/WEB-INF/userview.jsp")
                                 .forward(request, response);
             }
 
             // Modification of the password.
             if (request.getParameter("modifpwd") != null) {
-                user = (Usager) session.getAttribute("user");
-                if (servData.checkUsagerPassword(user, request.getParameter("oldpwd")) == null) {
+                if (servData.checkUsagerPassword(usagerbean.getUser(),
+                                request.getParameter("oldpwd")) == null) {
                     request.setAttribute("error", "old");
-                } else if (!request.getParameter("newpwd").equals(request.getParameter("confnewpwd"))) {
+                } else if (!request.getParameter("newpwd").equals(
+                            request.getParameter("confnewpwd"))) {
                     request.setAttribute("error", "confnew");
-                } else if (((String) request.getParameter("newpwd")).length() < PASSWORD_MIN_LENGTH) {
+                } else if (((String) request.getParameter("newpwd")).length()
+                                < PASSWORD_MIN_LENGTH) {
                     request.setAttribute("error", "newshort");
                 } else { // OK, can save new password
-                    servData.modifyUsagerPassword(user, request.getParameter("newpwd"));
+                    servData.modifyUsagerPassword(usagerbean.getUser(),
+                                        request.getParameter("newpwd"));
                 }
                 request.getRequestDispatcher("/WEB-INF/userview.jsp")
                                 .forward(request, response);
@@ -142,17 +144,16 @@ public class UserViewServlet extends HttpServlet {
             // Delete several usagers.
             if (request.getParameter("delselected") != null) {
                 Map<String, String[]> reqparams = request.getParameterMap();
-                if (reqparams.get("selected") != null) {  // If at least one entry is selected
+                // If at least one entry is selected
+                if (reqparams.get("selected") != null) {
                     List<String> strListId =
                             Arrays.asList(reqparams.get("selected"));
                     Collections.reverse(strListId);
                     for (String s: strListId) {
-                        servData.delete(((List<Usager>)
-                                session.getAttribute("userlist")).get(
+                        servData.delete(usagerbean.getUserlist().get(
                                         Integer.valueOf(s) - 1));
                     }
                 }
-                session.removeAttribute("userlist");
                 response.sendRedirect("userlist");
             }
         } catch (Exception e) {

@@ -18,7 +18,7 @@
     		<div id="delall"><input type="submit" class="action" name="delselected" value="Supprimer tous les usagers sélectionnés"/></div>
 	        <table class="listing">
 	            <tr><th></th><th>Nom</th><th>Prénom</th><th></th></tr>
-	            <c:forEach var="user" items="${userlist}" varStatus="loop">
+	            <c:forEach var="user" items="${usagerbean.userlist}" varStatus="loop">
 	                <tr><td><input type="checkbox" name="selected" value="${loop.count}"/></td>
 	                	<td><c:out value="${user.name}"/></td><td><c:out value="${user.firstName}"/></td>
 	                    <td><input type="submit" class="btn view" name="view" value="${loop.count}"/><input type="submit" class="btn del" name="delete"value="${loop.count}"/>

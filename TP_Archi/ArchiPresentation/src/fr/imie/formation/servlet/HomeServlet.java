@@ -27,15 +27,18 @@ public class HomeServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected final void doGet(HttpServletRequest request,
+                               HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/home.jsp")
+                    .forward(request, response);
     }
 
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected final void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected final void doPost(HttpServletRequest request,
+                                HttpServletResponse response)
             throws ServletException, IOException {
         // Not used
     }

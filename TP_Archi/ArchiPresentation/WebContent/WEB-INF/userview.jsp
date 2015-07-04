@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:choose>
-    <c:when test="${empty user }"><c:set var="pagetitle" scope="page" value="Nouvel Usager"/></c:when>
-    <c:otherwise><c:set var="pagetitle" scope="page" value="Usager ${user.firstName } ${user.name }" /></c:otherwise>
+    <c:when test="${empty usagerbean.user }"><c:set var="pagetitle" scope="page" value="Nouvel Usager"/></c:when>
+    <c:otherwise><c:set var="pagetitle" scope="page" value="Usager ${usagerbean.user.firstName } ${usagerbean.user.name }" /></c:otherwise>
 </c:choose>
 <t:maintemplate pagetitle="${pagetitle}" tabtitle="Usager">
     <fmt:setLocale value="${lang }"/>
@@ -33,25 +33,25 @@
                         <table>
                             <caption>Modification des informations usager</caption>
                             <tr><td><label for="name"><fmt:message key="usager.lastname" bundle="${propertie}"/></label></td>
-                                <td><input id="name" name="name" type="text" required value="${user.name}" placeholder="NOM"/></td></tr>
+                                <td><input id="name" name="name" type="text" required value="${usagerbean.user.name}" placeholder="NOM"/></td></tr>
                             <tr><td><label for="firstname"><fmt:message key="usager.firstname" bundle="${propertie}"/></label></td>
-                                <td><input id="firstname" name="firstname" type="text" required value="${user.firstName}" placeholder="Prénom"/></td></tr>
+                                <td><input id="firstname" name="firstname" type="text" required value="${usagerbean.user.firstName}" placeholder="Prénom"/></td></tr>
                             <tr><td><label for="birth">Date de Naissance</label></td>
-                                <td><input id="birth" name="birthdate" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${user.dateBirth}" />" placeholder="JJ/MM/AAAA" /></td></tr>
+                                <td><input id="birth" name="birthdate" type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usagerbean.user.dateBirth}" />" placeholder="JJ/MM/AAAA" /></td></tr>
                             <tr><td><label for="site">Site d'inscription</label></td>
-                                <td><t:combobox cbselected="${user.inscrSite }" cbitems="${sitelist}" cbname="inscrsite"></t:combobox>
+                                <td><t:combobox cbselected="${usagerbean.user.inscrSite }" cbitems="${sitebean.sitelist}" cbname="inscrsite"></t:combobox>
                                 </td></tr>
                             <tr><td><label for="email">Email</label></td>
-                                <td><input id="email" name="email" type="email" value="${user.email}" placeholder="xxxxxx@yyyyy.zzz"/></td></tr>
+                                <td><input id="email" name="email" type="email" value="${usagerbean.user.email}" placeholder="xxxxxx@yyyyy.zzz"/></td></tr>
                             <tr><td><label for="nbcon">Nombre de connexions</label></td>
-                                <td><input id="nbcon" name="nbcon" type="number" disabled value="${user.nbConnection }"/></td></tr>
+                                <td><input id="nbcon" name="nbcon" type="number" disabled value="${usagerbean.user.nbConnection }"/></td></tr>
                             <tr><td colspan="2"><p class="error"> </p></td></tr>
                             <tr><td colspan="2"><input class="button action" id="init" type="reset" value="Réinitialiser"/><input class="button action" id="saveuser" type="submit" name="save" value="Enregistrer"/></td></tr>
                         </table>
                     </fieldset>
                 </form>
                 <form method="post" action="userview">
-                     <c:if test="${user.id == userconnected.id}">
+                     <c:if test="${usagerbean.user.id == userconnected.id}">
                          <fieldset>
                              <c:set var="errormsg" scope="page" value=""/>
                              <c:choose>
@@ -74,7 +74,7 @@
                     </c:if>
                 </form>
                 <form  class="bottom" method="post" action="userview">
-                     <c:if test="${!empty user.id }"><!-- Can't delete on usager creation -->
+                     <c:if test="${!empty usagerbean.user.id }"><!-- Can't delete on usager creation -->
                         <input class="button action" id="delete" type="submit" name="delete" value="Supprimer l'usager"/>
                     </c:if>
                 </form>
