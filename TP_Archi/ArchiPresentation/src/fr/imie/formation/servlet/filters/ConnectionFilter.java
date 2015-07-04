@@ -56,11 +56,10 @@ public class ConnectionFilter implements Filter {
             if (user == null && connecteduserbean.getUser() != null) { // Just logged in
                 String nextURI = (String) session.getAttribute("pathURI");
                 String lastURI = (String) session.getAttribute("logoutPathURI");
-                Usager lastConnectedUser = (Usager) session.getAttribute("lastconnecteduser");
                 if (nextURI != null) {
                     resp.sendRedirect(nextURI);
-                } else if (lastConnectedUser != null
-                        && lastConnectedUser.getId() == connecteduserbean.getUser().getId()
+                } else if (connecteduserbean.getLastuser() != null
+                        && connecteduserbean.getLastuser().getId() == connecteduserbean.getUser().getId()
                         && lastURI != null) {
                     resp.sendRedirect(lastURI);
                 } else {
@@ -68,7 +67,7 @@ public class ConnectionFilter implements Filter {
                 }
                 session.removeAttribute("pathURI");
                 session.removeAttribute("logoutPathURI");
-                session.removeAttribute("lastconnecteduser");
+                connecteduserbean.setLastuser(null);
             }
         } else {
             String uri = req.getRequestURI();

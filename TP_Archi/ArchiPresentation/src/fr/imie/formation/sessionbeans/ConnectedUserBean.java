@@ -22,6 +22,9 @@ public class ConnectedUserBean implements Serializable {
     /** User connected.
      */
     private Usager user;
+    /** Last user connected.
+     */
+    private Usager lastuser;
     /**
      */
     public ConnectedUserBean() {
@@ -38,5 +41,17 @@ public class ConnectedUserBean implements Serializable {
      */
     public void setUser(Usager user) {
         this.user = user;
+    }
+    /**
+     * @return the lastuser
+     */
+    public Usager getLastuser() {
+        return lastuser;
+    }
+    /**
+     * @param lastuser the lastuser to set
+     */
+    public void setLastuser(Usager lastuser) {
+        this.lastuser = lastuser;
     }
 }

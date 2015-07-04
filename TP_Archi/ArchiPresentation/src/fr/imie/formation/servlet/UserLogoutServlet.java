@@ -52,7 +52,7 @@ public class UserLogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("logoutPathURI", request.getHeader("referer"));
-        session.setAttribute("lastconnecteduser", connecteduserbean.getUser());
+        connecteduserbean.setLastuser(connecteduserbean.getUser());
         connecteduserbean.setUser(null);
         openConnectionsBean.removeUser();
         response.sendRedirect("login");
