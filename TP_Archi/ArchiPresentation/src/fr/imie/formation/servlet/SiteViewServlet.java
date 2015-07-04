@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,19 +17,21 @@ import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.services.IService;
+import fr.imie.formation.sessionbeans.SiteBean;
 
 /** Servlet to control manipulation on an Usager (view, create, update, delete).
  * Servlet implementation class UserViewServlet
  */
 @WebServlet("/siteview")
 public class SiteViewServlet extends HttpServlet {
+    @Inject @Named("sitebean") private SiteBean sitebean;
     /**
-     * 
      */
     private static final long serialVersionUID = 3276474025300312834L;
     /** Service Used.
      */
     @Inject private IService servData;
+    /** Site displayed.
     /** Constructor.
      */
     public SiteViewServlet() {
@@ -52,51 +55,46 @@ public class SiteViewServlet extends HttpServlet {
                                 HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Site site = null;
         try {
             // Simple view of the site
             if (request.getParameter("view") != null) {
                 List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-                site = siteList.get(Integer.valueOf(request.getParameter("view")) - 1);
-                session.setAttribute("site", site);
+                sitebean.setSite(siteList.get(Integer.valueOf(request.getParameter("view")) - 1));
                 request.getRequestDispatcher("/WEB-INF/siteview.jsp")
                                 .forward(request, response);
             }
             // Add a new site
             if (request.getParameter("new") != null) {
-                site = new Site();
-                session.setAttribute("site", site);
+                sitebean.setSite(new Site());
                 request.getRequestDispatcher("/WEB-INF/siteview.jsp")
                                 .forward(request, response);
             }
 
             // Delete selected site
             if (request.getParameter("delete") != null) {
-                if (session.getAttribute("site") == null) {  // From sitelist
+                if (sitebean.getSite() == null) {  // From sitelist
                     List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-                    site = siteList.get(Integer.valueOf(request.getParameter("delete")) - 1);
+                    sitebean.setSite(siteList.get(Integer.valueOf(request.getParameter("delete")) - 1));
                 } else { // From siteview
-                    site = (Site) session.getAttribute("site");
-                    session.removeAttribute("site");
+                    // Nothing to do
                 }
-                servData.delete(site);
-                session.removeAttribute("siteist");
+                servData.delete(sitebean.getSite());
+                sitebean.setSite(null);
+                session.removeAttribute("sitelist");
                 response.sendRedirect("sitelist");
             }
 
             // Save current site
             if (request.getParameter("save") != null) {
-                site = (Site) session.getAttribute("site");
-                if (site == null) { // New Site to create
-                    site = new Site();
+                if (sitebean.getSite() == null) { // New Site to create
+                    sitebean.setSite(new Site());
                 } // User to modify
-                site.setName(request.getParameter("name"));
-                if (site.getId() == null) { // New Site to create
-                    site = servData.insert(site);
+                sitebean.getSite().setName(request.getParameter("name"));
+                if (sitebean.getSite().getId() == null) { // New Site to create
+                    sitebean.setSite(servData.insert( sitebean.getSite()));
                 } else {  // User to modify
-                    servData.update(site);
+                    servData.update(sitebean.getSite());
                 }
-                session.setAttribute("site", site);
                 request.getRequestDispatcher("/WEB-INF/siteview.jsp")
                                 .forward(request, response);
             }

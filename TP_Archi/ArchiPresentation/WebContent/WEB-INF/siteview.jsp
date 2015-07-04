@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:choose>
-    <c:when test="${empty site }"><c:set var="pagetitle" scope="page" value="Nouveau Site"/></c:when>
-    <c:otherwise><c:set var="pagetitle" scope="page" value="Site ${site.name }" /></c:otherwise>
+    <c:when test="${empty sitebean.site }"><c:set var="pagetitle" scope="page" value="Nouveau Site"/></c:when>
+    <c:otherwise><c:set var="pagetitle" scope="page" value="Site ${sitebean.site.name }" /></c:otherwise>
 </c:choose>
 <t:maintemplate pagetitle="${pagetitle}" tabtitle="Site">
     <fmt:setLocale value="${lang }"/>
@@ -33,14 +33,14 @@
                         <table>
                             <caption>Modification des informations du site</caption>
                             <tr><td><label for="name">Nom</label></td>
-                                <td><input id="name" name="name" type="text" required value="${site.name}" placeholder="NOM"/></td></tr>
+                                <td><input id="name" name="name" type="text" required value="${sitebean.site.name}" placeholder="NOM"/></td></tr>
                             <tr><td colspan="2"><p class="error"> </p></td></tr>
                             <tr><td colspan="2"><input class="button action" id="init" type="reset" value="Réinitialiser"/><input class="button action" id="saveuser" type="submit" name="save" value="Enregistrer"/></td></tr>
                         </table>
                     </fieldset>
                 </form>
                 <form  class="bottom" method="post" action="siteview">
-                     <c:if test="${!empty user.id }"><!-- Can't delete on usager creation -->
+                     <c:if test="${!empty sitebean.site.id }"><!-- Can't delete on usager creation -->
                         <input class="button action" id="delete" type="submit" name="delete" value="Supprimer le site"/>
                     </c:if>
                 </form>
