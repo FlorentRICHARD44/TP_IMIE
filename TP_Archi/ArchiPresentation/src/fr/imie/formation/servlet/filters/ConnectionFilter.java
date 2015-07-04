@@ -48,25 +48,22 @@ public class ConnectionFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        HttpSession session = req.getSession();
         Usager user = connecteduserbean.getUser();
         String path = req.getRequestURI();
         if ((user != null) || (path.contains("login") || (path.contains("IMG/") || path.contains("CSS/")))) {
             chain.doFilter(req, resp);
             if (user == null && connecteduserbean.getUser() != null) { // Just logged in
-                String nextURI = (String) session.getAttribute("pathURI");
-                String lastURI = (String) session.getAttribute("logoutPathURI");
-                if (nextURI != null) {
-                    resp.sendRedirect(nextURI);
+                if (connecteduserbean.getPathURI() != null) {
+                    resp.sendRedirect(connecteduserbean.getPathURI());
                 } else if (connecteduserbean.getLastuser() != null
                         && connecteduserbean.getLastuser().getId() == connecteduserbean.getUser().getId()
-                        && lastURI != null) {
-                    resp.sendRedirect(lastURI);
+                        && connecteduserbean.getLogoutPathURI() != null) {
+                    resp.sendRedirect(connecteduserbean.getLogoutPathURI());
                 } else {
                     resp.sendRedirect("home");
                 }
-                session.removeAttribute("pathURI");
-                session.removeAttribute("logoutPathURI");
+                connecteduserbean.setPathURI(null);
+                connecteduserbean.setLogoutPathURI(null);
                 connecteduserbean.setLastuser(null);
             }
         } else {
@@ -74,7 +71,7 @@ public class ConnectionFilter implements Filter {
             if (req.getQueryString() != null) {
                 uri = uri.concat("?").concat(req.getQueryString());
             }
-            req.getSession().setAttribute("pathURI", uri);
+            connecteduserbean.setPathURI(uri);
             resp.sendRedirect("login");
         }
     }
@@ -84,5 +81,4 @@ public class ConnectionFilter implements Filter {
      */
     public final void init(FilterConfig fConfig) throws ServletException {
     }
-
 }

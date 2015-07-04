@@ -57,5 +57,4 @@ public class SiteListServlet extends HttpServlet {
             throws ServletException, IOException {
         // Not used.
     }
-
 }

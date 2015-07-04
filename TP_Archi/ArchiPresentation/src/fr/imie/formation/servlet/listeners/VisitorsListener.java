@@ -1,7 +1,6 @@
 package fr.imie.formation.servlet.listeners;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -29,14 +28,14 @@ public class VisitorsListener implements HttpSessionListener {
         super();
     }
 
-	/**
+    /**
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public final void sessionCreated(HttpSessionEvent event) {
         openconnectionsbean.addVisitor();
     }
 
-	/**
+    /**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public final void sessionDestroyed(HttpSessionEvent event) {

@@ -3,11 +3,9 @@ package fr.imie.formation.sessionbeans;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import fr.imie.formation.jdbc.data.Usager;
-import fr.imie.formation.servlet.applibeans.OpenConnectionsBean;
 
 /** Bean to store the user connected in the session.
  * @author Florent RICHARD
@@ -25,6 +23,13 @@ public class ConnectedUserBean implements Serializable {
     /** Last user connected.
      */
     private Usager lastuser;
+    /** Asked path URI.
+     */
+    private String pathURI;
+    /** Logout path URI.
+     */
+    private String logoutPathURI;
+
     /**
      */
     public ConnectedUserBean() {
@@ -53,5 +58,29 @@ public class ConnectedUserBean implements Serializable {
      */
     public void setLastuser(Usager lastuser) {
         this.lastuser = lastuser;
+    }
+    /**
+     * @return the pathURI
+     */
+    public String getPathURI() {
+        return pathURI;
+    }
+    /**
+     * @param pathURI the pathURI to set
+     */
+    public void setPathURI(String pathURI) {
+        this.pathURI = pathURI;
+    }
+    /**
+     * @return the logoutPathURI
+     */
+    public String getLogoutPathURI() {
+        return logoutPathURI;
+    }
+    /**
+     * @param logoutPathURI the logoutPathURI to set
+     */
+    public void setLogoutPathURI(String logoutPathURI) {
+        this.logoutPathURI = logoutPathURI;
     }
 }
