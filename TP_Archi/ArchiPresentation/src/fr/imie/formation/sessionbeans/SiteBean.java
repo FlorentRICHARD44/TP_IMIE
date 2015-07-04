@@ -1,6 +1,7 @@
 package fr.imie.formation.sessionbeans;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -22,6 +23,9 @@ public class SiteBean implements Serializable {
     /** Site used.
      */
     private Site site;
+    /** List of sites.
+     */
+    private List<Site> sitelist;
     /**
      */
     public SiteBean() {
@@ -38,5 +42,17 @@ public class SiteBean implements Serializable {
      */
     public void setSite(Site site) {
         this.site = site;
+    }
+    /**
+     * @return the sitelist
+     */
+    public List<Site> getSitelist() {
+        return sitelist;
+    }
+    /**
+     * @param sitelist the sitelist to set
+     */
+    public void setSitelist(List<Site> sitelist) {
+        this.sitelist = sitelist;
     }
 }

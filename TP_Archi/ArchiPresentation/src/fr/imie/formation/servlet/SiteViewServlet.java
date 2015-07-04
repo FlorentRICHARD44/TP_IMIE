@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.imie.formation.jdbc.data.Site;
 import fr.imie.formation.jdbc.services.IService;
@@ -24,6 +23,8 @@ import fr.imie.formation.sessionbeans.SiteBean;
  */
 @WebServlet("/siteview")
 public class SiteViewServlet extends HttpServlet {
+    /** Bean to used site elements from session.
+     */
     @Inject @Named("sitebean") private SiteBean sitebean;
     /**
      */
@@ -41,7 +42,8 @@ public class SiteViewServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected final void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected final void doGet(HttpServletRequest request,
+                               HttpServletResponse response)
             throws ServletException, IOException {
         // return to the user list, because access from an URL (not an action)
         response.sendRedirect("sitelist");
@@ -50,16 +52,14 @@ public class SiteViewServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    @SuppressWarnings("unchecked")
     protected final void doPost(HttpServletRequest request,
                                 HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         try {
             // Simple view of the site
             if (request.getParameter("view") != null) {
-                List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-                sitebean.setSite(siteList.get(Integer.valueOf(request.getParameter("view")) - 1));
+                sitebean.setSite(sitebean.getSitelist().get(
+                        Integer.valueOf(request.getParameter("view")) - 1));
                 request.getRequestDispatcher("/WEB-INF/siteview.jsp")
                                 .forward(request, response);
             }
@@ -73,14 +73,11 @@ public class SiteViewServlet extends HttpServlet {
             // Delete selected site
             if (request.getParameter("delete") != null) {
                 if (sitebean.getSite() == null) {  // From sitelist
-                    List<Site> siteList = (List<Site>) session.getAttribute("sitelist");
-                    sitebean.setSite(siteList.get(Integer.valueOf(request.getParameter("delete")) - 1));
-                } else { // From siteview
-                    // Nothing to do
+                    sitebean.setSite(sitebean.getSitelist().get(
+                        Integer.valueOf(request.getParameter("delete")) - 1));
                 }
                 servData.delete(sitebean.getSite());
                 sitebean.setSite(null);
-                session.removeAttribute("sitelist");
                 response.sendRedirect("sitelist");
             }
 
@@ -91,7 +88,7 @@ public class SiteViewServlet extends HttpServlet {
                 } // User to modify
                 sitebean.getSite().setName(request.getParameter("name"));
                 if (sitebean.getSite().getId() == null) { // New Site to create
-                    sitebean.setSite(servData.insert( sitebean.getSite()));
+                    sitebean.setSite(servData.insert(sitebean.getSite()));
                 } else {  // User to modify
                     servData.update(sitebean.getSite());
                 }
@@ -102,17 +99,16 @@ public class SiteViewServlet extends HttpServlet {
             // Delete several sites.
             if (request.getParameter("delselected") != null) {
                 Map<String, String[]> reqparams = request.getParameterMap();
-                if (reqparams.get("selected") != null) {  // If at least one entry is selected
+                // If at least one entry is selected
+                if (reqparams.get("selected") != null) {
                     List<String> strListId =
                             Arrays.asList(reqparams.get("selected"));
                     Collections.reverse(strListId);
                     for (String s: strListId) {
-                        servData.delete(((List<Site>)
-                                session.getAttribute("sitelist")).get(
+                        servData.delete(sitebean.getSitelist().get(
                                         Integer.valueOf(s) - 1));
                     }
                 }
-                session.removeAttribute("sitelist");
                 response.sendRedirect("sitelist");
             }
         } catch (Exception e) {

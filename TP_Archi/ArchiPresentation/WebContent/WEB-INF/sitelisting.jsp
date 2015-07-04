@@ -18,7 +18,7 @@
     		<div id="delall"><input type="submit" class="action" name="delselected" value="Supprimer tous les sites sélectionnés"/></div>
 	        <table class="listing">
 	            <tr><th></th><th>Nom</th><th></th></tr>
-	            <c:forEach var="site" items="${sitelist}" varStatus="loop">
+	            <c:forEach var="site" items="${sitebean.sitelist}" varStatus="loop">
 	                <tr><td><input type="checkbox" name="selected" value="${loop.count}"/></td>
 	                	<td><c:out value="${site.name}"/></td>
 	                    <td><input type="submit" class="btn view" name="view" value="${loop.count}"/><input type="submit" class="btn del" name="delete"value="${loop.count}"/>
