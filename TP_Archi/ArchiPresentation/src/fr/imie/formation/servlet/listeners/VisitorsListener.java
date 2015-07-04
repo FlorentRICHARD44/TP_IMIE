@@ -1,9 +1,13 @@
 package fr.imie.formation.servlet.listeners;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
+import fr.imie.formation.servlet.applibeans.OpenConnectionsBean;
+import fr.imie.formation.sessionbeans.ConnectedUserBean;
 
 /** Listener to count the number of visitors (actives sessions).
  * Application Lifecycle Listener implementation class VisitorsListener
@@ -11,6 +15,13 @@ import javax.servlet.http.HttpSessionListener;
  */
 @WebListener
 public class VisitorsListener implements HttpSessionListener {
+
+    /** Bean for visitors.
+     */
+    @Inject private OpenConnectionsBean openconnectionsbean;
+    /** Bean for connected user.
+     */
+    @Inject private ConnectedUserBean connectedUserBean;
 
     /** Default constructor.
      */
@@ -22,20 +33,17 @@ public class VisitorsListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public final void sessionCreated(HttpSessionEvent event) {
-        ServletContext context = event.getSession().getServletContext();
-        if (context.getAttribute("nbvisitors") == null) {
-            context.setAttribute("nbvisitors", 0);
-        }
-        context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") + 1);
+        openconnectionsbean.addVisitor();
     }
 
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public final void sessionDestroyed(HttpSessionEvent event) {
-        ServletContext context = event.getSession().getServletContext();
-        if (context.getAttribute("nbvisitors") != null) {
-            context.setAttribute("nbvisitors", (Integer) context.getAttribute("nbvisitors") - 1);
+        if (connectedUserBean.getUser() != null) {
+            connectedUserBean.setUser(null);
+            openconnectionsbean.removeUser();
         }
+        openconnectionsbean.removeVisitor();
     }
 }
