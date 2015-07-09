@@ -33,7 +33,7 @@ public class UsagerList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("usagerlist", serv.findAll());
-	    request.getRequestDispatcher("userlist").forward(request, response);
+	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	}
 
 	/**
