@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +36,7 @@ public class UserViewServlet extends HttpServlet {
     private static final long serialVersionUID = -4654069060040888179L;
     /** Service Used.
      */
-    @Inject private IService servData;
+    @EJB private IService servData;
     /** Bean for usager.
      */
     @Inject private UsagerBean usagerbean;

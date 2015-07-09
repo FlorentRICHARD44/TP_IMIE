@@ -2,6 +2,7 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ public class UserListServlet extends HttpServlet {
     private static final long serialVersionUID = 2417900212257871777L;
     /** Service used.
      */
-    @Inject private IService servData;
+    @EJB private IService servData;
     /** Bean for usagers.
      */
     @Inject private UsagerBean usagerbean;

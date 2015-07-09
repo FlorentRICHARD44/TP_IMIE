@@ -13,6 +13,7 @@ import fr.imie.formation.jdbc.dao.DaoUsager;
 import fr.imie.formation.jdbc.dao.DummyDaoSite;
 import fr.imie.formation.jdbc.dao.DummyDaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
+import fr.imie.formation.jdbc.dao.UsagerEjbDAO;
 import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
 import fr.imie.formation.jdbc.services.IService;
@@ -40,7 +41,6 @@ public class Factory implements IFactory {
      * @see fr.imie.formation.transverse.IFactory#getUsagerDao()
      */
     @Override
-    @Produces
     public IDao<DtoUsager> getUsagerDao() {
         return new DaoUsager();
     }
@@ -49,7 +49,6 @@ public class Factory implements IFactory {
      * @see fr.imie.formation.transverse.IFactory#getSiteDao()
      */
     @Override
-    @Produces
     public IDao<DtoSite> getSiteDao() {
         return new DaoSite();
     }
@@ -58,12 +57,11 @@ public class Factory implements IFactory {
      * @see fr.imie.formation.transverse.IFactory#getService()
      */
     @Override
-    @Produces
     public IService getService() {
-        daoUsager = new DaoUsager();
-        daoSite = new DaoSite();
+        //daoUsager = new UsagerEjbDAO();
+        //daoSite = new DaoSite();
         IService serv = new ServiceData();
-        serv.setDaos(daoUsager, daoSite);
+        //serv.setDaos(daoUsager, daoSite);
         return serv;
     }
 

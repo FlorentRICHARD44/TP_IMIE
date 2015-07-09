@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -31,7 +32,7 @@ public class SiteViewServlet extends HttpServlet {
     private static final long serialVersionUID = 3276474025300312834L;
     /** Service Used.
      */
-    @Inject private IService servData;
+    @EJB private IService servData;
     /** Site displayed.
     /** Constructor.
      */

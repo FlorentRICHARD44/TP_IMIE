@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import fr.imie.formation.jdbc.NullFilterException;
 import fr.imie.formation.jdbc.dao.ConnectionProvider;
@@ -21,23 +24,21 @@ import fr.imie.formation.transverse.IFactory;
  * @author Florent RICHARD
  */
 @Real
+@Stateless
 public class ServiceData implements IService {
     /** Access to Database for Usager.
      */
+    @EJB(beanName = "UsagerEjbDAO")
     private IDao<DtoUsager> daoUsager;
     /** Access to Database for Site.
      */
+    @EJB(beanName = "SiteEjbDAO")
     private IDao<DtoSite> daoSite;
 
     /** Constructor.
      */
     public ServiceData() {
-    }
-    
-    @Override
-    public void setDaos(IDao<DtoUsager> daoU, IDao<DtoSite> daoS) {
-        daoUsager = daoU;
-        daoSite = daoS;
+        super();
     }
 
     /** Return the list of all Usagers.

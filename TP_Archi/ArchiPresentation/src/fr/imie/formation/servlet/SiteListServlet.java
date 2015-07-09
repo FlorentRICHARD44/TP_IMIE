@@ -2,6 +2,7 @@ package fr.imie.formation.servlet;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +23,7 @@ public class SiteListServlet extends HttpServlet {
     private static final long serialVersionUID = 2749772919799880950L;
     /** Service used.
      */
-    @Inject private IService servData;
+    @EJB private IService servData;
     /** Beans for storing sites element.
      */
     @Inject private SiteBean sitebean;

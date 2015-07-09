@@ -88,6 +88,4 @@ public interface IService extends AutoCloseable {
      * @param newPassword New Password to apply to usager.
      */
     void modifyUsagerPassword(Usager user, String newPassword);
-
-    void setDaos(IDao<DtoUsager> daoU, IDao<DtoSite> daoS);
 }
