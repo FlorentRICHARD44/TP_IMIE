@@ -11,7 +11,7 @@
 	<body>
 		<table>
 			
-	            <tr><th></th><th>Nom</th><th>Prénom</th><th></th></tr>
+	            <tr><th>Nom</th><th>Prénom</th><th></th></tr>
 	            <c:forEach var="user" items="${usagerlist}" varStatus="loop">
 	                <tr><td><c:out value="${user.nom}"/></td><td><c:out value="${user.prenom}"/></td>
 	                    <td><a href="userview?id=${user.id}">Voir en détails</a>
