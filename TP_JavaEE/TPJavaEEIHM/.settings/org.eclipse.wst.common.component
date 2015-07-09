@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="TPJavaEEIHM">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="TPJavaEEJPA.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/TPJavaEEJPA/TPJavaEEJPA">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="TPJavaEEService.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/TPJavaEEService/TPJavaEEService">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="TPJavaEEIHM"/>
+        <property name="java-output-path" value="/TPJavaEEIHM/build/classes"/>
+    </wb-module>
+</project-modules>
