@@ -1,95 +1,104 @@
 package fr.imie.entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: UsagerEntity
- *
+ * The persistent class for the "usager" database table.
+ * 
  */
 @Entity
 @Table(name="usager")
+@NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u")
 public class UsagerEntity implements Serializable {
-	/**
+
+    /**
      */
-    private static final long serialVersionUID = -3238352129673799825L;
+    private static final long serialVersionUID = -8964746877547011952L;
+
     @Id
-	private Integer id;
-	private String nom;
-	private String prenom;
-	private String email;
-	private String password;
-	private Integer nb_connexion;
-	private Integer si_id;
-	private Date datenaissance;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
 
-	public UsagerEntity() {
-		super();
-	}   
-	public Integer getId() {
-		return this.id;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name="datenaissance")
+    private Date datenaissance;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}   
-	public String getNom() {
-		return this.nom;
-	}
+    @Column(name="email")
+    private String email;
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}   
-	public String getPrenom() {
-		return this.prenom;
-	}
+    @Column(name="nb_connexion")
+    private int nbConnexion;
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}   
-	public String getEmail() {
-		return this.email;
-	}
+    @Column(name="nom")
+    private String nom;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}   
-	public String getPassword() {
-		return this.password;
-	}
+    @Column(name="password")
+    private String password;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}   
-	public Integer getNb_connexion() {
-		return this.nb_connexion;
-	}
+    @Column(name="prenom")
+    private String prenom;
 
-	public void setNb_connexion(Integer nb_connexion) {
-		this.nb_connexion = nb_connexion;
-	}   
-	public Integer getSi_id() {
-		return this.si_id;
-	}
-
-	public void setSi_id(Integer si_id) {
-		this.si_id = si_id;
-	}
-    /**
-     * @return the datenaissance
-     */
-    public Date getDatenaissance() {
-        return datenaissance;
+    public UsagerEntity() {
+        super();
     }
-    /**
-     * @param datenaissance the datenaissance to set
-     */
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getDatenaissance() {
+        return this.datenaissance;
+    }
+
     public void setDatenaissance(Date datenaissance) {
         this.datenaissance = datenaissance;
     }
-   
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getNbConnexion() {
+        return this.nbConnexion;
+    }
+
+    public void setNbConnexion(int nbConnexion) {
+        this.nbConnexion = nbConnexion;
+    }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPrenom() {
+        return this.prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 }

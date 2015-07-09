@@ -14,7 +14,7 @@
 				<div><label>Nom: </label><input type="text" value="${usager.nom }"/></div>
 				<div><label>Prénom: </label><input type="text" value="${usager.prenom }"/></div>
 				<div><label>E-mail: </label><input type="text" value="${usager.email }"/></div>
-				<div><label>Nombre de connexions: </label><input type="number" value="${usager.nb_connexion }"/></div>
+				<div><label>Nombre de connexions: </label><input type="number" value="${usager.nbConnexion }"/></div>
 				<div><label>Date de naissance: </label><input type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></div>
 			</fieldset>
 		</form>
