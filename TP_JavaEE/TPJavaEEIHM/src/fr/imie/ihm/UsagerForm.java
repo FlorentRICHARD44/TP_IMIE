@@ -38,15 +38,17 @@ public class UsagerForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("usager", serv.findById(Integer.valueOf(request.getParameter("id"))));
-		request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+		// not used
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("new") != null) {
+	    if (request.getParameter("view") != null) {
+	        request.setAttribute("usager", serv.findById(Integer.valueOf(request.getParameter("view"))));
+	        request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+	    } else if (request.getParameter("new") != null) {
 		    request.setAttribute("usager", null);
 		    request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("save") != null) {
@@ -67,7 +69,11 @@ public class UsagerForm extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("del") != null) {
 		    UsagerEntity user = new UsagerEntity();
-            user.setId(Integer.valueOf(request.getParameter("id")));
+		    if (request.getParameter("id") != null) { // Delete from usager view
+		        user.setId(Integer.valueOf(request.getParameter("id")));
+		    } else {  // Delete from usager list
+                user.setId(Integer.valueOf(request.getParameter("del")));
+		    }
 		    serv.remove(user);
 		    response.sendRedirect("userlist");
 		}

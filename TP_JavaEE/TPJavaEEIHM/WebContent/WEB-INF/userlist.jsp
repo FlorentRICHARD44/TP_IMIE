@@ -12,14 +12,13 @@
 	<body>
 		<form method="post" action="userview">
 			<input type="submit" name="new" value="Ajouter un usager"/>
-		</form>
-		<form method="post" action="userlist">
 			<table>
 					<tr><th>Nom</th><th>Prénom</th><th></th></tr>
 		            <tr><td><input type="text" name="name" value="${param.name }"/></td><td><input type="text" name="firstname" value="${param.firstname }"/></td><td><input type="submit" value="Filtrer" name="filter"/></tr>
 		            <c:forEach var="user" items="${usagerlist}" varStatus="loop">
 		                <tr><td><c:out value="${user.nom}"/></td><td><c:out value="${user.prenom}"/></td>
-		                    <td><a href="userview?id=${user.id}">Voir en détails</a>
+		                    <td><input type="submit" class="btn view" name="view" value="${user.id}"/>
+			                    <input type="submit" class="btn del" name="del" value="${user.id}"/>
 		                    </td></tr>
 		            </c:forEach>
 		            <c:if test="${empty usagerlist }">
