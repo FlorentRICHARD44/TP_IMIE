@@ -16,7 +16,10 @@ import fr.imie.service.Services;
  */
 @WebServlet("/userlist")
 public class UsagerList extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1169335807621570540L;
     @EJB
     private Services serv;
        
@@ -25,7 +28,6 @@ public class UsagerList extends HttpServlet {
      */
     public UsagerList() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,6 +35,8 @@ public class UsagerList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("usagerlist", serv.findAll());
+		request.setAttribute("name", "");
+        request.setAttribute("firstname", "");
 	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	}
 
@@ -40,7 +44,15 @@ public class UsagerList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	    if (request.getParameter("filter") != null) {
+	        request.setAttribute("usagerlist",
+	                serv.findUserByFullname(request.getParameter("name"),
+	                                        request.getParameter("firstname")));
+	        request.setAttribute("name", request.getParameter("name"));
+	        request.setAttribute("firstname", request.getParameter("firstname"));
+	        request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
+	    }
+	    
 	}
 
 }

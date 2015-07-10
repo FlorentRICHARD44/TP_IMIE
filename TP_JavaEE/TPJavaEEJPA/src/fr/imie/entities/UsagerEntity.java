@@ -11,7 +11,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name="usager")
-@NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u")
+@NamedQueries({
+    @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u"),
+    @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like :name AND lower(u.prenom) like :firstname")
+})
 public class UsagerEntity implements Serializable {
 
     /**
