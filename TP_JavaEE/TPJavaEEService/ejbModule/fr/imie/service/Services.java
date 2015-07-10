@@ -43,16 +43,18 @@ public class Services {
         return (List<UsagerEntity>) query.getResultList();
     }
 
-    public void save(UsagerEntity user) {
+    public UsagerEntity save(UsagerEntity user) {
+        UsagerEntity newusager = null;
         if (user.getId() == null) {
             em.persist(user);
+            newusager = user;
         } else {
-            
-            em.merge(user);
+            newusager = em.merge(user);
         }
+        return newusager;
     }
 
     public void remove(UsagerEntity user) {
-        em.remove(em.find(UsagerEntity.class, user.getId()));
+        em.remove(em.merge(user));
     }
 }

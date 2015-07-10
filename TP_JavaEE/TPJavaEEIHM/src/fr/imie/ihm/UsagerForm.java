@@ -64,7 +64,7 @@ public class UsagerForm extends HttpServlet {
                 user.setDatenaissance(null);
             }
 		    user.setEmail(request.getParameter("email"));
-		    serv.save(user);
+		    user = serv.save(user);
             request.setAttribute("usager", user);
             request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("del") != null) {
