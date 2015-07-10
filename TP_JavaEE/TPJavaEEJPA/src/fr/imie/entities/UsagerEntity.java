@@ -12,8 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name="usager")
 @NamedQueries({
-    @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u"),
-    @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like :name AND lower(u.prenom) like :firstname")
+    @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u ORDER BY u.nom, u.prenom"),
+    @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like lower(:name) AND lower(u.prenom) like lower(:firstname) ORDER BY u.nom, u.prenom")
 })
 public class UsagerEntity implements Serializable {
 
@@ -24,7 +24,7 @@ public class UsagerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
-    private int id;
+    private Integer id = null;
 
     @Temporal(TemporalType.DATE)
     @Column(name="datenaissance")
@@ -49,11 +49,11 @@ public class UsagerEntity implements Serializable {
         super();
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

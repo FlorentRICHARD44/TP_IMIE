@@ -48,8 +48,6 @@ public class UsagerList extends HttpServlet {
 	        request.setAttribute("usagerlist",
 	                serv.findUserByFullname(request.getParameter("name"),
 	                                        request.getParameter("firstname")));
-	        request.setAttribute("name", request.getParameter("name"));
-	        request.setAttribute("firstname", request.getParameter("firstname"));
 	        request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	    }
 	    

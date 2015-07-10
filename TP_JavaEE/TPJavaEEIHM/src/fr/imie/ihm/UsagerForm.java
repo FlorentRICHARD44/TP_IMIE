@@ -1,6 +1,8 @@
 package fr.imie.ihm;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.imie.entities.UsagerEntity;
 import fr.imie.service.Services;
 
 /**
@@ -43,7 +46,31 @@ public class UsagerForm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getParameter("new") != null) {
+		    request.setAttribute("usager", null);
+		    request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+		} else if (request.getParameter("save") != null) {
+		    UsagerEntity user = new UsagerEntity();
+		    if (!request.getParameter("id").equals("")) {
+		        user.setId(Integer.valueOf(request.getParameter("id")));
+		    }
+		    user.setNom(request.getParameter("name"));
+		    user.setPrenom(request.getParameter("firstname"));
+		    try {
+                user.setDatenaissance(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dateofbirth")));
+            } catch (ParseException e) {
+                user.setDatenaissance(null);
+            }
+		    user.setEmail(request.getParameter("email"));
+		    serv.save(user);
+            request.setAttribute("usager", user);
+            request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
+		} else if (request.getParameter("del") != null) {
+		    UsagerEntity user = new UsagerEntity();
+            user.setId(Integer.valueOf(request.getParameter("id")));
+		    serv.remove(user);
+		    response.sendRedirect("userlist");
+		}
 	}
 
 }

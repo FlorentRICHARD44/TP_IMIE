@@ -38,8 +38,21 @@ public class Services {
     @SuppressWarnings("unchecked")
     public List<UsagerEntity> findUserByFullname(String name, String firstName) {
         Query query = em.createNamedQuery("UsagerEntity.findByFullname");
-        query.setParameter("name", "%" + name.toLowerCase() + "%");
-        query.setParameter("firstname", "%" + firstName.toLowerCase() + "%");
+        query.setParameter("name", "%" + name + "%");
+        query.setParameter("firstname", "%" + firstName + "%");
         return (List<UsagerEntity>) query.getResultList();
+    }
+
+    public void save(UsagerEntity user) {
+        if (user.getId() == null) {
+            em.persist(user);
+        } else {
+            
+            em.merge(user);
+        }
+    }
+
+    public void remove(UsagerEntity user) {
+        em.remove(em.find(UsagerEntity.class, user.getId()));
     }
 }

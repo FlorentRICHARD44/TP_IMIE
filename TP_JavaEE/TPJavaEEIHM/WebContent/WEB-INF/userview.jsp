@@ -12,11 +12,17 @@
 	<body>
 		<form method="post" action="userview">
 			<fieldset>
-				<div><label>Nom: </label><input type="text" value="${usager.nom }"/></div>
-				<div><label>Prénom: </label><input type="text" value="${usager.prenom }"/></div>
-				<div><label>E-mail: </label><input type="text" value="${usager.email }"/></div>
-				<div><label>Nombre de connexions: </label><input type="number" value="${usager.nbConnexion }"/></div>
-				<div><label>Date de naissance: </label><input type="text" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></div>
+				<input type="text" hidden="true" name="id" value="${usager.id }"/>
+				<div><label>Nom: </label><input type="text" name="name" value="${usager.nom }"/></div>
+				<div><label>Prénom: </label><input type="text" name="firstname" value="${usager.prenom }"/></div>
+				<div><label>E-mail: </label><input type="text" name="email" value="${usager.email }"/></div>
+				<div><label>Nombre de connexions: </label><input type="number" disabled value="${usager.nbConnexion }"/></div>
+				<div><label>Date de naissance: </label><input type="text" name="dateofbirth" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></div>
+				<div><input type="submit" value="Enregistrer" name="save"/>
+					<c:if test="${! empty usager.id }">
+						<input type="submit" value="Supprimer" name="del"/>
+					</c:if>
+				</div>
 			</fieldset>
 		</form>
 	</body>
