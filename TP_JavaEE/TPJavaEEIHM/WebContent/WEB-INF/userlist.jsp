@@ -6,6 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="CSS/tpservlet.css"/>
 		<title>Liste des Usagers</title>
 	</head>
 	<body>
@@ -18,7 +19,9 @@
 		                    <td><a href="userview?id=${user.id}">Voir en détails</a>
 		                    </td></tr>
 		            </c:forEach>
-				
+		            <c:if test="${empty usagerlist }">
+		            	<tr><td colspan="3"><p class="error">Aucun usager ne correspond aux critères de filtres</p></td></tr>
+		            </c:if>
 			</table>
 		</form>
 	</body>
