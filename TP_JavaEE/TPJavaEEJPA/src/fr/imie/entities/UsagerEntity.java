@@ -45,6 +45,10 @@ public class UsagerEntity implements Serializable {
     @Column(name="prenom")
     private String prenom;
 
+    @ManyToOne(optional=false) 
+    @JoinColumn(name="si_id", nullable=true, updatable=true)
+    private SiteEntity site;
+    
     public UsagerEntity() {
         super();
     }
@@ -103,5 +107,19 @@ public class UsagerEntity implements Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    /**
+     * @return the site
+     */
+    public SiteEntity getSite() {
+        return site;
+    }
+
+    /**
+     * @param site the site to set
+     */
+    public void setSite(SiteEntity site) {
+        this.site = site;
     }
 }

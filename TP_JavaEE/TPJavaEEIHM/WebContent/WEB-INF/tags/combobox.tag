@@ -1,4 +1,4 @@
-<%@tag description="ComboBox Tag - Display a ComboBox with List elements (preceded by a 'Aucun' unselectable element). Values can't be retrieved from 1 to n" pageEncoding="UTF-8"%>
+<%@tag description="ComboBox Tag - Display a ComboBox with List elements (preceded by a 'Aucun' unselectable element). Values can't be retrieved by its id" pageEncoding="UTF-8"%>
 <%@attribute name="cbname" required="true" description="name of the ComboBox as used in forms"%>
 <%@attribute name="cbselected" required="true" description="String equals to the string of the selected elements"%>
 <%@attribute name="cbitems" required="true" type="java.util.List" description="Items listed in the ComboBox."%>
@@ -15,7 +15,7 @@
           <c:if test="${element eq cbselected}">
               <c:set var="selected" scope="page" value=" selected"/>
           </c:if>
-          <option <c:out value="${selected}"/> value="${loop.count}"><c:out value="${element}"></c:out></option>
+          <option <c:out value="${selected}"/> value="${element.id}"><c:out value="${element}"></c:out></option>
     </c:forEach>
 </select>
 <jsp:doBody/>

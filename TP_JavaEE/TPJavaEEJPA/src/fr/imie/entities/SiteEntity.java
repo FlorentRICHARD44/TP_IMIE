@@ -3,6 +3,7 @@ package fr.imie.entities;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
+
 import javax.persistence.*;
 
 /**
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="site")
-
+@NamedQuery(name="SiteEntity.findAll", query="SELECT s FROM SiteEntity s")
 public class SiteEntity implements Serializable {
 	/**
      */
@@ -39,5 +40,12 @@ public class SiteEntity implements Serializable {
 	public void setNom(String si_nom) {
 		this.nom = si_nom;
 	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.nom;
+    }
    
 }

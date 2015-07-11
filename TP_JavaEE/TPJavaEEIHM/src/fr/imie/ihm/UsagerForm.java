@@ -46,10 +46,12 @@ public class UsagerForm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    if (request.getParameter("view") != null) {
-	        request.setAttribute("usager", serv.findById(Integer.valueOf(request.getParameter("view"))));
+	        request.setAttribute("usager", serv.findUsagerById(Integer.valueOf(request.getParameter("view"))));
+	        request.setAttribute("sitelist", serv.findAllSites());
 	        request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 	    } else if (request.getParameter("new") != null) {
 		    request.setAttribute("usager", null);
+		    request.setAttribute("sitelist", serv.findAllSites());
 		    request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("save") != null) {
 		    UsagerEntity user = new UsagerEntity();
@@ -63,9 +65,25 @@ public class UsagerForm extends HttpServlet {
             } catch (ParseException e) {
                 user.setDatenaissance(null);
             }
-		    user.setEmail(request.getParameter("email"));
+		    if (request.getParameter("email").equals("")) {
+		        user.setEmail(null);
+		    } else  {
+		        user.setEmail(request.getParameter("email"));
+		    }
+		    if (request.getParameter("nbconnexion").equals("")) {
+		        user.setNbConnexion(0);
+		    } else {
+		        user.setNbConnexion(Integer.valueOf(request.getParameter("nbconnexion")));
+		    }
+		    if (request.getParameter("site") == null) {
+		        user.setSite(null);
+		    } else {
+		        user.setSite(serv.findSiteById(Integer.valueOf(request.getParameter("site"))));
+		    }
+		    user.setPassword(request.getParameter("password"));
 		    user = serv.save(user);
             request.setAttribute("usager", user);
+            request.setAttribute("sitelist", serv.findAllSites());
             request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("del") != null) {
 		    UsagerEntity user = new UsagerEntity();

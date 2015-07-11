@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <header>
-	<img alt="Logo Cyberbase" src="/ArchiPresentation/IMG/Logo_Cyberbase.gif">
+	<img alt="Logo Cyberbase" src="IMG/Logo_Cyberbase.gif">
 	<c:set var="now" value="<%=new java.util.Date()%>" />  
 	<h1><c:out value="${title }"/></h1>
 	<section id="info_connection">

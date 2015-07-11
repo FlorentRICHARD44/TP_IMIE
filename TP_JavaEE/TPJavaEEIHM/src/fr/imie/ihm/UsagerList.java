@@ -34,7 +34,7 @@ public class UsagerList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("usagerlist", serv.findAll());
+		request.setAttribute("usagerlist", serv.findAllUsagers());
 		request.setAttribute("name", "");
         request.setAttribute("firstname", "");
 	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);

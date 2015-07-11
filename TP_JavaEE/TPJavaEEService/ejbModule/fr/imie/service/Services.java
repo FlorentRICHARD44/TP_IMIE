@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import fr.imie.entities.SiteEntity;
 import fr.imie.entities.UsagerEntity;
 
 /**
@@ -24,12 +25,11 @@ public class Services {
         super();
     }
     
-    public UsagerEntity findById(Integer id){
-        UsagerEntity user = em.find(UsagerEntity.class, id);
-        return user;
+    public UsagerEntity findUsagerById(Integer id){
+        return em.find(UsagerEntity.class, id);
     }
     
-    public List<UsagerEntity> findAll() {
+    public List<UsagerEntity> findAllUsagers() {
         @SuppressWarnings("unchecked")
         List<UsagerEntity> userList = em.createNamedQuery("UsagerEntity.findAll").getResultList();
         return userList;
@@ -56,5 +56,15 @@ public class Services {
 
     public void remove(UsagerEntity user) {
         em.remove(em.merge(user));
+    }
+
+    public List<SiteEntity> findAllSites() {
+        @SuppressWarnings("unchecked")
+        List<SiteEntity> siteList = em.createNamedQuery("SiteEntity.findAll").getResultList();
+        return siteList;
+    }
+
+    public SiteEntity findSiteById(Integer id) {
+        return em.find(SiteEntity.class, id);
     }
 }
