@@ -1,4 +1,4 @@
-package fr.imie.ihm;
+package fr.imie.ihm.servlets;
 
 import java.io.IOException;
 import java.text.ParseException;
