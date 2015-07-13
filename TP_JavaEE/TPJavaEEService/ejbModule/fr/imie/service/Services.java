@@ -74,4 +74,19 @@ public class Services {
         query.setParameter("name", "%" + name + "%");
         return (List<SiteEntity>) query.getResultList();
     }
+
+    public SiteEntity save(SiteEntity site) {
+        SiteEntity newsite = null;
+        if (site.getId() == null) {
+            em.persist(site);
+            newsite = site;
+        } else {
+            newsite = em.merge(site);
+        }
+        return newsite;
+    }
+
+    public void remove(SiteEntity site) {
+        em.remove(em.merge(site));
+    }
 }

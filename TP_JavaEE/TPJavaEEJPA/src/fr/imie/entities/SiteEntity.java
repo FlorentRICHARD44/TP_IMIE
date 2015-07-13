@@ -21,8 +21,9 @@ public class SiteEntity implements Serializable {
      */
     private static final long serialVersionUID = 2620669870584944116L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer id;
+	private Integer id = null;
 	@Column(name="nom")
 	private String nom;
 
