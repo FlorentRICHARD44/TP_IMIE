@@ -12,27 +12,32 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="site")
-@NamedQuery(name="SiteEntity.findAll", query="SELECT s FROM SiteEntity s")
+@NamedQueries({
+    @NamedQuery(name="SiteEntity.findAll", query="SELECT s FROM SiteEntity s ORDER BY s.nom"),
+    @NamedQuery(name="SiteEntity.findByName", query="SELECT s FROM SiteEntity s WHERE lower(s.nom) like lower(:name) ORDER BY s.nom")
+})
 public class SiteEntity implements Serializable {
 	/**
      */
     private static final long serialVersionUID = 2620669870584944116L;
     @Id
-	@Column(name="si_id")
+	@Column(name="id")
 	private Integer id;
-	@Column(name="si_nom")
+	@Column(name="nom")
 	private String nom;
 
 	public SiteEntity() {
 		super();
-	}   
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
 
 	public void setId(Integer si_id) {
 		this.id = si_id;
-	}   
+	}
+
 	public String getNom() {
 		return this.nom;
 	}
@@ -40,9 +45,7 @@ public class SiteEntity implements Serializable {
 	public void setNom(String si_nom) {
 		this.nom = si_nom;
 	}
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
     public String toString() {
         return this.nom;

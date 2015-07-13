@@ -67,4 +67,11 @@ public class Services {
     public SiteEntity findSiteById(Integer id) {
         return em.find(SiteEntity.class, id);
     }
+
+    @SuppressWarnings("unchecked")
+    public List<SiteEntity> findSiteByName(String name) {
+        Query query = em.createNamedQuery("SiteEntity.findByName");
+        query.setParameter("name", "%" + name + "%");
+        return (List<SiteEntity>) query.getResultList();
+    }
 }

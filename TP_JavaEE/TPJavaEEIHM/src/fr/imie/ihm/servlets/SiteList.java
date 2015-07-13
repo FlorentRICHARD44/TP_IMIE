@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import fr.imie.service.Services;
 
 /**
- * Servlet implementation class UsagerList
+ * Servlet implementation class SiteList
  */
-@WebServlet("/userlist")
-public class UsagerList extends HttpServlet {
+@WebServlet("/sitelist")
+public class SiteList extends HttpServlet {
     /**
-     * 
      */
-    private static final long serialVersionUID = 1169335807621570540L;
+    private static final long serialVersionUID = -5513985457384599474L;
     @EJB
     private Services serv;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UsagerList() {
+    public SiteList() {
         super();
     }
 
@@ -34,23 +33,16 @@ public class UsagerList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("usagerlist", serv.findAllUsagers());
-		request.setAttribute("name", "");  // Default value of filter
-        request.setAttribute("firstname", "");  // Default value of filter
-	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
+		request.setAttribute("sitelist", serv.findAllSites());
+		request.getRequestDispatcher("/WEB-INF/sitelist.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    if (request.getParameter("filter") != null) {
-	        request.setAttribute("usagerlist",
-	                serv.findUserByFullname(request.getParameter("name"),
-	                                        request.getParameter("firstname")));
-	        request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
-	    }
-	    
-	}
+		request.setAttribute("sitelist", serv.findSiteByName(request.getParameter("name")));
+		request.getRequestDispatcher("/WEB-INF/sitelist.jsp").forward(request, response);
+    }
 
 }
