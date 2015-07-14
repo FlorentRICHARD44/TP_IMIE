@@ -89,4 +89,17 @@ public class Services {
     public void remove(SiteEntity site) {
         em.remove(em.merge(site));
     }
+
+    public UsagerEntity checkUsagerPassword(UsagerEntity filter,
+            String password) {
+        UsagerEntity user = null;
+        Query query = em.createNamedQuery("UsagerEntity.findByFullname");
+        query.setParameter("name", "%" + filter.getNom() + "%");
+        query.setParameter("firstname", "%" + filter.getPrenom() + "%");
+        user = (UsagerEntity) query.getSingleResult();
+        if (!user.getPassword().equals(password)) {
+            user = null;
+        }
+        return user;
+    }
 }

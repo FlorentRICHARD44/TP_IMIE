@@ -9,8 +9,8 @@
 	<h1><c:out value="${title }"/></h1>
 	<section id="info_connection">
 		<div class="line"><p class="data"><fmt:formatDate pattern="dd/MM/yyyy" value="${now}" /></p></div>
-		<div class="line"><p class="data"><fmt:message key="menu.info.user" bundle="${propertie}"/> : John DOE</p></div>
-		<div class="line"><p class="data">x <fmt:message key="menu.info.visitors" bundle="${propertie}"/>, <fmt:message key="menu.info.included" bundle="${propertie}"/> x <fmt:message key="menu.info.logged" bundle="${propertie}"/></p></div>
+		<div class="line"><p class="data"><fmt:message key="menu.info.user" bundle="${propertie}"/> : <c:out value="${connecteduserbean.user.prenom}"/> <c:out value="${connecteduserbean.user.nom}"/></p></div>
+		<div class="line"><p class="data"><c:out value="${openconnectionsbean.visitors}"/> <fmt:message key="menu.info.visitors" bundle="${propertie}"/>, <fmt:message key="menu.info.included" bundle="${propertie}"/> <c:out value="${openconnectionsbean.loggedUsers}"/> <fmt:message key="menu.info.logged" bundle="${propertie}"/></p></div>
 	</section>
 </header>
 <nav><div class="menu"><div class="menuitem"><a href="home"><fmt:message key="menu.home" bundle="${propertie}"/></a></div><div class="menuitem"><a href="userlist"><fmt:message key="menu.usagerslist" bundle="${propertie}"/></a></div><div class="menuitem"><a href="sitelist"><fmt:message key="menu.siteslist" bundle="${propertie}"/></a></div></div>
