@@ -10,8 +10,8 @@
 		<fmt:setBundle basename="fr.imie.ihm.languages" var="propertie"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="CSS/tpservlet.css"/>
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-		<link rel="icon" href="favicon.ico" type="image/x-icon"/>	
+        <link rel="shortcut icon" href="IMG/favicon.ico" type="image/x-icon"/>
+		<link rel="icon" href="IMG/favicon.ico" type="image/x-icon"/>	
         <title><c:out value="${tabtitle}"/></title>
     </head>
     <body>

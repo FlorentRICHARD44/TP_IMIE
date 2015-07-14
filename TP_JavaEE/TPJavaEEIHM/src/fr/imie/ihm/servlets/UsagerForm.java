@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.entities.UsagerEntity;
+import fr.imie.ihm.beans.RequestHeaderBean;
 import fr.imie.service.Services;
 
 /**
@@ -26,6 +28,7 @@ public class UsagerForm extends HttpServlet {
     private static final long serialVersionUID = -7973303656865987885L;
     @EJB
     private Services serv;
+    @Inject private RequestHeaderBean header;
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,13 +36,6 @@ public class UsagerForm extends HttpServlet {
     public UsagerForm() {
         super();
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// not used
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -87,14 +83,13 @@ public class UsagerForm extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/userview.jsp").forward(request, response);
 		} else if (request.getParameter("del") != null) {
 		    UsagerEntity user = new UsagerEntity();
-		    if (request.getParameter("id") != null) { // Delete from usager view
+		    if (header.getReferer().contains(request.getRequestURI())) { // Delete from usager view
 		        user.setId(Integer.valueOf(request.getParameter("id")));
-		    } else {  // Delete from usager list
+		    } else if (header.getReferer().contains("userlist")) {  // Delete from usager list
                 user.setId(Integer.valueOf(request.getParameter("del")));
 		    }
 		    serv.remove(user);
 		    response.sendRedirect("userlist");
 		}
 	}
-
 }

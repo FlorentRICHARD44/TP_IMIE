@@ -41,5 +41,8 @@ public class RequestHeaderBean implements Serializable {
     public String getUserAgent() {
         return request.getHeader("user-agent");
     }
-
+    
+    public String getReferer() {
+        return request.getHeader("Referer");
+    }
 }

@@ -45,7 +45,7 @@ public class UsagerEntity implements Serializable {
     @Column(name="prenom")
     private String prenom;
 
-    @ManyToOne(optional=false) 
+    @ManyToOne(optional=true) 
     @JoinColumn(name="si_id", nullable=true, updatable=true)
     private SiteEntity site;
     
