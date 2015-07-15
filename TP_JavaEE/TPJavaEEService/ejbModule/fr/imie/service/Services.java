@@ -62,14 +62,15 @@ public class Services {
      */
     @SuppressWarnings("unchecked")
     public List<UsagerEntity> findUsagersBySite(SiteEntity site) {
+        List<UsagerEntity> usagerlist = null;
         Query query = null;
         if (site == null) {
             query = em.createNamedQuery("UsagerEntity.findBySiteNull");
+            usagerlist = (List<UsagerEntity>) query.getResultList();
         } else {
-            query = em.createNamedQuery("UsagerEntity.findBySite");
-            query.setParameter("siteid", site.getId());
+            usagerlist = site.getUsagerList();
         }
-        return (List<UsagerEntity>) query.getResultList();
+        return usagerlist;
     }
     /** Save an Usager in persistance (creation or update).
      * @param user Usager to save
