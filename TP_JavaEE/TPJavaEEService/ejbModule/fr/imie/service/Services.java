@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import fr.imie.entities.HobbyEntity;
 import fr.imie.entities.SiteEntity;
 import fr.imie.entities.UsagerEntity;
 
@@ -161,5 +162,36 @@ public class Services {
             user = null;
         }
         return user;
+    }
+
+    public List<HobbyEntity> findAllHobbies() {
+        @SuppressWarnings("unchecked")
+        List<HobbyEntity> hobbyList = em.createNamedQuery("HobbyEntity.findAll").getResultList();
+        return hobbyList;
+    }
+
+    public List<HobbyEntity> findHobbyByName(String name) {
+        Query query = em.createNamedQuery("HobbyEntity.findByName");
+        query.setParameter("name", "%" + name + "%");
+        return (List<HobbyEntity>) query.getResultList();
+    }
+
+    public HobbyEntity findHobbyById(Integer id) {
+        return em.find(HobbyEntity.class, id);
+    }
+
+    public HobbyEntity save(HobbyEntity hobby) {
+        HobbyEntity newhobby = null;
+        if (hobby.getId() == null) {
+            em.persist(hobby);
+            newhobby = hobby;
+        } else {
+            newhobby = em.merge(hobby);
+        }
+        return newhobby;
+    }
+
+    public void remove(HobbyEntity hobby) {
+        em.remove(em.merge(hobby));
     }
 }

@@ -1,8 +1,11 @@
 package fr.imie.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
+import java.util.List;
 
 
 /** The persistent class for the "usager" database table.
@@ -12,8 +15,7 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u ORDER BY u.nom, u.prenom"),
     @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like lower(:name) AND lower(u.prenom) like lower(:firstname) ORDER BY u.nom, u.prenom"),
-    @NamedQuery(name="UsagerEntity.findBySite", query="SELECT u FROM UsagerEntity u WHERE u.site.id = :siteid ORDER BY u.nom, u.prenom"),
-   @NamedQuery(name="UsagerEntity.findBySiteNull", query="SELECT u FROM UsagerEntity u WHERE u.site = null ORDER BY u.nom, u.prenom")
+    @NamedQuery(name="UsagerEntity.findBySiteNull", query="SELECT u FROM UsagerEntity u WHERE u.site = null ORDER BY u.nom, u.prenom")
 })
 public class UsagerEntity implements Serializable {
 
@@ -65,6 +67,13 @@ public class UsagerEntity implements Serializable {
     @JoinColumn(name="si_id", nullable=true, updatable=true)
     private SiteEntity site;
     
+    /** Hobbies of the usager
+     */
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="usagerhobby",
+               joinColumns=@JoinColumn(name="usager_id", referencedColumnName="id"),
+               inverseJoinColumns=@JoinColumn(name="hobby_id", referencedColumnName="id"))
+    private List<HobbyEntity> hobbies;
     /** Constructor.
      */
     public UsagerEntity() {
@@ -139,5 +148,19 @@ public class UsagerEntity implements Serializable {
      */
     public void setSite(SiteEntity site) {
         this.site = site;
+    }
+
+    /**
+     * @return the hobbies
+     */
+    public final List<HobbyEntity> getHobbies() {
+        return hobbies;
+    }
+
+    /**
+     * @param hobbies the hobbies to set
+     */
+    public final void setHobbies(List<HobbyEntity> hobbies) {
+        this.hobbies = hobbies;
     }
 }

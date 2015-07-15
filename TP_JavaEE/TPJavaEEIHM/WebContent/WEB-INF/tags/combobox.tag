@@ -21,6 +21,11 @@
     <c:if test="${itemall }">
     	<option <c:out value="${selected}"/>><fmt:message key="text.all" bundle="${propertie }"/></option>
     </c:if>
+    <c:set var="selected" scope="page" value=""/>
+    <c:if test="${cbselected == '-'}">
+        <c:set var="selected" scope="page" value=" selected"/>
+    </c:if>
+    
     <option <c:out value="${disabled}"/> <c:out value="${selected}"/>>-</option>
     <c:forEach var="element" items="${cbitems}" varStatus="loop">
           <c:set var="selected" scope="page" value=""/>

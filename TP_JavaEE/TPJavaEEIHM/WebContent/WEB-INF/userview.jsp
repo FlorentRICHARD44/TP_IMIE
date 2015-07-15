@@ -14,19 +14,33 @@
 <t:maintemplate pagetitle="${pagetitle}" tabtitle="${tabtitle }">
 	<form method="post" action="userview">
 		<fieldset>
-			<input type="text" hidden="true" name="id" value="${usager.id }"/>
-			<div><label><fmt:message key="usager.lastname" bundle="${propertie}"/></label><input required type="text" name="name" value="${usager.nom }"/></div>
-			<div><label><fmt:message key="usager.firstname" bundle="${propertie}"/></label><input required type="text" name="firstname" value="${usager.prenom }"/></div>
-			<div><label><fmt:message key="usager.email" bundle="${propertie}"/></label><input type="text" name="email" value="${usager.email }"/></div>
-			<div><label><fmt:message key="usager.nbconnection" bundle="${propertie}"/></label><input type="number" name="nbconnexion" value="${usager.nbConnexion }"/></div>
-			<div><label><fmt:message key="usager.dateofbirth" bundle="${propertie}"/></label><input type="text" name="dateofbirth" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></div>
-			<div><label><fmt:message key="usager.site" bundle="${propertie}"/></label><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site" noneselecteable="false"></t:combobox></div>
-			<input type="password" hidden="true" name="password" value="${usager.password }"/>
-			<div><input type="submit" class="action" value="<fmt:message key="action.save" bundle="${propertie}"/>" name="save"/>
+			<table>
+				<tr><td><input type="text" hidden="true" name="id" value="${usager.id }"/></td></tr>
+				<tr><td><label><fmt:message key="usager.lastname" bundle="${propertie}"/></label></td>
+				    <td><input required type="text" name="name" value="${usager.nom }"/></td></tr>
+				<tr><td><label><fmt:message key="usager.firstname" bundle="${propertie}"/></label></td>
+				    <td><input required type="text" name="firstname" value="${usager.prenom }"/></td></tr>
+				<tr><td><label><fmt:message key="usager.email" bundle="${propertie}"/></label></td>
+					<td><input type="text" name="email" value="${usager.email }"/></td></tr>
+				<tr><td><label><fmt:message key="usager.nbconnection" bundle="${propertie}"/></label></td>
+					<td><input type="number" name="nbconnexion" value="${usager.nbConnexion }"/></td></tr>
+				<tr><td><label><fmt:message key="usager.dateofbirth" bundle="${propertie}"/></label></td>
+				    <td><input type="text" name="dateofbirth" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></td></tr>
+				<tr><td><label><fmt:message key="usager.site" bundle="${propertie}"/></label></td>
+				    <td><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site" noneselecteable="false"></t:combobox></td></tr>
+				<tr><td><label><fmt:message key="usager.hobbies" bundle="${propertie}"/></label></td>
+					<td><table>
+					 	 	<c:forEach var="hobby" items="${usager.hobbies}" >
+					 	 		<tr><td><c:out value="${hobby.nom}"/>
+					 	 	</c:forEach>
+					 	 	<tr><td>TODO Add hobby</td></tr>
+					 	</table></td></tr>
+				<tr><td><input type="password" hidden="true" name="password" value="${usager.password }"/></td></tr>
+				<tr><td><input type="submit" class="action" value="<fmt:message key="action.save" bundle="${propertie}"/>" name="save"/>
 				<c:if test="${! empty usager.id }">
 					<input type="submit" class="action" value="<fmt:message key="action.delete" bundle="${propertie}"/>" name="del"/>
-				</c:if>
-			</div>
+				</c:if></td></tr>
+			</table>
 		</fieldset>
 	</form>
 </t:maintemplate>

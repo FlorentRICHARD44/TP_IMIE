@@ -39,7 +39,6 @@ public class UsagerList extends HttpServlet {
 		request.setAttribute("name", "");  // Default value of filter
         request.setAttribute("firstname", "");  // Default value of filter
         request.setAttribute("sitelist", serv.findAllSites());
-        request.setAttribute("site", "Aucun");
 	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	}
 
@@ -52,7 +51,6 @@ public class UsagerList extends HttpServlet {
 	                serv.findUserByFullname(request.getParameter("name"),
 	                                        request.getParameter("firstname")));
 	        request.setAttribute("sitelist", serv.findAllSites());
-	        request.setAttribute("site", "Aucun");
 	        request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	    } else if (request.getParameter("filterSite") != null) {
 	        String strId = request.getParameter("site");
@@ -63,16 +61,19 @@ public class UsagerList extends HttpServlet {
 	            try {
 	                id = Integer.valueOf(strId);
                     site = serv.findSiteById(id);
+                    request.setAttribute("site", site);
 	            } catch (NumberFormatException e) {
 	                all = true;
+	                request.setAttribute("site", null);
 	            }
+	        } else {
+	            request.setAttribute("site", "-");
 	        }
 	        request.setAttribute("usagerlist", serv.findUsagersBySite(site));
 	        if (all) {
 	            request.setAttribute("usagerlist", serv.findAllUsagers());
 	        }
 	        request.setAttribute("sitelist", serv.findAllSites());
-            request.setAttribute("site", site);
             request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
         }
 	    
