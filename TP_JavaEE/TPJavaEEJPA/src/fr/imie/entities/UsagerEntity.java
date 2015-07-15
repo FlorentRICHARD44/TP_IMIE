@@ -5,50 +5,68 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-/**
- * The persistent class for the "usager" database table.
- * 
+/** The persistent class for the "usager" database table.
  */
 @Entity
 @Table(name="usager")
 @NamedQueries({
     @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u ORDER BY u.nom, u.prenom"),
-    @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like lower(:name) AND lower(u.prenom) like lower(:firstname) ORDER BY u.nom, u.prenom")
+    @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like lower(:name) AND lower(u.prenom) like lower(:firstname) ORDER BY u.nom, u.prenom"),
+    @NamedQuery(name="UsagerEntity.findBySite", query="SELECT u FROM UsagerEntity u WHERE u.site.id = :siteid ORDER BY u.nom, u.prenom"),
+   @NamedQuery(name="UsagerEntity.findBySiteNull", query="SELECT u FROM UsagerEntity u WHERE u.site = null ORDER BY u.nom, u.prenom")
 })
 public class UsagerEntity implements Serializable {
 
-    /**
+    /** Serial Version UID.
      */
     private static final long serialVersionUID = -8964746877547011952L;
 
+    /** Identifier for the usager.
+     */
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id = null;
 
+    /** Date of birth of the usager.
+     */
     @Temporal(TemporalType.DATE)
     @Column(name="datenaissance")
     private Date datenaissance;
 
+    /** Email for the usager.
+     */
     @Column(name="email")
     private String email;
 
+    /** Number of connections done by the usager.
+     */
     @Column(name="nb_connexion")
     private int nbConnexion;
 
+    /** Last name of the usager.
+     */
     @Column(name="nom")
     private String nom;
 
+    /** Password used by the usager.
+     */
     @Column(name="password")
     private String password;
 
+    /** First name of the usager.
+     */
     @Column(name="prenom")
     private String prenom;
 
+    /** Site where the usager was inscripted.
+     */
     @ManyToOne(optional=true) 
     @JoinColumn(name="si_id", nullable=true, updatable=true)
     private SiteEntity site;
     
+    /** Constructor.
+     */
     public UsagerEntity() {
         super();
     }

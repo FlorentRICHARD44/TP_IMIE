@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.imie.entities.SiteEntity;
 import fr.imie.service.Services;
 
 /**
@@ -37,6 +38,8 @@ public class UsagerList extends HttpServlet {
 		request.setAttribute("usagerlist", serv.findAllUsagers());
 		request.setAttribute("name", "");  // Default value of filter
         request.setAttribute("firstname", "");  // Default value of filter
+        request.setAttribute("sitelist", serv.findAllSites());
+        request.setAttribute("site", "Aucun");
 	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
 	}
 
@@ -44,12 +47,34 @@ public class UsagerList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    if (request.getParameter("filter") != null) {
+	    if (request.getParameter("filterFullName") != null) {
 	        request.setAttribute("usagerlist",
 	                serv.findUserByFullname(request.getParameter("name"),
 	                                        request.getParameter("firstname")));
+	        request.setAttribute("sitelist", serv.findAllSites());
+	        request.setAttribute("site", "Aucun");
 	        request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
-	    }
+	    } else if (request.getParameter("filterSite") != null) {
+	        String strId = request.getParameter("site");
+	        Integer id = null;
+	        SiteEntity site = null;
+	        Boolean all = false;
+	        if (!strId.equals("-")) {
+	            try {
+	                id = Integer.valueOf(strId);
+                    site = serv.findSiteById(id);
+	            } catch (NumberFormatException e) {
+	                all = true;
+	            }
+	        }
+	        request.setAttribute("usagerlist", serv.findUsagersBySite(site));
+	        if (all) {
+	            request.setAttribute("usagerlist", serv.findAllUsagers());
+	        }
+	        request.setAttribute("sitelist", serv.findAllSites());
+            request.setAttribute("site", site);
+            request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
+        }
 	    
 	}
 

@@ -15,7 +15,10 @@
 		<form method="post" action="userlist">
 			<tr><td><input type="text" name="name" value="${param.name }"/></td>
 					<td><input type="text" name="firstname" value="${param.firstname }"/></td>
-					<td><input type="submit" class="action" value="<fmt:message key="action.filter" bundle="${propertie}"/>" name="filter"/></td></tr>
+					<td><input type="submit" class="action" value="<fmt:message key="action.filterbyname" bundle="${propertie}"/>" name="filterFullName"/></td></tr>
+			<tr><td><label><fmt:message key="site" bundle="${propertie}"/></label></td>
+			    <td><t:combobox cbselected="${site }" cbitems="${sitelist}" cbname="site" noneselecteable="true" itemall="true"></t:combobox></td>
+			    <td><input type="submit" class="action" value="<fmt:message key="action.filterbysite" bundle="${propertie}"/>" name="filterSite"/></tr>
 		</form>
            <form method="post" action="userview">
             <c:forEach var="user" items="${usagerlist}" varStatus="loop">

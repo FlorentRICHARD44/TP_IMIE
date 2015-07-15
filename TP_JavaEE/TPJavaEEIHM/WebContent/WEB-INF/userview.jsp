@@ -20,7 +20,7 @@
 			<div><label><fmt:message key="usager.email" bundle="${propertie}"/></label><input type="text" name="email" value="${usager.email }"/></div>
 			<div><label><fmt:message key="usager.nbconnection" bundle="${propertie}"/></label><input type="number" name="nbconnexion" value="${usager.nbConnexion }"/></div>
 			<div><label><fmt:message key="usager.dateofbirth" bundle="${propertie}"/></label><input type="text" name="dateofbirth" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></div>
-			<div><label><fmt:message key="usager.site" bundle="${propertie}"/></label><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site"></t:combobox></div>
+			<div><label><fmt:message key="usager.site" bundle="${propertie}"/></label><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site" noneselecteable="false"></t:combobox></div>
 			<input type="password" hidden="true" name="password" value="${usager.password }"/>
 			<div><input type="submit" class="action" value="<fmt:message key="action.save" bundle="${propertie}"/>" name="save"/>
 				<c:if test="${! empty usager.id }">
