@@ -163,4 +163,13 @@ public class UsagerEntity implements Serializable {
     public final void setHobbies(List<HobbyEntity> hobbies) {
         this.hobbies = hobbies;
     }
+
+    public void addHobby(HobbyEntity hobby) {
+        this.hobbies.add(hobby);
+    }
+
+    public void removeHobby(HobbyEntity hobby) {
+        this.hobbies.remove(hobby);
+        
+    }
 }

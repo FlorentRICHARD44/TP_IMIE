@@ -54,6 +54,7 @@ public class SiteForm extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/siteview.jsp").forward(request, response);
         } else if (request.getParameter("del") != null) {
             SiteEntity site = new SiteEntity();
+            // TODO use the same parameter to store the id whatever the url referer
             if (header.getReferer().contains(request.getRequestURI())) { // Delete from site view
                 site.setId(Integer.valueOf(request.getParameter("id")));
             } else if (header.getReferer().contains("sitelist")){  // Delete from site list

@@ -57,6 +57,7 @@ public class HobbyForm extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/hobbyview.jsp").forward(request, response);
         } else if (request.getParameter("del") != null) {
             HobbyEntity hobby = new HobbyEntity();
+            // TODO use the same parameter to store the id whatever the url referer
             if (header.getReferer().contains(request.getRequestURI())) { // Delete from hobby view
                 hobby.setId(Integer.valueOf(request.getParameter("id")));
             } else if (header.getReferer().contains("hobbylist")){  // Delete from hobby list

@@ -31,11 +31,13 @@
 				<tr><td><label><fmt:message key="usager.hobbies" bundle="${propertie}"/></label></td>
 					<td><table>
 					 	 	<c:forEach var="hobby" items="${usager.hobbies}" >
-					 	 		<tr><td><c:out value="${hobby.nom}"/>
+					 	 		<tr><td><c:out value="${hobby.nom}"/></td><td><input type="submit" class="btn del" name="delhobby" value="${hobby.id}"/></td></tr>
 					 	 	</c:forEach>
-					 	 	<tr><td>TODO Add hobby</td></tr>
+					 	 	<c:if test="${! empty availablehobbies }">
+						 	 	<tr><td><t:combobox cbselected="null" cbitems="${availablehobbies}" cbname="newhobby" none="false"></t:combobox></td>
+						 	 		<td><input type="submit" class="action" name="addhobby" value="<fmt:message key="action.add" bundle="${propertie}"/>"/></td></tr>
+					 		</c:if>
 					 	</table></td></tr>
-				<tr><td><input type="password" hidden="true" name="password" value="${usager.password }"/></td></tr>
 				<tr><td><input type="submit" class="action" value="<fmt:message key="action.save" bundle="${propertie}"/>" name="save"/>
 				<c:if test="${! empty usager.id }">
 					<input type="submit" class="action" value="<fmt:message key="action.delete" bundle="${propertie}"/>" name="del"/>
