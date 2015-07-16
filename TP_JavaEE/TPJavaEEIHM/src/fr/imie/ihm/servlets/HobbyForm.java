@@ -3,6 +3,7 @@ package fr.imie.ihm.servlets;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.entities.HobbyEntity;
+import fr.imie.entities.HobbyMusicEntity;
+import fr.imie.entities.HobbySportEntity;
 import fr.imie.entities.SiteEntity;
 import fr.imie.ihm.beans.RequestHeaderBean;
 import fr.imie.service.Services;
@@ -43,11 +46,30 @@ public class HobbyForm extends HttpServlet {
 	    if (request.getParameter("view") != null) {
             request.setAttribute("hobby", serv.findHobbyById(Integer.valueOf(request.getParameter("view"))));
             request.getRequestDispatcher("/WEB-INF/hobbyview.jsp").forward(request, response);
-        } else if (request.getParameter("new") != null) {
-            request.setAttribute("hobby", null);
+        } else if (request.getParameter("newsport") != null
+                || request.getParameter("newmusic") != null) {
+            HobbyEntity hobby = null;
+            if (request.getParameter("newsport") != null) {
+                hobby = new HobbySportEntity();
+            } else if (request.getParameter("newmusic") != null) {
+                hobby = new HobbyMusicEntity();
+            }
+            request.setAttribute("hobby", hobby);
             request.getRequestDispatcher("/WEB-INF/hobbyview.jsp").forward(request, response);
         } else if (request.getParameter("save") != null) {
-            HobbyEntity hobby = new HobbyEntity();
+            HobbyEntity hobby = null;
+            if (request.getParameter("type").equals(HobbySportEntity.class.getName())) {
+                hobby = new HobbySportEntity();
+                if (request.getParameter("team") == null) {
+                    ((HobbySportEntity) hobby).setTeam(false);
+                } else {
+                    ((HobbySportEntity) hobby).setTeam(true);
+                }
+                
+            } else if (request.getParameter("type").equals(HobbyMusicEntity.class.getName())) {
+                hobby = new HobbyMusicEntity();
+                ((HobbyMusicEntity)hobby).setGenremusic(request.getParameter("genre"));
+            }
             if (!request.getParameter("id").equals("")) {
                 hobby.setId(Integer.valueOf(request.getParameter("id")));
             }
@@ -56,15 +78,28 @@ public class HobbyForm extends HttpServlet {
             request.setAttribute("hobby", hobby);
             request.getRequestDispatcher("/WEB-INF/hobbyview.jsp").forward(request, response);
         } else if (request.getParameter("del") != null) {
-            HobbyEntity hobby = new HobbyEntity();
+            Integer id = null;
             // TODO use the same parameter to store the id whatever the url referer
             if (header.getReferer().contains(request.getRequestURI())) { // Delete from hobby view
-                hobby.setId(Integer.valueOf(request.getParameter("id")));
+                id = Integer.valueOf(request.getParameter("id"));
             } else if (header.getReferer().contains("hobbylist")){  // Delete from hobby list
-                hobby.setId(Integer.valueOf(request.getParameter("del")));
+                id = Integer.valueOf(request.getParameter("del"));
             }
-            serv.remove(hobby);
-            response.sendRedirect("hobbylist");
+            HobbyEntity hobby = serv.findHobbyById(Integer.valueOf(id));
+            try {
+                serv.remove(hobby);
+                response.sendRedirect("hobbylist");
+            } catch (EJBTransactionRolledbackException e) {
+                request.setAttribute("error", "hobbyassignedtousager");
+                request.setAttribute("hobby", serv.findHobbyById(id));
+                if (header.getReferer().contains(request.getRequestURI())) { // Delete from hobby view
+                    request.getRequestDispatcher("/WEB-INF/hobbyview.jsp").forward(request, response);
+                } else if (header.getReferer().contains("hobbylist")){  // Delete from hobby list
+                    request.setAttribute("hobbylist", serv.findAllHobbies());
+                    request.getRequestDispatcher("/WEB-INF/hobbylist.jsp").forward(request, response);
+                }
+                
+            }
         }
 	}
 
