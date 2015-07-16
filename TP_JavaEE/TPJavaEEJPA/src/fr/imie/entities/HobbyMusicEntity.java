@@ -13,6 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="hobbymusic")
+@DiscriminatorValue(value="Music")
 public class HobbyMusicEntity extends HobbyEntity implements Serializable {
 
 	
