@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="hobby")
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="type")
 @NamedQueries({
     @NamedQuery(name="HobbyEntity.findAll", query="SELECT h FROM HobbyEntity h ORDER BY h.nom"),
     @NamedQuery(name="HobbyEntity.findByName", query="SELECT h FROM HobbyEntity h WHERE lower(h.nom) like lower(:name) ORDER BY h.nom")
