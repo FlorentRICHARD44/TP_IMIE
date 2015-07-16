@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="hobby")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="type")
 @NamedQueries({
     @NamedQuery(name="HobbyEntity.findAll", query="SELECT h FROM HobbyEntity h ORDER BY h.nom"),

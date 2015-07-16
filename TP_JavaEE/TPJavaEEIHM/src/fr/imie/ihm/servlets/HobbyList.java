@@ -36,6 +36,7 @@ public class HobbyList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("hobbylist", serv.findAllHobbies());
         request.getRequestDispatcher("/WEB-INF/hobbylist.jsp").forward(request, response);
+        // TODO Ajouter lien de visualisation des usagers du loisir
     }
 
     /**

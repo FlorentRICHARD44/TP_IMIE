@@ -40,6 +40,7 @@ public class UsagerList extends HttpServlet {
         request.setAttribute("firstname", "");  // Default value of filter
         request.setAttribute("sitelist", serv.findAllSites());
 	    request.getRequestDispatcher("/WEB-INF/userlist.jsp").forward(request, response);
+	    // TODO ajouter filtre par loisir
 	}
 
 	/**

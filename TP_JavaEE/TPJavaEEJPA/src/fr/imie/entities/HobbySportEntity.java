@@ -1,8 +1,10 @@
 package fr.imie.entities;
 
 import fr.imie.entities.HobbyEntity;
+
 import java.io.Serializable;
 import java.lang.Boolean;
+
 import javax.persistence.*;
 
 /**
@@ -10,6 +12,7 @@ import javax.persistence.*;
  *
  */
 @Entity
+@Table(name="hobbysport")
 @DiscriminatorValue(value="Sport")
 public class HobbySportEntity extends HobbyEntity implements Serializable {
 
