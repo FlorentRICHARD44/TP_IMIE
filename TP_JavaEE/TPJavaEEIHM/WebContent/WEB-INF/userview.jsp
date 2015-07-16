@@ -11,7 +11,22 @@
     <c:otherwise><c:set var="pagetitle" scope="page"><fmt:message key="usager" bundle="${propertie}"/> ${usager.prenom } ${usager.nom }</c:set></c:otherwise>
 </c:choose>
 <c:set var="tabtitle" scope="page"><fmt:message key="usager" bundle="${propertie}"/></c:set>
-<t:maintemplate pagetitle="${pagetitle}" tabtitle="${tabtitle }">
+<t:maintemplate pagetitle="${pagetitle}" tabtitle="${tabtitle }"><div class="path">  <!-- Chemin de la page actuelle dans le site -->
+        <a href="home">Accueil</a> > <a href="userlist">Liste Usagers</a> > <a href="userview">Vue Usager</a>
+    </div>
+    <aside id="menulocal">  <!-- Menu local -->
+        <h2>Base Usagers</h2>
+        <ul>
+            <li><a href="userlist">Liste des Usagers</a></li>
+            <li><form method="post" action="userview"><input class="localmenu" type="submit" name="new" value="Ajouter un Usager"/></form></li>
+        </ul>
+    </aside>
+    <section>
+        <ul id="listelocale">
+            <li> </li>
+            <li> </li>
+        </ul>
+        <div class="actionzone">
 	<form method="post" action="userview">
 		<fieldset>
 			<table>
@@ -27,7 +42,7 @@
 				<tr><td><label><fmt:message key="usager.dateofbirth" bundle="${propertie}"/></label></td>
 				    <td><input type="text" name="dateofbirth" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${usager.datenaissance}" />"/></td></tr>
 				<tr><td><label><fmt:message key="usager.site" bundle="${propertie}"/></label></td>
-				    <td><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site" noneselecteable="false"></t:combobox></td></tr>
+				    <td><t:combobox cbselected="${usager.site }" cbitems="${sitelist}" cbname="site" none="true" noneselecteable="false"></t:combobox></td></tr>
 				<tr><td><label><fmt:message key="usager.hobbies" bundle="${propertie}"/></label></td>
 					<td><table>
 					 	 	<c:forEach var="hobby" items="${usager.hobbies}" >
@@ -45,4 +60,6 @@
 			</table>
 		</fieldset>
 	</form>
+	</div>
+	</section>
 </t:maintemplate>

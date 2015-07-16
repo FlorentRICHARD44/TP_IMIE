@@ -18,7 +18,7 @@
     <c:if test="${itemall }">
     	<option <c:out value="${selected}"/>><fmt:message key="text.all" bundle="${propertie }"/></option>
     </c:if>
-    <c:if test="${none } ==true">
+    <c:if test="${none == true }">
     	<c:set var="disabled" scope="page" value="disable"/>
 	    <c:if test="${noneselectable}==true">
 	        <c:set var="disabled" scope="page" value=" "/>
