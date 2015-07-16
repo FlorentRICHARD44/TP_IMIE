@@ -53,6 +53,7 @@ public class SiteForm extends HttpServlet {
             request.setAttribute("site", site);
             request.getRequestDispatcher("/WEB-INF/siteview.jsp").forward(request, response);
         } else if (request.getParameter("del") != null) {
+            System.out.println("voir les usagers du site");
             SiteEntity site = new SiteEntity();
             // TODO use the same parameter to store the id whatever the url referer
             if (header.getReferer().contains(request.getRequestURI())) { // Delete from site view
@@ -62,6 +63,9 @@ public class SiteForm extends HttpServlet {
             }
             serv.remove(site);
             response.sendRedirect("sitelist");
+        } else if (request.getParameter("viewusagers") != null) {
+            request.getRequestDispatcher("userlist?filterSite=true&site="+request.getParameter("id"))
+                        .forward(request, response);
         }
 	}
 
