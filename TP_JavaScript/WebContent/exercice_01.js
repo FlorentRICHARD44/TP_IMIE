@@ -15,7 +15,9 @@ function calc_categorie(age, label) {
 			cat = "Cadet"
 		}
 		document.getElementById(label).innerHTML = "La catégorie est " + cat
+		document.getElementById(label).removeAttribute("class")
 	} else {
 		document.getElementById(label).innerHTML = "La personne est trop jeune pour jouer"
+			document.getElementById(label).setAttribute("class", "error")
 	}
 }

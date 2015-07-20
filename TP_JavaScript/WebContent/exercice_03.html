@@ -7,5 +7,11 @@
 	</head>
 	<body>
 		<h1>Exercice 3: factorielle</h1>
+		<div><label for="number">Nombre</label><input type="number" id="number"/>
+			 <p>Résultat: </p><p id="result"></p>
+		</div>
+		<div>
+			<button onClick="factorielle(document.getElementById('number').value,'result')">calculer</button>
+		</div>
 	</body>
 </html>
