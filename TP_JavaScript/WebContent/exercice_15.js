@@ -23,7 +23,7 @@ var valListe = []
 function displayStartList() {
 	var startList = document.getElementById("startlist");
 	// Removes all the child
-	while (startList.firstChild) {
+	while (startList.hasChildNodes()) {
 		startList.removeChild(startList.firstChild);
 	}
 	for (var i in valListe) {
@@ -32,10 +32,10 @@ function displayStartList() {
 		var elements = document.createElement("ul")
 		// Create del button
 		var btndel = document.createElement("button")
-		btndel.setAttribute("id", i)
+		btndel.setAttribute("data-index", i)
 		btndel.setAttribute("class", "btn del")
 		btndel.addEventListener("click", function(e) {
-				valListe.splice(parseInt(e.target.getAttribute("id")), 1);
+				valListe.splice(parseInt(e.target.getAttribute("data-index")), 1);
 				displayStartList();
 				if (valListe.length <= 1) {
 					document.getElementById("btn_sort").setAttribute("hidden", "true")
@@ -43,15 +43,13 @@ function displayStartList() {
 				return false}, 
 				false)
 		elements.appendChild(btndel)
-		// Add value
-		elements.appendChild(document.createTextNode(valListe[i].getValue()))
 		// Create Move Left button
 		if (i > 0) {
 			var btnleft = document.createElement("button")
-			btnleft.setAttribute("id", i)
+			btnleft.setAttribute("data-index", i)
 			btnleft.setAttribute("class", "btn moveleft")
 			btnleft.addEventListener("click", function(e) {
-				var index = parseInt(e.target.getAttribute("id"));
+				var index = parseInt(e.target.getAttribute("data-index"));
 				var tmp = valListe[index - 1];
 				valListe[index - 1] = valListe[index];
 				valListe[index] = tmp;
@@ -59,13 +57,15 @@ function displayStartList() {
 				return false}, false)
 			elements.appendChild(btnleft)
 		}
+		// Add value
+		elements.appendChild(document.createTextNode(valListe[i].getValue()))
 		// Create Move Right button
 		if (i < (valListe.length - 1)) {
 			var btnright = document.createElement("button")
-			btnright.setAttribute("id", i)
+			btnright.setAttribute("data-index", i)
 			btnright.setAttribute("class", "btn moveright")
 			btnright.addEventListener("click", function(e) {
-				var index = parseInt(e.target.getAttribute("id"));
+				var index = parseInt(e.target.getAttribute("data-index"));
 				var tmp = valListe[index + 1];
 				valListe[index + 1] = valListe[index];
 				valListe[index] = tmp;
@@ -99,7 +99,7 @@ var btn_sort = document.getElementById("btn_sort");
 btn_sort.addEventListener("click",
 		function(e) {
 			var resdiv = document.getElementById("sortresult")
-			while (resdiv.firstChild) {
+			while (resdiv.hasChildNodes()) {
 				resdiv.removeChild(resdiv.firstChild)
 			}
 			tri(valListe, affiche)
