@@ -12,15 +12,15 @@ function Object (val){
 	}
 }
 
-table = [new Object(9),
+table = [new Object(1),
          new Object(8),
          new Object(7),
-         new Object(6),
-         new Object(5),
-         new Object(4),
-         new Object(3),
+         new Object(9),
          new Object(2),
-         new Object(1)]
+         new Object(3),
+         new Object(4),
+         new Object(6),
+         new Object(5)]
 
 function affiche(tableau) {
 	document.write("<div>")
@@ -42,12 +42,13 @@ function tri(tableau, fct_affichage) {
 				tmp = tableau[j]
 				tableau[j] = tableau[j+1]
 				tableau[j + 1] = tmp
-				tableau[j + 1].setStatus("moved")
+				tableau[j + 1].setStatus("movedleft")
+				tableau[j].setStatus("movedright")
 				move = true
-				fct_affichage(tableau);
-				break;
+
 			}
 		}
+		fct_affichage(tableau);
 		for (var j=0; j < tableau.length; j++) {
 			tableau[j].setStatus("")
 		}
