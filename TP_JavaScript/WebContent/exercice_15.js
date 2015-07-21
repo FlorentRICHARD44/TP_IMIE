@@ -37,6 +37,9 @@ function displayStartList() {
 		btndel.addEventListener("click", function(e) {
 				valListe.splice(parseInt(e.target.getAttribute("id")), 1);
 				displayStartList();
+				if (valListe.length <= 1) {
+					document.getElementById("btn_sort").setAttribute("hidden", "true")
+				}
 				return false}, 
 				false)
 		elements.appendChild(btndel)
@@ -82,6 +85,9 @@ btn_add.addEventListener("click",
 		function(e){
 			if (document.getElementById("newval").value != "") {
 				valListe.push(new Object(parseInt(document.getElementById("newval").value)));
+				if (valListe.length > 1) {
+					document.getElementById("btn_sort").removeAttribute("hidden")
+				}
 			}
 			displayStartList();
 			return false;
@@ -92,7 +98,10 @@ btn_add.addEventListener("click",
 var btn_sort = document.getElementById("btn_sort");
 btn_sort.addEventListener("click",
 		function(e) {
-			console.log("sort")
+			var resdiv = document.getElementById("sortresult")
+			while (resdiv.firstChild) {
+				resdiv.removeChild(resdiv.firstChild)
+			}
 			tri(valListe, affiche)
 			return false
 		}, false);
@@ -115,25 +124,28 @@ function affiche(tableau) {
  * Function: sorts the values of a table (ascendent order).
  ****************************/
 function tri(tableau, fct_affichage) {
-	fct_affichage(tableau)
+	var tmptab = []
+	for (i in tableau) {
+		tmptab.push(tableau[i])
+	}
+	fct_affichage(tmptab)
 	move = true
 	while (move) {
 		move = false
-		for (var j=0; j < (tableau.length - 1); j++) {
-			if (tableau[j].getValue() > tableau[j+1].getValue()) {
-				tmp = tableau[j]
-				tableau[j] = tableau[j+1]
-				tableau[j + 1] = tmp
-				tableau[j + 1].setStatus("movedleft")
-				tableau[j].setStatus("movedright")
+		for (var j=0; j < (tmptab.length - 1); j++) {
+			if (tmptab[j].getValue() > tmptab[j+1].getValue()) {
+				tmp = tmptab[j]
+				tmptab[j] = tmptab[j+1]
+				tmptab[j + 1] = tmp
+				tmptab[j + 1].setStatus("movedleft")
+				tmptab[j].setStatus("movedright")
 				move = true
 
 			}
 		}
-		fct_affichage(tableau);
-		for (var j=0; j < tableau.length; j++) {
-			tableau[j].setStatus("")
+		fct_affichage(tmptab);
+		for (var j=0; j < tmptab.length; j++) {
+			tmptab[j].setStatus("")
 		}
 	}
-	return tableau
 }
