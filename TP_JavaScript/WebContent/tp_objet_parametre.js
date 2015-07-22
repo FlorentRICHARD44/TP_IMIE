@@ -4,16 +4,8 @@
 
 
 function ObjectA(objB) {
-	if (objB.attribute == undefined) {
-		this.attribute;
-	} else {
-		this.attribute = objB.attribute;
-	}
-	if (objB.method == undefined) {
-		this.method = function(){ alert("not implemented")};
-	} else {
-		this.method = objB.method;
-	}
+	this.attribute =  objB.attribute || "non initialisé";
+	this.method = objB.method || function(){ alert("not implemented")};
 }
 
 // Main Loop
