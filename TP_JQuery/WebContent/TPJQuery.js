@@ -7,15 +7,17 @@ var pendingImports = [];
 $(function() {
 	// Liste of all the images
 	var tabImg = [];
-	function Image(data, title, desc, tags) {
+	function Image(data, title, desc, tags, filename) {
 		var img_data = data;
 		var img_title = title;
 		var img_desc = desc;
 		var img_tags = tags;
+		var img_filename = filename;
 		this.getData = function() {return img_data};
 		this.getTitle = function() {return img_title};
 		this.getDesc = function() {return img_desc};
 		this.getTags = function() {return img_tags};
+		this.getFileName = function() {return img_filename};
 	}
 	/***************************
 	 * Show the Modal
@@ -39,7 +41,9 @@ $(function() {
 	$( "#savemodal" ).click(function() {
 		var img = new Image($('#modal img').attr("src"),
 				$('#modal #title').val(),
-				$('#modal #desc').val(),[]);
+				$('#modal #desc').val(),
+				[],
+				$('#modal #filename').val());
 		if ($('#modal #id').val() == '') { // New image
 			tabImg.push(img);
 		} else {  // Modification
@@ -52,6 +56,8 @@ $(function() {
 		$('#modal #desc').val('');
 		$('#modal #tags').val('');
 		$('#modal #id').val('');
+		$('#modal #filename').val('');
+		setTimeout(importImage, 1000);
 	})
 
 	
@@ -60,12 +66,13 @@ $(function() {
 	 *************************/
 	function displayImages(images) {
 		$('#imagelist').text('')
-		for (i in images) {
+		for (var i in images) {
 			if (i >= displayIndex && i < (displayIndex + nbImgDisplayed)) {
 				$('#imagelist').append($('<div>').addClass('img')
 											     .append($('<img>').attr('src', images[i].getData()))
 											     .append($('<h3>').text(images[i].getTitle()))
 											     .append($('<p>').text(images[i].getDesc()))
+											     .append($('<p>').text(images[i].getFileName()))
 											     .append($('<button>').addClass('btn')
 											    		 			  .attr('data_index', i)
 											    		 			  .button({icons: {primary: "ui-icon-trash"},text:false})
@@ -87,29 +94,40 @@ $(function() {
 		}
 	}
 
-	/**************************
-	 * Event : Add file(s) to the selection
-	 **************************/
+	/********************
+	 * Import new file.
+	 *******************/
+	function importImage() {
+		var f = pendingImports.pop();
+		if (f != undefined) {
+			var picReader = new FileReader();
+			picReader.addEventListener("load", function (event) {
+				var reader = event.target;
+				$('#modal img').attr("src", reader.result)
+				$('#modal #filename').val(reader.file.name)
+			});
 	
-	$( "#addfiles" )
-	.on("change", function( e ) {
-		if (window.File && window.FileReader && window.FileList && window.Blob) {
-			for (i = 0; i < e.target.files.length; i++) {
-
-				var picReader = new FileReader();
-				picReader.addEventListener("load", function (event) {
-					var reader = event.target;
-					$('#modal img').attr("src", reader.result)
-				});
-
-				var f = e.target.files[i];
-				if (f.type && !f.type.match('image.*')) {
-					continue;
-				}
+			if (!(f.type && !f.type.match('image.*'))) {
 				picReader.file = f;
 				picReader.readAsDataURL(f);
 				showModal();
 			}
+			
+			
+		}
+	}
+	
+	/**************************
+	 * Event : Add file(s) to the selection
+	 **************************/
+	$( "#addfiles" )
+	.on("change", function( e ) {
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+			for (i = 0; i < e.target.files.length; i++) {
+				pendingImports.push(e.target.files[i]);
+				
+			}
+			importImage();
 		} else {
 			console.log('non supporté');
 		}
