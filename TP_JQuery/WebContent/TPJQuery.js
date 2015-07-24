@@ -10,12 +10,15 @@ $(function() {
 	// Liste of all the images
 	var tabImg = [];
 	function Image(data, title, desc, tags, filename, datecreation) {
+		var img_id = null;
 		var img_data = data;
 		var img_title = title;
 		var img_desc = desc;
 		var img_tags = tags;
 		var img_filename = filename;
 		var img_datecreation = datecreation
+		this.getId = function() {return img_id};
+		this.setId = function(id) {img_id = id};
 		this.getData = function() {return img_data};
 		this.getTitle = function() {return img_title};
 		this.getDesc = function() {return img_desc};
@@ -64,12 +67,36 @@ $(function() {
 				tags,
 				$('#modal #filename').val(),
 				$('#modal #datepicker').val());
+		img.setId($('#modal #persistid').val())
 		if ($('#modal #id').val() == '') { // New image
-			tabImg.push(img);
+			$.ajax({
+			    data: JSON.stringify({"title":img.getTitle(),
+			    					  "desc":img.getDesc(),
+			    					  "data":img.getData(),
+			    					  "filename": img.getFileName(),
+			    					  "datecreation": img.getDateCreation(),
+			    					  "tags": img.getTags()}),
+			    url: 'https://api.mongolab.com/api/1/databases/imie_tpjs_portfolio/collections/folios?apiKey=b5wK_qlRZHhOMHIve4jc1DEI69PRBRdC',
+			    method: 'POST',
+			    contentType: 'application/json'
+			}).fail(function() {alert("bouh ca marche pas")})
+			  .done(function() {selectAll()});
 		} else {  // Modification
 			tabImg[parseInt($('#modal #id').val())] = img
+			$.ajax({
+			    data: JSON.stringify({"title":img.getTitle(),
+			    					  "desc":img.getDesc(),
+			    					  "data":img.getData(),
+			    					  "filename": img.getFileName(),
+			    					  "datecreation": img.getDateCreation(),
+			    					  "tags": img.getTags(),
+			    					  "_id": {$oid: img.getId()}}),
+			    url: 'https://api.mongolab.com/api/1/databases/imie_tpjs_portfolio/collections/folios/'+ img.getId() + '?apiKey=b5wK_qlRZHhOMHIve4jc1DEI69PRBRdC',
+			    method: 'PUT',
+			    contentType: 'application/json'
+			}).done(function() {selectAll()})
+			  .fail(function() {alert("bouh ca marche pas")});
 		}
-		displayImages(tabImg);
 		importImage();
 		$('#modal img').attr("src", "");
 		$('#modal #title').val('');
@@ -83,26 +110,32 @@ $(function() {
 	/*************************
 	 * Function: Display the correct images.
 	 *************************/
-	function displayImages(images) {
+	function displayImages() {
 		$('#imagelist').text('')
-		for (var i in images) {
+		for (var i in tabImg) {
 			if (i >= displayIndex && i < (displayIndex + nbImgDisplayed)) {
 				$('#imagelist').append($('<div>').addClass('img')
-											     .append($('<img>').attr('src', images[i].getData()))
-											     .append($('<h3>').text(images[i].getTitle()))
-											     .append($('<p>').text(images[i].getDesc()))
-											     .append($('<p>').text(images[i].getFileName()))
-											     .append($('<p>').text("Créé le : " + images[i].getDateCreation()))
-											     .append($('<p>').text(images[i].getTags().join('; ')))
+											     .append($('<img>').attr('src', tabImg[i].getData()))
+											     .append($('<h3>').text(tabImg[i].getTitle()))
+											     .append($('<p>').text(tabImg[i].getDesc()))
+											     .append($('<p>').text(tabImg[i].getFileName()))
+											     .append($('<p>').text("Créé le : " + tabImg[i].getDateCreation()))
+											     .append($('<p>').text(tabImg[i].getTags().join('; ')))
 											     .append($('<button>').addClass('btn')  // Button DELETE
 											    		 			  .button({icons: {primary: "ui-icon-trash"},text:false})
 											    		 			  .click(( function(copieIndex) {
 											    		 			        return function() { 
-											    		 			        	tabImg.splice(copieIndex, 1);
+											    		 			        	var img = tabImg[copieIndex];
+											    		 			        	$.ajax({
+											    		 						    url: 'https://api.mongolab.com/api/1/databases/imie_tpjs_portfolio/collections/folios/'+ img.getId() + '?apiKey=b5wK_qlRZHhOMHIve4jc1DEI69PRBRdC',
+											    		 						    method: 'DELETE',
+											    		 						    contentType: 'application/json'
+											    		 						}).done(function() {selectAll()})
+											    		 						  .fail(function() {alert("bouh ca marche pas")});
 											    		 			        	if (((nbImgDisplayed + displayIndex) >= tabImg.length) && (displayIndex > 0)) {
 											    		 			        		displayIndex--;
 											    		 			        	}
-								    		 			  					  	displayImages(tabImg);}}) ( i )))
+								    		 			  					  	}}) ( i )))
 	    		 			  					 .append($('<button>').addClass('btn')  // Button EDIT
 											    		 			  .button({icons: {primary: "ui-icon-pencil"},text:false})
 											    		 			  .click(( function(copieIndex) {
@@ -110,7 +143,9 @@ $(function() {
 											    		 			        	$('#modal img').attr("src", tabImg[copieIndex].getData());
 											    		 			        	$('#modal #title').val(tabImg[copieIndex].getTitle());
 											    		 			        	$('#modal #desc').val(tabImg[copieIndex].getDesc());
+											    		 			        	$('#modal #filename').val(tabImg[copieIndex].getFileName());
 											    		 			        	$('#modal #datepicker').val(tabImg[copieIndex].getDateCreation());
+											    		 			        	$('#modal #persistid').val(tabImg[copieIndex].getId());
 											    		 			        	$('#modal #id').val(copieIndex);
 											    		 			        	initTagList(tabImg[copieIndex].getTags());
 											    		 			        	showModal()}}) ( i ))));
@@ -168,7 +203,7 @@ $(function() {
 			if (displayIndex > 0) {
 				displayIndex--;
 			}
-			displayImages(tabImg);
+			displayImages();
 		});	
 	/**************************
 	 * Event : Click on Right move button
@@ -180,7 +215,7 @@ $(function() {
 			if (displayIndex < (tabImg.length - nbImgDisplayed)) {
 				displayIndex++;
 			}
-			displayImages(tabImg);
+			displayImages();
 		});
 	/****************
 	 * Liste drag and drop
@@ -192,6 +227,28 @@ $(function() {
 	 /** Date Picker **/
 	 $( "#datepicker" ).datepicker();
 	 
+	 /**************************
+	  * Persistance
+	  ************************/
+	 function selectAll() {
+		 $.ajax({
+		    	url: 'https://api.mongolab.com/api/1/databases/imie_tpjs_portfolio/collections/folios?apiKey=b5wK_qlRZHhOMHIve4jc1DEI69PRBRdC',
+				method: 'GET',
+				dataType: 'json'
+				}).done(function(data) {
+					console.log(data);
+					tabImg = []
+					for (var d in data) {
+						var img = new Image(data[d].data, data[d].title, data[d].desc, data[d].tags, data[d].filename, data[d].datecreation);
+						img.setId(data[d]._id.$oid);
+						console.log(img.getId());
+						tabImg.push(img);
+					}
+				}).fail(function() {alert("affichage: bouh ca marche pas")})
+				  .done(function() {displayImages(tabImg);});
+	 }
+	 
 	 // Main loop;
 	 initTagList();
+	 selectAll();
 });

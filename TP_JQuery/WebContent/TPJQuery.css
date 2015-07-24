@@ -2,7 +2,7 @@
 
 button
 {
-	width: 100px;
+	height: 2.4em;
 }
 
 #effect
@@ -23,19 +23,30 @@ div.img
 	border: solid 1px black;
 	margin: 5px;
 	padding: 5px;
-	width: 150px;
-	height: 200px;
+	
 }
 
 img
 {
 	width: 100px;
-	height: 130px;
 }
 
 ul
 {
 	width: 200px;
-	height: 200px;
 	overflow: scroll;
+}
+
+div.table
+{
+	display: table;
+}
+
+div.tablerow
+{
+	display: table-row;
+}
+div.tablecell
+{
+	display: table-cell;
 }

@@ -10,31 +10,34 @@
         <link rel="stylesheet" href="TPJQuery.css"/>
 	</head>
 	<body>
+		<h1 class="ui-widget-header ui-corner-all">Port Folio</h1>
 		<div><input type="file" id="addfiles" accept="image" multiple/></div>
 		<div id="modal" class="toggler">
 			 <div id="effect" class="ui-widget-content ui-corner-all" style="display: none;">
     			<h3 class="ui-widget-header ui-corner-all">Configuration Image</h3>
-				<table>
-					<tr><td><input id="id" type="text" hidden="true"/>
+				<div class="table">
+					<div class="tablerow"><div class="tablecell"><input id="id" type="text" hidden="true"/>
 					   		<input id="filename" type="text" hidden="true"/>
-					   </td></tr>
-					<tr><td><label>Preview</label></td><td><img></img></td></tr>
-					<tr><td><label>Title</label></td><td><input id="title" type="text"/></td></tr>
-					<tr><td><label>Description</label></td><td><textarea id="desc" rows="10" cols="200"></textarea></td></tr>
-					<tr><td><label>Date de création</label></td><td><input type="text" id="datepicker"/></td></tr>
-					<tr><td><label>Tags</label></td><td>
-						<table>
-							<tr><th>Disponible</th><th>Associé</th></tr>
-							<tr>
-								<td><ul id="sortable_dispo" class="droptrue">
+					   		<input id="persistid" type="text" hidden="true"/>
+					   </div>
+					</div>
+					<div class="tablerow"><div class="tablecell"><label>Preview</label></div><div class="tablecell"><img></img></div></div>
+					<div class="tablerow"><div class="tablecell"><label>Title</label></div><div class="tablecell"><input id="title" type="text"/></div></div>
+					<div class="tablerow"><div class="tablecell"><label>Description</label></div><div class="tablecell"><textarea id="desc" rows="10" cols="200"></textarea></div></div>
+					<div class="tablerow"><div class="tablecell"><label>Date de création</label></div><div class="tablecell"><input type="text" id="datepicker"/></div></div>
+					<div class="tablerow"><div class="tablecell"><label>Tags</label></div><div class="tablecell">
+						<div class="table">
+							<div class="tablerow"><div class="tablecell">Disponible</div><div class="tablecell">Associé</div></div>
+							<div class="tablerow">
+								<div class="tablecell"><ul id="sortable_dispo" class="droptrue">
 									</ul>
-								</td>
-								<td><ul id="sortable_link" class="droptrue"></ul></td>	
-							</tr>
-						</table>
-					</td></tr>
-					<tr><td colspan="2"><button id="savemodal">Save</button></td></tr>
-				</table>
+								</div>
+								<div class="tablecell"><ul id="sortable_link" class="droptrue"></ul></div>	
+							</div>
+						</div>
+					</div></div>
+					<div class="tablerow"><div class="tablecell"><button id="savemodal">Save</button></div></div>
+				</div>
 			</div>
 		</div>
 		<div id="slider"><button id="left" >Left</button>
