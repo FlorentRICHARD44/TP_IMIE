@@ -94,15 +94,16 @@ $(function() {
 											     .append($('<p>').text(images[i].getFileName()))
 											     .append($('<p>').text("Créé le : " + images[i].getDateCreation()))
 											     .append($('<p>').text(images[i].getTags().join('; ')))
-											     .append($('<button>').addClass('btn')
-											    		 			  .attr('data_index', i)
+											     .append($('<button>').addClass('btn')  // Button DELETE
 											    		 			  .button({icons: {primary: "ui-icon-trash"},text:false})
 											    		 			  .click(( function(copieIndex) {
 											    		 			        return function() { 
 											    		 			        	tabImg.splice(copieIndex, 1);
+											    		 			        	if (((nbImgDisplayed + displayIndex) >= tabImg.length) && (displayIndex > 0)) {
+											    		 			        		displayIndex--;
+											    		 			        	}
 								    		 			  					  	displayImages(tabImg);}}) ( i )))
-	    		 			  					 .append($('<button>').addClass('btn')
-											    		 			  .attr('data_index', i)
+	    		 			  					 .append($('<button>').addClass('btn')  // Button EDIT
 											    		 			  .button({icons: {primary: "ui-icon-pencil"},text:false})
 											    		 			  .click(( function(copieIndex) {
 											    		 			        return function() { 
