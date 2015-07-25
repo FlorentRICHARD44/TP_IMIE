@@ -21,6 +21,7 @@
 					<input type="submit" class="action" value="<fmt:message key="action.delete" bundle="${propertie}"/>" name="del"/>
 				</c:if>
 			</div>
+			<div><input type="submit" class="action" value="<fmt:message key="site.viewusagers" bundle="${propertie}"/>" name="viewusagers"/> </div>
 		</fieldset>
 	</form>
 </t:maintemplate>

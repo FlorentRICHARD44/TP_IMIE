@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercice 02</title>
+		<script id="exo2" src="exercice_02.js"></script>
+	</head>
+	<body>
+		<h1>Exercice 2: Prix des photocopies</h1>
+			<label for="nbPhotocop">Nombre de photocopie</label><input type="number" id="nbPhotocop" name="nbPhotocop"/>
+			<label>Total:</label><label id="text">0.00</label><label>€</label>
+		<div>
+			<button onclick="calc_price_photocop(document.getElementById('nbPhotocop').value, 'text')">Calculer</button>
+		</div>
+	</body>
+</html>

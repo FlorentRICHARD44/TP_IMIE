@@ -13,6 +13,6 @@
 		<div class="line"><p class="data"><c:out value="${openconnectionsbean.visitors}"/> <fmt:message key="menu.info.visitors" bundle="${propertie}"/>, <fmt:message key="menu.info.included" bundle="${propertie}"/> <c:out value="${openconnectionsbean.loggedUsers}"/> <fmt:message key="menu.info.logged" bundle="${propertie}"/></p></div>
 	</section>
 </header>
-<nav><div class="menu"><div class="menuitem"><a href="home"><fmt:message key="menu.home" bundle="${propertie}"/></a></div><div class="menuitem"><a href="userlist"><fmt:message key="menu.usagerslist" bundle="${propertie}"/></a></div><div class="menuitem"><a href="sitelist"><fmt:message key="menu.siteslist" bundle="${propertie}"/></a></div></div>
+<nav><div class="menu"><div class="menuitem"><a href="home"><fmt:message key="menu.home" bundle="${propertie}"/></a></div><div class="menuitem"><a href="userlist"><fmt:message key="menu.usagerslist" bundle="${propertie}"/></a></div><div class="menuitem"><a href="sitelist"><fmt:message key="menu.siteslist" bundle="${propertie}"/></a></div><div class="menuitem"><a href="hobbylist"><fmt:message key="menu.hobbieslist" bundle="${propertie}"/></a></div></div>
 	<form method="post" action="logout" ><input type="submit" value="<fmt:message key="menu.logout" bundle="${propertie}"/>" name="logout" /></form>
 </nav>

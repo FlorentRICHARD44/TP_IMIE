@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercice 15</title>
+		<style type="text/css">
+			*
+			{
+			    font-family: Arial;
+				font-size: normal;
+			    color: #1C325B;
+			    margin: 0px 0px 0px 0px;
+			    padding: 0px 0px 0px 0px;
+			}
+	       .value
+	       {
+	            display:inline-block;
+	       		border: solid 1px black;
+	       		padding: 3px;
+	       		
+	       }
+	       .result
+	       {
+	       		display: inline-block;
+	       		padding: 3px;
+	       }
+	       .movedleft
+	       {
+	       		color: red;
+	       }
+	       .movedright
+	       {
+	       		color: green;
+	       }
+	       button.btn
+			{
+				width: 25px;
+				height: 25px;
+				background-size : 25px 25px;
+				background-repeat: no-repeat;
+				background-color : transparent;
+				border: none;
+				color: transparent;
+				cursor: pointer;
+				margin: 0px 5px 0px 5px;
+			}
+			button.del
+			{	
+				background-image:url(IMG/delete.png);
+			}
+			button.moveright
+			{	
+				background-image:url(IMG/arrow-right.png);
+			}	
+			button.moveleft
+			{	
+				background-image:url(IMG/arrow-left.png);
+			}
+			ul 
+			{
+			    list-style-type: none; 
+			} 
+		</style>
+	</head>
+	<body>
+		<h1>Exercice 15: Tri à bulle sans fonction sort avec affichage intermédiaire</h1>
+		<div><input type="number" id="newval" required></input><button id="btn_addval">Ajouter</button></div>
+		<ul id="startlist"></ul>
+		<div><button id="btn_sort" hidden="true">Trier</button></div>
+		<div id="sortresult"></div>
+		<script src="exercice_15.js"></script>
+	</body>
+</html>

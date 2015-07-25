@@ -35,6 +35,7 @@ public class SiteList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("sitelist", serv.findAllSites());
 		request.getRequestDispatcher("/WEB-INF/sitelist.jsp").forward(request, response);
+		// TODO Ajouter lien de visualisation des usagers du site
 	}
 
 	/**

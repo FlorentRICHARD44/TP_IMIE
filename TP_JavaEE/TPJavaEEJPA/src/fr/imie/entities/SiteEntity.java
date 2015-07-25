@@ -3,6 +3,7 @@ package fr.imie.entities;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -26,6 +27,8 @@ public class SiteEntity implements Serializable {
 	private Integer id = null;
 	@Column(name="nom")
 	private String nom;
+	@OneToMany(mappedBy="site", fetch=FetchType.EAGER)
+	private List<UsagerEntity> usagerList;
 
 	public SiteEntity() {
 		super();
@@ -50,6 +53,20 @@ public class SiteEntity implements Serializable {
     @Override
     public String toString() {
         return this.nom;
+    }
+
+    /**
+     * @return the usagerList
+     */
+    public final List<UsagerEntity> getUsagerList() {
+        return usagerList;
+    }
+
+    /**
+     * @param usagerList the usagerList to set
+     */
+    public final void setUsagerList(List<UsagerEntity> usagerList) {
+        this.usagerList = usagerList;
     }
    
 }
