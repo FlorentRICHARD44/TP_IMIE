@@ -14,7 +14,7 @@ body
     background-color: #F3F5F4;
 }
 
-ul 
+ul, ol 
 {
     list-style-type: none;
     overflow: auto;
@@ -211,7 +211,7 @@ form.login input.action
 }
 
 /* Button for actions */
-input.action
+button.action
 {
     padding: 5px 5px 5px 5px;
     background-color: #1C325B;
@@ -221,7 +221,7 @@ input.action
     box-shadow: 2px 2px 2px #444444;
 }
 
-input.action:hover
+button.action:hover
 {
     cursor: pointer;
 	background-color: #F16800;
@@ -361,12 +361,12 @@ table.listing tr td
 	padding: 5px 10px 5px 10px;
 }
 
-ul#listelocale, div.actionzone
+ol#listelocale, div.actionzone
 {
     display: inline-block;
 }
 
-ul#listelocale
+ol#listelocale
 {
     width: 250px;
     border: solid 2px #1C325B;
@@ -377,10 +377,16 @@ ul#listelocale
     top: 10px;
 }
 
-ul#listelocale li
+ol#listelocale li
 {
     padding: 5px 5px 5px 5px;
     border-bottom: solid 1px #1C325B;
+}
+
+ol#listelocale li.ui-selected
+{
+	background-color: #F16800;
+	color: white;
 }
 
 div.actionzone
@@ -391,14 +397,18 @@ div.actionzone
     left: 280px;
     right: 0px;
 }
-
+div.actionzone fieldset
+{
+	border: none;
+}
+	
 div.actionzone h1
 {
     position: absolute;
     top: 0px;
     left: 10px;
 }
-input#new
+button#new
 {
 	position: absolute;
     top: 5px;
@@ -426,28 +436,39 @@ div.displayzone fieldset
     padding: 5px 5px 5px 5px;
 }
 
-
-div.displayzone table caption
+div.table
 {
-    text-align: left;
-    font-weight: bold;
-    padding: 0px 0px 10px 5px;
+	display: table;
 }
-
-div.displayzone td
+div.table-row
 {
+	display: table-row;
+}
+div.table-cell
+{
+	display: table-cell;
     padding: 5px 5px 5px 5px;
 }
-div.displayzone td input
+div.displayzone div.table-cell input
 {
 	margin-right: 10px;
 }
 
-input#del
+div.displayzone div.table-cell label
+{
+	font-weight: bold;
+}
+button#del
 {
 	position: absolute;
     bottom: 10px;
     left: 10px;
+}
+button#save
+{
+	position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 div.displayzone form.bottom
