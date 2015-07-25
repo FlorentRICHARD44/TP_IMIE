@@ -5,15 +5,9 @@ package fr.imie.formation.transverse;
 
 
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-
 import fr.imie.formation.jdbc.dao.DaoSite;
 import fr.imie.formation.jdbc.dao.DaoUsager;
-import fr.imie.formation.jdbc.dao.DummyDaoSite;
-import fr.imie.formation.jdbc.dao.DummyDaoUsager;
 import fr.imie.formation.jdbc.dao.IDao;
-import fr.imie.formation.jdbc.dao.UsagerEjbDAO;
 import fr.imie.formation.jdbc.dto.DtoSite;
 import fr.imie.formation.jdbc.dto.DtoUsager;
 import fr.imie.formation.jdbc.services.IService;
