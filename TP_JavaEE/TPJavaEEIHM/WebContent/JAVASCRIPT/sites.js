@@ -15,7 +15,7 @@ function updateSiteList(selected) {
 												.append(data);
 								if (selected != undefined) {
 									SelectSelectableElement($('#listelocale'),
-											$("li[data-index*='"+selected+"']"))
+											$("li[data-index='"+selected+"']"))
 								}
 							})
 		    .fail(function(data){alert("problem getting sitelist")});
@@ -72,12 +72,12 @@ function getSite(siteId) {
 			method: 'GET'})
 			.done((function(copieSiteId) {
 					return function(data){
-						$('div.displayzone').text('')
-										    .append(data);
-						$('div.actionzone button#save').on('click', function() {siteSave(copieSiteId)});
-						$('div.actionzone button#del').on('click', function() {siteDelete(copieSiteId)});
-						$('p.error').attr('hidden', 'true');
-						}
+							$('div.displayzone').text('')
+											    .append(data);
+							$('div.actionzone button#save').on('click', function() {siteSave(copieSiteId)});
+							$('div.actionzone button#del').on('click', function() {siteDelete(copieSiteId)});
+							$('p.error').attr('hidden', 'true');
+							}
 					})(siteId))
 			.fail(function(data){alert("problem site")});
 }
@@ -110,9 +110,13 @@ $(function() {
 		$.ajax({url: 'sites',
 				method: 'POST'})
 				.done(function(data){
+						if (data.redirect) {
+							window.location.href = data.redirect;
+						} else {
 							$('div.displayzone').text('')
 											    .append(data);
-							$('div.actionzone button#save').on('click', function() {siteSave()})})
+							$('div.actionzone button#save').on('click', function() {siteSave()})}
+				})
 				.fail(function(data){alert("problem site")});
 	});
 	

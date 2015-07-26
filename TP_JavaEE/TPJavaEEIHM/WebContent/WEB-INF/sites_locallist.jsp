@@ -3,5 +3,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html >
 <c:forEach var="site" items="${sitelist}" varStatus="loop">
-    <li data-index="<c:out value="${site.id}"/>"><c:out value="${site.nom}"/></li>
+    <li class="ui-selectee" data-index="<c:out value="${site.id}"/>"><c:out value="${site.nom}"/></li>
 </c:forEach>
