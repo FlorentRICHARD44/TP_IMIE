@@ -92,7 +92,8 @@ public class SitePage extends HttpServlet {
                 site.setId(Integer.valueOf(paramvalue.split("=")[1]));
             }
         }
-        serv.remove(site);
+        if (!serv.remove(site)) {
+            resp.sendError(400, "Le Site ne peut pas être supprimé car il est rattaché à un Usager");
+        }
     }
-
 }

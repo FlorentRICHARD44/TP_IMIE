@@ -26,7 +26,7 @@ public class SiteEntity implements Serializable {
 	@Column(name="id")
 	private Integer id = null;
 	@Column(name="nom")
-	private String nom;
+	private String nom = null;
 	@OneToMany(mappedBy="site", fetch=FetchType.EAGER)
 	private List<UsagerEntity> usagerList;
 
@@ -52,7 +52,13 @@ public class SiteEntity implements Serializable {
 
     @Override
     public String toString() {
-        return this.nom;
+        String result;
+        if (this.nom == null) {
+            result = "Site: -";
+        } else {
+            result = this.nom;
+        }
+        return result;
     }
 
     /**

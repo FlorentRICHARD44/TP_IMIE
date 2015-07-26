@@ -73,7 +73,7 @@ public class Services {
             query = em.createNamedQuery("UsagerEntity.findBySiteNull");
             usagerlist = (List<UsagerEntity>) query.getResultList();
         } else {
-            usagerlist = site.getUsagerList();
+            usagerlist = em.find(SiteEntity.class, site.getId()).getUsagerList();
         }
         return usagerlist;
     }
@@ -143,10 +143,17 @@ public class Services {
     }
 
     /** Delete a Site from the persistance.
+     * The site can't be deleted if an other entity is linked to it.
      * @param site Site to delete
+     * @return done true if the remove is done, else false.
      */
-    public void remove(SiteEntity site) {
-        em.remove(em.merge(site));
+    public Boolean remove(SiteEntity site) {
+        Boolean done = false;
+        if (findUsagersBySite(site).size() == 0) {
+            em.remove(em.merge(site));
+            done = true;
+        }
+        return done;
     }
 
     /** Check the password for an usager.

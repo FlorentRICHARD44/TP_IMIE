@@ -55,7 +55,8 @@ function siteDelete(siteId) {
 	$.ajax({url: 'sites',
 			method: 'DELETE',
 			data: {"id": siteId}})
-			.fail(function(){console.log("fail delete")})
+			.fail(function(data){$('p.error').removeAttr("hidden")
+				                             .append(data.responseText)})
 			.done(function(data){
 					updateSiteList();
 					$('div.displayzone').text('')});
@@ -75,7 +76,7 @@ function getSite(siteId) {
 										    .append(data);
 						$('div.actionzone button#save').on('click', function() {siteSave(copieSiteId)});
 						$('div.actionzone button#del').on('click', function() {siteDelete(copieSiteId)});
-						
+						$('p.error').attr('hidden', 'true');
 						}
 					})(siteId))
 			.fail(function(data){alert("problem site")});

@@ -15,6 +15,7 @@
 		</div>
 	</div>
 </fieldset>
+<p class="error" hidden="true"></p>
 <c:if test="${! empty site }">
 	<button id="del" class="button action">Supprimer</button>
 </c:if>
