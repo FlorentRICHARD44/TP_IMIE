@@ -1,11 +1,15 @@
 package fr.imie.entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
-import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: SiteEntity
@@ -27,8 +31,6 @@ public class SiteEntity implements Serializable {
 	private Integer id = null;
 	@Column(name="nom")
 	private String nom = null;
-	@OneToMany(mappedBy="site", fetch=FetchType.EAGER)
-	private List<UsagerEntity> usagerList;
 
 	public SiteEntity() {
 		super();
@@ -60,19 +62,4 @@ public class SiteEntity implements Serializable {
         }
         return result;
     }
-
-    /**
-     * @return the usagerList
-     */
-    public final List<UsagerEntity> getUsagerList() {
-        return usagerList;
-    }
-
-    /**
-     * @param usagerList the usagerList to set
-     */
-    public final void setUsagerList(List<UsagerEntity> usagerList) {
-        this.usagerList = usagerList;
-    }
-   
 }

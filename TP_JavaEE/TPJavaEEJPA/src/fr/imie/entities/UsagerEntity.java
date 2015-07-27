@@ -15,6 +15,7 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name="UsagerEntity.findAll", query="SELECT u FROM UsagerEntity u ORDER BY u.nom, u.prenom"),
     @NamedQuery(name="UsagerEntity.findByFullname", query="SELECT u FROM UsagerEntity u WHERE lower(u.nom) like lower(:name) AND lower(u.prenom) like lower(:firstname) ORDER BY u.nom, u.prenom"),
+    @NamedQuery(name="UsagerEntity.findBySite", query="SELECT u FROM UsagerEntity u WHERE u.site = :site ORDER BY u.nom, u.prenom"),
     @NamedQuery(name="UsagerEntity.findBySiteNull", query="SELECT u FROM UsagerEntity u WHERE u.site = null ORDER BY u.nom, u.prenom")
 })
 public class UsagerEntity implements Serializable {

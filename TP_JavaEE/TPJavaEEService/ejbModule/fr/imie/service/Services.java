@@ -73,7 +73,9 @@ public class Services {
             query = em.createNamedQuery("UsagerEntity.findBySiteNull");
             usagerlist = (List<UsagerEntity>) query.getResultList();
         } else {
-            usagerlist = em.find(SiteEntity.class, site.getId()).getUsagerList();
+            query = em.createNamedQuery("UsagerEntity.findBySite");
+            query.setParameter("site", site);
+            usagerlist = (List<UsagerEntity>) query.getResultList();
         }
         return usagerlist;
     }
