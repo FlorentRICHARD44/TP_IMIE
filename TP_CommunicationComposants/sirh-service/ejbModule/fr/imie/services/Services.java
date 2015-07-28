@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import fr.imie.entities.EmployeeEntity;
+import fr.imie.entities.ProjectEntity;
 
 /** Service used to access the data.
  * @author Florent RICHARD
@@ -47,5 +48,30 @@ public class Services {
     
     public void remove(EmployeeEntity employee) {
         em.remove(em.merge(employee));
+    }
+
+    public ProjectEntity findProjectById(Integer id) {
+        return em.find(ProjectEntity.class, id);
+    }
+    
+    public List<ProjectEntity> findAllProjects() {
+        @SuppressWarnings("unchecked")
+        List<ProjectEntity> projList = em.createNamedQuery("ProjectEntity.findAll").getResultList();
+        return projList;
+    }
+    
+    public ProjectEntity save(ProjectEntity project) {
+        ProjectEntity newproject = null;
+        if (project.getId() == null) {
+            em.persist(project);
+            newproject = project;
+        } else {
+            newproject = em.merge(project);
+        }
+        return newproject;
+    }
+    
+    public void remove(ProjectEntity project) {
+        em.remove(em.merge(project));
     }
 }
