@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import fr.imie.entities.EmployeeEntity;
+import fr.imie.entities.ProjectEntity;
 import fr.imie.services.Services;
 
 @RequestScoped
@@ -28,15 +29,25 @@ public class EmployeeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EmployeeEntity> getAll() {
-        return serv.findAllEmployees();
+    public Response getAll() {
+        ResponseBuilder builder = Response.status(Status.OK);
+        List<EmployeeEntity> employeeList = serv.findAllEmployees();
+        builder.entity(employeeList);
+        return builder.build();
     }
     
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EmployeeEntity post(@PathParam("id") Integer id) {
-        return serv.findEmployeeById(id);
+    public Response getEmployee(@PathParam("id") Integer id) {
+        ResponseBuilder builder = Response.status(Status.OK);
+        EmployeeEntity employee = serv.findEmployeeById(id);
+        if (employee == null) {
+            builder = Response.status(Status.BAD_REQUEST);
+        } else {
+            builder.entity(employee);
+        }
+        return builder.build();
     }
     
     @POST

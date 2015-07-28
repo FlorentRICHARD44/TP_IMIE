@@ -1,8 +1,19 @@
 package fr.imie.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: EmployeeEntity
@@ -25,6 +36,11 @@ public class EmployeeEntity implements Serializable {
     private String prenom = null;
     @Column(name="matricule")
     private String matricule = null;
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="employes_projets",
+               joinColumns=@JoinColumn(name="employe_id", referencedColumnName="id"),
+               inverseJoinColumns=@JoinColumn(name="projet_id", referencedColumnName="id"))
+    private List<ProjectEntity> projects = null;
 
     public EmployeeEntity() {
         super();
@@ -72,5 +88,13 @@ public class EmployeeEntity implements Serializable {
      */
     public final void setMatricule(String matricule) {
         this.matricule = matricule;
+    }
+
+    public List<ProjectEntity> getProjects() {
+        return this.projects;
+    }
+    
+    public void setProjects(List<ProjectEntity> projects) {
+        this.projects = projects;
     }
 }

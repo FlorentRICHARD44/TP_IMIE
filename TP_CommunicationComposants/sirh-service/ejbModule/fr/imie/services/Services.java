@@ -30,8 +30,8 @@ public class Services {
     }
     
     public List<EmployeeEntity> findAllEmployees() {
-        List<EmployeeEntity> userList = em.createNamedQuery("EmployeeEntity.findAll", EmployeeEntity.class).getResultList();
-        return userList;
+        List<EmployeeEntity> employeeList = em.createNamedQuery("EmployeeEntity.findAll", EmployeeEntity.class).getResultList();
+        return employeeList;
     }
     
     public EmployeeEntity save(EmployeeEntity employee) {
