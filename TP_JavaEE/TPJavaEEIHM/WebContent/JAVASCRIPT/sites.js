@@ -9,15 +9,22 @@
  *              update the html to add the list from server
  ****************************************************************************/
 function updateSiteList(selected) {
-	$.ajax({url: 'sites?sitelist=true',
+	$.ajax({url: 'api/sites',
+			dataType: "json",
 			method: 'GET'})
-			.done(function(data){$('ol#listelocale').text('')
-												.append(data);
-								if (selected != undefined) {
-									SelectSelectableElement($('#listelocale'),
-											$("li[data-index='"+selected+"']"))
-								}
-							})
+			.done(function(data){
+						$('ol#listelocale').text('');
+						for (var i in data) {
+							var li = $('<li>').addClass("ui-selectee")
+											  .attr("data-index", data[i].id)
+											  .text(data[i].nom)
+							$('ol#listelocale').append(li);
+						}
+						if (selected != undefined) {
+							SelectSelectableElement($('#listelocale'),
+									$("li[data-index='"+selected+"']"))
+						}
+					})
 		    .fail(function(data){alert("problem getting sitelist")});
 }
 	
@@ -36,15 +43,16 @@ function SelectSelectableElement (selectableContainer, elementsToSelect)
  * Description: call the server to save the site
  ****************************************************************************/
 function siteSave(siteId) {
-	$.ajax({url: 'sites',
+	$.ajax({url: 'api/sites/' + (siteId || -1),
+			dataType: "json",
+			contentType: "application/json",
 			method: 'PUT',
-			data: {"id": siteId || "null",
-				   "nom": $('input#sitename').val()}})
+			data: JSON.stringify({"id": siteId || -1,
+				   "nom": $('div.displayzone input#sitename').val()})})
 			.fail(function(){console.log("fail save")})
 			.done(function(data){
-						var id = data.substr(0, data.length - 1);
-						updateSiteList(id);
-						getSite(id)});
+						updateSiteList(data.id);
+						getSite(data.id)});
 }
 
 /*****************************************************************************
@@ -52,9 +60,8 @@ function siteSave(siteId) {
  * Description: call the server to delete the site
  ****************************************************************************/
 function siteDelete(siteId) {
-	$.ajax({url: 'sites',
-			method: 'DELETE',
-			data: {"id": siteId}})
+	$.ajax({url: 'api/sites/' + siteId,
+			method: 'DELETE'})
 			.fail(function(data){$('p.error').removeAttr("hidden")
 				                             .append(data.responseText)})
 			.done(function(data){
@@ -68,18 +75,22 @@ function siteDelete(siteId) {
  *              update the html to add the site from server
  ****************************************************************************/
 function getSite(siteId) {
-	$.ajax({url: 'sites?site='+siteId,
+	$.ajax({url: 'api/sites/'+siteId,
+			dataType: "json",
 			method: 'GET'})
 			.done((function(copieSiteId) {
 					return function(data){
-							$('div.displayzone').text('')
-											    .append(data);
-							$('div.actionzone button#save').on('click', function() {siteSave(copieSiteId)});
-							$('div.actionzone button#del').on('click', function() {siteDelete(copieSiteId)});
-							$('p.error').attr('hidden', 'true');
+						$('div.displayzone').remove();
+						var sitediv = $('div.sitemodel').clone();
+						$('div.sitemodel').after(sitediv)
+						sitediv.removeClass("sitemodel").addClass("displayzone").removeAttr("hidden");
+						$('div.displayzone input#sitename').val(data.nom);
+						$('div.displayzone button#save').on('click', function() {siteSave(copieSiteId)});
+						$('div.displayzone button#del').on('click', function() {siteDelete(copieSiteId)});
+						$('p.error').attr('hidden', 'true');
 							}
 					})(siteId))
-			.fail(function(data){alert("problem site")});
+			.fail(function(data){window.location.href = "sites"});
 }
 
 
