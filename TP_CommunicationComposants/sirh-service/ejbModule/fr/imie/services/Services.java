@@ -30,8 +30,7 @@ public class Services {
     }
     
     public List<EmployeeEntity> findAllEmployees() {
-        @SuppressWarnings("unchecked")
-        List<EmployeeEntity> userList = em.createNamedQuery("EmployeeEntity.findAll").getResultList();
+        List<EmployeeEntity> userList = em.createNamedQuery("EmployeeEntity.findAll", EmployeeEntity.class).getResultList();
         return userList;
     }
     
@@ -55,8 +54,7 @@ public class Services {
     }
     
     public List<ProjectEntity> findAllProjects() {
-        @SuppressWarnings("unchecked")
-        List<ProjectEntity> projList = em.createNamedQuery("ProjectEntity.findAll").getResultList();
+        List<ProjectEntity> projList = em.createNamedQuery("ProjectEntity.findAll", ProjectEntity.class).getResultList();
         return projList;
     }
     
