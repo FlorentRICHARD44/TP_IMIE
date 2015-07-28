@@ -13,31 +13,33 @@ function User(id, nom, prenom, matricule) {
 $(function() {
 	$('#login').on('click',
 				   function() {
-						$.ajax({url: 'http://localhost:8080/sirh-rest/api/employee/' 
-									+ $('div.employee-selection input#user').val(),
-								method: 'GET',
-							    dataType: 'json'})
-							    .done(function(data) {
-							    	userConnected = new User(data.id, data.nom, data.prenom, data.matricule);
-							    	$('div.employee-data').removeAttr("hidden");
-							    	$('div.employee-data h3').text(userConnected.firstname + " " + userConnected.name);
-							    	$('div.employee-data #name').val(userConnected.name);
-							    	$('div.employee-data #firstname').val(userConnected.firstname);
-							    	$('div.employee-data #matricule').val(userConnected.matricule);
-							    	$('div.employee-selection p.error').text("");
-							    	$('ul#project-list li').remove();
-						    		$('#close-projects').attr("hidden", "true");
-						    		$('#see-projects').removeAttr("hidden");
-							    })
-							    .fail(function(data) {
-							    	$('div.employee-selection p.error').text("Employé non trouvé");
-							    	$('div.employee-data').attr("hidden", "true");
-							    })
+						if ($('div.employee-selection input#user').val() != "") {
+							$.ajax({url: 'http://10.0.10.75:8080/sirh-rest/api/employee/' 
+										+ $('div.employee-selection input#user').val(),
+									method: 'GET',
+								    dataType: 'json'})
+								    .done(function(data) {
+								    	userConnected = new User(data.id, data.nom, data.prenom, data.matricule);
+								    	$('div.employee-data').removeAttr("hidden");
+								    	$('div.employee-data h3').text(userConnected.firstname + " " + userConnected.name);
+								    	$('div.employee-data #name').val(userConnected.name);
+								    	$('div.employee-data #firstname').val(userConnected.firstname);
+								    	$('div.employee-data #matricule').val(userConnected.matricule);
+								    	$('div.employee-selection p.error').text("");
+								    	$('ul#project-list li').remove();
+							    		$('#close-projects').attr("hidden", "true");
+							    		$('#see-projects').removeAttr("hidden");
+								    })
+								    .fail(function(data) {
+								    	$('div.employee-selection p.error').text("Employé non trouvé");
+								    	$('div.employee-data').attr("hidden", "true");
+								    });
+						}
 	});
 	
 	$('#see-projects').on('click',
 						  function() {
-						$.ajax({url: 'http://localhost:8080/sirh-rest/api/project?employee=' 
+						$.ajax({url: 'http://10.0.10.75:8080/sirh-rest/api/project?employee=' 
 									 + userConnected.id,
 							    method: 'GET',
 							    dataType: 'json'})

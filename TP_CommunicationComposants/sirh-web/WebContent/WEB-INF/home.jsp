@@ -16,7 +16,7 @@
 	<div class="employee-selection table">
 		<div class="table-row">
 			<div class="table-cell"><label>ID</label></div>
-			<div class="table-cell"><input id="user" type="text" placeholder="Identifiant"/></div>
+			<div class="table-cell"><input id="user" type="text" placeholder="Identifiant" required/></div>
 			<div class="table-cell"><button class="button action" id="login">Valider</button></div>
 		</div>
 		<div class="table-row">
