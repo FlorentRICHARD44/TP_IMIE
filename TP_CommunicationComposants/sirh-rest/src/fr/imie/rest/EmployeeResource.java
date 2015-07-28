@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -40,12 +41,30 @@ public class EmployeeResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response add(EmployeeEntity employee) {
         ResponseBuilder builder = Response.status(Status.CREATED);
         if (!employee.getNom().equals("") && !employee.getPrenom().equals("")) {
             employee = serv.save(employee);
-            //employee.setMatricule(String.format("MAT%d", employee.getId()));
-            serv.save(employee);
+            employee.setMatricule(String.format("MAT%d", employee.getId()));
+            employee = serv.save(employee);
+            builder.entity(employee);
+        } else {
+            builder = Response.status(Status.BAD_REQUEST);
+        }
+        return builder.build();
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response modify(EmployeeEntity employee) {
+        ResponseBuilder builder = Response.status(Status.CREATED);
+        if ((serv.findEmployeeById(employee.getId()) != null)
+         && !employee.getNom().equals("")
+         && !employee.getPrenom().equals("")) {
+            employee = serv.save(employee);
+            builder.entity(employee);
         } else {
             builder = Response.status(Status.BAD_REQUEST);
         }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -69,6 +70,8 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case EMPLOYEE_ADD: addEmployee();
                 break;
+                case EMPLOYEE_MODIFY: modifyEmployee();
+                break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
             }
@@ -81,6 +84,15 @@ public class IHMConsole implements AutoCloseable {
         Invocation.Builder builder = target.request();
         List<Employee> employeList = builder.get(new GenericType<List<Employee>>(){});
         return employeList;
+    }
+    
+    public Employee getEmployee(Integer id) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        Invocation.Builder builder = target.path(String.valueOf(id)).request();
+        Employee employee = builder.get(Employee.class);
+        return employee;
+        
     }
     
     public void displayEmployeeList() {
@@ -96,9 +108,35 @@ public class IHMConsole implements AutoCloseable {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
         Invocation.Builder builder = target.request();
-        Response resp = builder.post(Entity.entity(employee, MediaType.APPLICATION_JSON),
-                                    Response.class);
-        System.out.println("Résultat de la requête: " + Status.fromStatusCode(resp.getStatus()));
+        try {
+            employee = builder.post(Entity.entity(employee, MediaType.APPLICATION_JSON),
+                                        Employee.class);
+            System.out.println("Nouvel employé créé : " + employee.getId() + " " + employee.getPrenom() + " " + employee.getNom() + " " + employee.getMatricule());
+        } catch(BadRequestException e) {
+            System.out.println("Impossible de créer cet usager");
+        }
+    }
+    
+    public void modifyEmployee() {
+        displayEmployeeList();
+        Employee employee = null;
+        do {
+            Integer id = getInteger("Selectionner un employé par son ID", null, false);
+            employee = getEmployee(id);
+        } while(employee == null);
+        employee.setNom(getString("Entrer le nom (" + employee.getNom() + ")", "", false));
+        employee.setPrenom(getString("Entrer le prénom(" + employee.getPrenom() + ")", "", false));
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        Invocation.Builder builder = target.request();
+        try {
+            employee = builder.put(Entity.entity(employee, MediaType.APPLICATION_JSON),
+                                        Employee.class);
+            System.out.println("Employé modifié : " + employee.getId() + " " + employee.getPrenom() + " " + employee.getNom() + " " + employee.getMatricule());
+        } catch(BadRequestException e) {
+            System.out.println("Impossible de modifier cet usager");
+        }
+        
     }
     
     public void deleteEmployee() {
