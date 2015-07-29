@@ -21,7 +21,15 @@ public class BankocashSoapService {
     }
     
      public CompteEntity findCompteByEmployee(Integer employee_id) {
-         return serv.find
+         return serv.findCompteByEmployee(employee_id);
+     }
+     
+     public CompteEntity crediteCompte(CompteEntity compte, Float value) {
+         return serv.crediteCompte(compte, value);
+     }
+     
+     public CompteEntity debiteCompte(CompteEntity compte, Float value) {
+         return serv.debiteCompte(compte, value);
      }
 
 }

@@ -14,7 +14,7 @@ $(function() {
 	$('#login').on('click',
 				   function() {
 						if ($('div.employee-selection input#user').val() != "") {
-							$.ajax({url: 'http://10.0.10.75:8080/sirh-rest/api/employee/' 
+							$.ajax({url: 'http://localhost:8080/sirh-rest/api/employee/' 
 										+ $('div.employee-selection input#user').val(),
 									method: 'GET',
 								    dataType: 'json'})
@@ -39,7 +39,7 @@ $(function() {
 	
 	$('#see-projects').on('click',
 						  function() {
-						$.ajax({url: 'http://10.0.10.75:8080/sirh-rest/api/project?employee=' 
+						$.ajax({url: 'http://localhost:8080/sirh-rest/api/project?employee=' 
 									 + userConnected.id,
 							    method: 'GET',
 							    dataType: 'json'})

@@ -174,7 +174,7 @@ public class IHMConsole implements AutoCloseable {
         Employee employee = getEmployee(id);
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
-        CompteEntity compte = bankoService.findCompte(employee.getId());
+        CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
         Float value = getFloat("Indiquer la somme à créditer: ", null, false);
         compte = bankoService.crediteCompte(compte, value);
         System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
@@ -186,7 +186,7 @@ public class IHMConsole implements AutoCloseable {
         Employee employee = getEmployee(id);
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
-        CompteEntity compte = bankoService.findCompte(employee.getId());
+        CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
         Float value = getFloat("Indiquer la somme à débiter: ", null, false);
         compte = bankoService.debiteCompte(compte, value);
         System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
