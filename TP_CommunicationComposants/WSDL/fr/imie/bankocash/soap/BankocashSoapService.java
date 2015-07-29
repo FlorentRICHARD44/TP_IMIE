@@ -3,6 +3,7 @@ package fr.imie.bankocash.soap;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.RequestWrapper;
@@ -25,11 +26,14 @@ public interface BankocashSoapService {
     /**
      * 
      * @param arg0
+     * @return
+     *     returns fr.imie.bankocash.soap.CompteEntity
      */
     @WebMethod
+    @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "createCompte", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.CreateCompte")
     @ResponseWrapper(localName = "createCompteResponse", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.CreateCompteResponse")
-    public void createCompte(
+    public CompteEntity createCompte(
         @WebParam(name = "arg0", targetNamespace = "")
         CompteEntity arg0);
 

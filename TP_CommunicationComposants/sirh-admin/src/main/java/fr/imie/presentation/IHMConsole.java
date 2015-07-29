@@ -73,6 +73,10 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case COMPTE_ADD: addCompte();
                 break;
+                case COMPTE_CREDITE: crediteCompte();
+                break;
+                case COMPTE_DEBITE: debiteCompte();
+                break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
             }
@@ -160,10 +164,32 @@ public class IHMConsole implements AutoCloseable {
         compte.setPrenomTitulaire(employee.getPrenom());
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
-        bankoService.createCompte(compte);
-        
-        
-        
+        compte = bankoService.createCompte(compte);
+        System.out.println("Compte créé avec le nom \"" + compte.getNom() + "\". Solde actuel: " + compte.getSolde() + "euros");
+    }
+    
+    public void crediteCompte() {
+        displayEmployeeList();
+        Integer id = getInteger("Selectionner un employé par son ID", null, false);
+        Employee employee = getEmployee(id);
+        BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
+        BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
+        CompteEntity compte = bankoService.findCompte(employee.getId());
+        Float value = getFloat("Indiquer la somme à créditer: ", null, false);
+        compte = bankoService.crediteCompte(compte, value);
+        System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+    }
+    
+    public void debiteCompte() {
+        displayEmployeeList();
+        Integer id = getInteger("Selectionner un employé par son ID", null, false);
+        Employee employee = getEmployee(id);
+        BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
+        BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
+        CompteEntity compte = bankoService.findCompte(employee.getId());
+        Float value = getFloat("Indiquer la somme à débiter: ", null, false);
+        compte = bankoService.debiteCompte(compte, value);
+        System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
     }
 
     /** Prints a message in the console and return the value set by the user.
@@ -184,6 +210,32 @@ public class IHMConsole implements AutoCloseable {
             if (!str.equals("**")) {
                 if (str.length() > 0) {
                     retVal = Integer.valueOf(str);
+                } else {
+                    retVal = defaultValue;
+                }
+            }
+        } while (!(nullAccepted || (retVal != null)));
+        return retVal;
+    }
+    
+    /** Prints a message in the console and return the value set by the user.
+     * If the line returned is empty, a default value is returned
+     * If the line is "**", null is returned.
+     * @param message Message to print
+     * @param defaultValue Default value of the Float
+     * @param nullAccepted If set to true, the value null can be returned.
+     * @return Value returned.
+     */
+    private Float getFloat(final String message,
+                             final Float defaultValue,
+                             final boolean nullAccepted) {
+        Float retVal = null;
+        do {
+            System.out.format("%s", message);
+            String str = scan.nextLine();
+            if (!str.equals("**")) {
+                if (str.length() > 0) {
+                    retVal = Float.valueOf(str);
                 } else {
                     retVal = defaultValue;
                 }

@@ -10,7 +10,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="compte")
-@NamedQuery(name="CompteEntity.findAll", query="SELECT c FROM CompteEntity c")
+@NamedQueries({
+    @NamedQuery(name="CompteEntity.findAll", query="SELECT c FROM CompteEntity c"),
+    @NamedQuery(name="CompteEntity.findByEmployee", query="SELECT c FROM CompteEntity c WHERE c.id_titulaire = :id")
+})
 public class CompteEntity implements Serializable {
 
 	/**

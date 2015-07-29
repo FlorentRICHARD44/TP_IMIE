@@ -16,9 +16,12 @@ public class BankocashSoapService {
         super();
     }
     
-     public void createCompte(CompteEntity newCompte) {
-        serv.save(newCompte);
-        System.out.println("compte créé");
+     public CompteEntity createCompte(CompteEntity newCompte) {
+        return serv.save(newCompte);
     }
+    
+     public CompteEntity findCompteByEmployee(Integer employee_id) {
+         return serv.find
+     }
 
 }
