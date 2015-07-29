@@ -1,7 +1,5 @@
 package fr.imie.presentation;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,28 +9,29 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
+import fr.imie.bankocash.soap.BankocashSoapService;
+import fr.imie.bankocash.soap.BankocashSoapServiceService;
+import fr.imie.bankocash.soap.CompteEntity;
 import fr.imie.data.Employee;
 
 
 
 public class IHMConsole implements AutoCloseable {
+    private final static String API_ADDRESS = "http://localhost:8080/sirh-rest/api";
     /** Scanner used to get informations.
      */
     private Scanner scan;
-    /** Formatter for date.
-     */
-    private SimpleDateFormat dateformat;
     /** Constructor.
      */
     public IHMConsole() {
         scan = new Scanner(System.in);
-        dateformat = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     @Override
@@ -72,6 +71,8 @@ public class IHMConsole implements AutoCloseable {
                 break;
                 case EMPLOYEE_MODIFY: modifyEmployee();
                 break;
+                case COMPTE_ADD: addCompte();
+                break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
             }
@@ -80,7 +81,7 @@ public class IHMConsole implements AutoCloseable {
     
     public List<Employee> getEmployeeList() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        WebTarget target = client.target(API_ADDRESS + "/employee");
         Invocation.Builder builder = target.request();
         List<Employee> employeList = builder.get(new GenericType<List<Employee>>(){});
         return employeList;
@@ -88,7 +89,7 @@ public class IHMConsole implements AutoCloseable {
     
     public Employee getEmployee(Integer id) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        WebTarget target = client.target(API_ADDRESS + "/employee");
         Invocation.Builder builder = target.path(String.valueOf(id)).request();
         Employee employee = builder.get(Employee.class);
         return employee;
@@ -106,7 +107,7 @@ public class IHMConsole implements AutoCloseable {
         employee.setNom(getString("Entrer le nom", "", false));
         employee.setPrenom(getString("Entrer le prénom", "", false));
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        WebTarget target = client.target(API_ADDRESS + "/employee");
         Invocation.Builder builder = target.request();
         try {
             employee = builder.post(Entity.entity(employee, MediaType.APPLICATION_JSON),
@@ -127,7 +128,7 @@ public class IHMConsole implements AutoCloseable {
         employee.setNom(getString("Entrer le nom (" + employee.getNom() + ")", "", false));
         employee.setPrenom(getString("Entrer le prénom(" + employee.getPrenom() + ")", "", false));
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        WebTarget target = client.target(API_ADDRESS + "/employee");
         Invocation.Builder builder = target.request();
         try {
             employee = builder.put(Entity.entity(employee, MediaType.APPLICATION_JSON),
@@ -143,10 +144,26 @@ public class IHMConsole implements AutoCloseable {
         displayEmployeeList();
         Integer id = getInteger("Selectionner un employé par son ID", null, false);
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/sirh-rest/api/employee");
+        WebTarget target = client.target(API_ADDRESS + "/employee");
         Invocation.Builder builder = target.path(String.valueOf(id)).request();
         Response resp = builder.delete();
         System.out.println("Résultat de la requête: " + Status.fromStatusCode(resp.getStatus()));
+    }
+    
+    public void addCompte() {
+        displayEmployeeList();
+        Integer id = getInteger("Selectionner un employé par son ID", null, false);
+        Employee employee = getEmployee(id);
+        CompteEntity compte = new CompteEntity();
+        compte.setIdTitulaire(employee.getMatricule());
+        compte.setNomTitulaire(employee.getNom());
+        compte.setPrenomTitulaire(employee.getPrenom());
+        BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
+        BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
+        bankoService.createCompte(compte);
+        
+        
+        
     }
 
     /** Prints a message in the console and return the value set by the user.

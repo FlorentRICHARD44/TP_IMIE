@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.bankocash.imie.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="BankocashSoapServiceService" targetNamespace="http://soap.bankocash.imie.fr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soap.bankocash.imie.fr/" elementFormDefault="unqualified" targetNamespace="http://soap.bankocash.imie.fr/" version="1.0">
+
+  <xs:element name="createCompte" type="tns:createCompte"/>
+
+  <xs:element name="createCompteResponse" type="tns:createCompteResponse"/>
+
+  <xs:complexType name="createCompte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:compteEntity"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="compteEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="idTitulaire" type="xs:string"/>
+      <xs:element minOccurs="0" name="nom" type="xs:string"/>
+      <xs:element minOccurs="0" name="nomTitulaire" type="xs:string"/>
+      <xs:element minOccurs="0" name="prenomTitulaire" type="xs:string"/>
+      <xs:element name="solde" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createCompteResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="createCompte">
+    <wsdl:part element="tns:createCompte" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCompteResponse">
+    <wsdl:part element="tns:createCompteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BankocashSoapService">
+    <wsdl:operation name="createCompte">
+      <wsdl:input message="tns:createCompte" name="createCompte">
+    </wsdl:input>
+      <wsdl:output message="tns:createCompteResponse" name="createCompteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankocashSoapServiceServiceSoapBinding" type="tns:BankocashSoapService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createCompte">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createCompte">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createCompteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankocashSoapServiceService">
+    <wsdl:port binding="tns:BankocashSoapServiceServiceSoapBinding" name="BankocashSoapServicePort">
+      <soap:address location="http://localhost:8080/bankocash/BankocashSoapService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

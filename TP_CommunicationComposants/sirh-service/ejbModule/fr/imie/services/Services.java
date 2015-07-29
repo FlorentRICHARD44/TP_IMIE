@@ -39,6 +39,7 @@ public class Services {
         if (employee.getId() == null) {
             em.persist(employee);
             newemployee = employee;
+            newemployee.setMatricule("MAT" + newemployee.getId());
         } else {
             newemployee = em.merge(employee);
         }

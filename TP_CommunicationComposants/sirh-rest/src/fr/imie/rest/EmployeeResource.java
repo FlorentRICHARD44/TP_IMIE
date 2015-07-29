@@ -57,8 +57,6 @@ public class EmployeeResource {
         ResponseBuilder builder = Response.status(Status.CREATED);
         if (!employee.getNom().equals("") && !employee.getPrenom().equals("")) {
             employee = serv.save(employee);
-            employee.setMatricule(String.format("MAT%d", employee.getId()));
-            employee = serv.save(employee);
             builder.entity(employee);
         } else {
             builder = Response.status(Status.BAD_REQUEST);
