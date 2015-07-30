@@ -29,7 +29,7 @@
   <xs:complexType name="compteEntity">
     <xs:sequence>
       <xs:element minOccurs="0" name="id" type="xs:int"/>
-      <xs:element minOccurs="0" name="idTitulaire" type="xs:string"/>
+      <xs:element minOccurs="0" name="idTitulaire" type="xs:int"/>
       <xs:element minOccurs="0" name="nom" type="xs:string"/>
       <xs:element minOccurs="0" name="nomTitulaire" type="xs:string"/>
       <xs:element minOccurs="0" name="prenomTitulaire" type="xs:string"/>

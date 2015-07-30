@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "BankocashSoapServiceService", targetNamespace = "http://soap.bankocash.imie.fr/", wsdlLocation = "http://localhost:8080/bankocash/BankocashSoapService?wsdl")
+@WebServiceClient(name = "BankocashSoapServiceService", targetNamespace = "http://soap.bankocash.imie.fr/", wsdlLocation = "file:/home/imie/DEV/GIT/TP_IMIE/TP_CommunicationComposants/bankocash/src/BankocashSoapService.xml")
 public class BankocashSoapServiceService
     extends Service
 {
@@ -30,7 +30,7 @@ public class BankocashSoapServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/imie/DEV/GIT/TP_IMIE/TP_CommunicationComposants/bankocash/src/BankocashSoapService.xml");
+            url = new URL("http://localhost:8080/bankocash/BankocashSoapService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

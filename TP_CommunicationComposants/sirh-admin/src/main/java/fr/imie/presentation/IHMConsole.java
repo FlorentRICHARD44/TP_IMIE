@@ -159,13 +159,13 @@ public class IHMConsole implements AutoCloseable {
         Integer id = getInteger("Selectionner un employé par son ID", null, false);
         Employee employee = getEmployee(id);
         CompteEntity compte = new CompteEntity();
-        compte.setIdTitulaire(employee.getMatricule());
+        compte.setIdTitulaire(employee.getId());
         compte.setNomTitulaire(employee.getNom());
         compte.setPrenomTitulaire(employee.getPrenom());
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
         compte = bankoService.createCompte(compte);
-        System.out.println("Compte créé avec le nom \"" + compte.getNom() + "\". Solde actuel: " + compte.getSolde() + "euros");
+        System.out.println(String.format("Compte créé avec le nom \"%s\". Solde actuel: %.02f €",compte.getNom(), compte.getSolde()));
     }
     
     public void crediteCompte() {
@@ -178,7 +178,7 @@ public class IHMConsole implements AutoCloseable {
         if (compteList.size() == 0) {
             System.out.println("Aucun compte n'existe pour l'employé sélectionné");
         } else {
-            compteList.stream().forEach(compte -> System.out.println("- " + compte.getId() + " Compte: " + compte.getNom() + " : solde actuel = " + compte.getSolde() + " euros."));
+            compteList.stream().forEach(compte -> System.out.println(String.format(" - %d Compte \"%s\". Solde actuel: %.02f €",compte.getId(), compte.getNom(), compte.getSolde())));
             Integer idCompte = getInteger("Choisir l'Id du compte à modifier", null, false);
             CompteEntity compteToModify = null;
             for (CompteEntity compte: compteList) {
@@ -191,9 +191,12 @@ public class IHMConsole implements AutoCloseable {
                 System.out.println("L'id renseigné n'existe pas");
             } else {
                 Float value = getFloat("Indiquer la somme à créditer: ", null, false);
-                compteToModify = bankoService.crediteCompte(compteToModify, value);
-                System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compteToModify.getSolde() + "euros");
-            
+                if (value > 0) {
+                    compteToModify = bankoService.crediteCompte(compteToModify, value);
+                    System.out.println(String.format("Compte crédité de %.02f €. Solde actuel: %.02f €.", value, compteToModify.getSolde()));
+                } else {
+                    System.out.println("La somme créditée doit est positive!");
+                }
             }
         }
     }
@@ -208,7 +211,7 @@ public class IHMConsole implements AutoCloseable {
         if (compteList.size() == 0) {
             System.out.println("Aucun compte n'existe pour l'employé sélectionné");
         } else {
-            compteList.stream().forEach(compte -> System.out.println("- " + compte.getId() + " Compte: " + compte.getNom() + " : solde actuel = " + compte.getSolde() + " euros."));
+            compteList.stream().forEach(compte -> System.out.println(String.format(" - %d Compte \"%s\". Solde actuel: %.02f €",compte.getId(), compte.getNom(), compte.getSolde())));
             Integer idCompte = getInteger("Choisir l'Id du compte à modifier", null, false);
             CompteEntity compteToModify = null;
             for (CompteEntity compte: compteList) {
@@ -221,9 +224,12 @@ public class IHMConsole implements AutoCloseable {
                 System.out.println("L'id renseigné n'existe pas");
             } else {
                 Float value = getFloat("Indiquer la somme à débiter: ", null, false);
-                compteToModify = bankoService.debiteCompte(compteToModify, value);
-                System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compteToModify.getSolde() + "euros");
-            
+                if (value > 0) {
+                    compteToModify = bankoService.debiteCompte(compteToModify, value);
+                    System.out.println(String.format("Compte débité de %.02f €. Solde actuel: %.02f €.", value, compteToModify.getSolde()));
+                } else {
+                    System.out.println("La somme débitée doit être positive!");
+                }
             }
         }
     }

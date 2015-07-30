@@ -477,3 +477,12 @@ div.displayzone form.bottom
 	bottom: 10px;
 	left: 10px;
 }
+
+li.positive
+{
+	color: green;
+}
+li.negative
+{
+	color: red;
+}

@@ -27,7 +27,7 @@ public class CompteEntity implements Serializable {
 	private Integer id = null;
 
 	@Column(name="id_titulaire")
-	private String idTitulaire;
+	private Integer idTitulaire;
 
 	@Column(name="nom")
 	private String nom;
@@ -52,11 +52,11 @@ public class CompteEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getIdTitulaire() {
+	public Integer getIdTitulaire() {
 		return this.idTitulaire;
 	}
 
-	public void setIdTitulaire(String idTitulaire) {
+	public void setIdTitulaire(Integer idTitulaire) {
 		this.idTitulaire = idTitulaire;
 	}
 

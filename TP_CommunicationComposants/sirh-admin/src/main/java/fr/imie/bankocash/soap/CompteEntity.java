@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="idTitulaire" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="idTitulaire" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="nom" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="nomTitulaire" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="prenomTitulaire" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 public class CompteEntity {
 
     protected Integer id;
-    protected String idTitulaire;
+    protected Integer idTitulaire;
     protected String nom;
     protected String nomTitulaire;
     protected String prenomTitulaire;
@@ -77,10 +77,10 @@ public class CompteEntity {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public String getIdTitulaire() {
+    public Integer getIdTitulaire() {
         return idTitulaire;
     }
 
@@ -89,10 +89,10 @@ public class CompteEntity {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public void setIdTitulaire(String value) {
+    public void setIdTitulaire(Integer value) {
         this.idTitulaire = value;
     }
 

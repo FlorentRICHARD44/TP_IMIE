@@ -74,7 +74,13 @@ $(function() {
 							    .done(function(data) {
 							    	$('ul#compte-list li').remove();
 							    	for (var i in data) {
-							    		$('ul#compte-list').append($('<li>').text(data[i].nom + " Solde = " + data[i].solde + " euros"));
+							    		var line = $('<li>').text(data[i].nom + " Solde = " + data[i].solde.toFixed(2) + " euros");
+							    		if (data[i].solde < 0) {
+							    			line.addClass("negative");
+							    		} else {
+							    			line.addClass("positive");
+							    		}
+							    		$('ul#compte-list').append(line);
 							    	}
 						    		$('#see-comptes').attr("hidden", "true");
 						    		$('#close-comptes').removeAttr("hidden");
