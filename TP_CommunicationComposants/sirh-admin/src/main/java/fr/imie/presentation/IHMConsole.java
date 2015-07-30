@@ -175,9 +175,13 @@ public class IHMConsole implements AutoCloseable {
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
         CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
-        Float value = getFloat("Indiquer la somme à créditer: ", null, false);
-        compte = bankoService.crediteCompte(compte, value);
-        System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+        if (compte == null) {
+            System.out.println("Aucun compte n'existe pour l'employé sélectionné");
+        } else {
+            Float value = getFloat("Indiquer la somme à créditer: ", null, false);
+            compte = bankoService.crediteCompte(compte, value);
+            System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+        }
     }
     
     public void debiteCompte() {
@@ -187,9 +191,13 @@ public class IHMConsole implements AutoCloseable {
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
         CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
-        Float value = getFloat("Indiquer la somme à débiter: ", null, false);
-        compte = bankoService.debiteCompte(compte, value);
-        System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+        if (compte == null) {
+            System.out.println("Aucun compte n'existe pour l'employé sélectionné");
+        } else {
+             Float value = getFloat("Indiquer la somme à débiter: ", null, false);
+            compte = bankoService.debiteCompte(compte, value);
+            System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+        }
     }
 
     /** Prints a message in the console and return the value set by the user.

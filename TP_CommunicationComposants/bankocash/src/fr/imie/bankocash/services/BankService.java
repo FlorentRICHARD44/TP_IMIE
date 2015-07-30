@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -36,19 +37,23 @@ public class BankService {
     }
     
     public CompteEntity findCompteByEmployee(Integer id) {
-        Query query = em.createNamedQuery("CompteEntity.findByEmployee");
-        query.setParameter("id", String.valueOf(id));
-        return (CompteEntity) query.getSingleResult();
+        try {
+            Query query = em.createNamedQuery("CompteEntity.findByEmployee", CompteEntity.class);
+            query.setParameter("id", String.valueOf(id));
+            return (CompteEntity) query.getResultList().get(0);
+        } catch(IndexOutOfBoundsException e) {
+            return null;
+        }
     }
     
     public CompteEntity crediteCompte(CompteEntity compte, Float value) {
-        compte = em.getReference(CompteEntity.class, compte);
+        compte = em.getReference(CompteEntity.class, compte.getId());
         compte.setSolde(compte.getSolde() + value);
         return compte;
     }
     
     public CompteEntity debiteCompte(CompteEntity compte, Float value) {
-        compte = em.getReference(CompteEntity.class, compte);
+        compte = em.getReference(CompteEntity.class, compte.getId());
         compte.setSolde(compte.getSolde() - value);
         return compte;
     }

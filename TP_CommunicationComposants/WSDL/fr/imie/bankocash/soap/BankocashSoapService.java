@@ -25,6 +25,54 @@ public interface BankocashSoapService {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns fr.imie.bankocash.soap.CompteEntity
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "debiteCompte", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.DebiteCompte")
+    @ResponseWrapper(localName = "debiteCompteResponse", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.DebiteCompteResponse")
+    public CompteEntity debiteCompte(
+        @WebParam(name = "arg0", targetNamespace = "")
+        CompteEntity arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Float arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns fr.imie.bankocash.soap.CompteEntity
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "crediteCompte", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.CrediteCompte")
+    @ResponseWrapper(localName = "crediteCompteResponse", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.CrediteCompteResponse")
+    public CompteEntity crediteCompte(
+        @WebParam(name = "arg0", targetNamespace = "")
+        CompteEntity arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Float arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns fr.imie.bankocash.soap.CompteEntity
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "findCompteByEmployee", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.FindCompteByEmployee")
+    @ResponseWrapper(localName = "findCompteByEmployeeResponse", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.FindCompteByEmployeeResponse")
+    public CompteEntity findCompteByEmployee(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns fr.imie.bankocash.soap.CompteEntity

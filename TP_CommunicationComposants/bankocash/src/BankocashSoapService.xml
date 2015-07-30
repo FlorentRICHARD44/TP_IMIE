@@ -7,9 +7,22 @@
 
   <xs:element name="createCompteResponse" type="tns:createCompteResponse"/>
 
-  <xs:complexType name="createCompte">
+  <xs:element name="crediteCompte" type="tns:crediteCompte"/>
+
+  <xs:element name="crediteCompteResponse" type="tns:crediteCompteResponse"/>
+
+  <xs:element name="debiteCompte" type="tns:debiteCompte"/>
+
+  <xs:element name="debiteCompteResponse" type="tns:debiteCompteResponse"/>
+
+  <xs:element name="findCompteByEmployee" type="tns:findCompteByEmployee"/>
+
+  <xs:element name="findCompteByEmployeeResponse" type="tns:findCompteByEmployeeResponse"/>
+
+  <xs:complexType name="debiteCompte">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="tns:compteEntity"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:float"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -24,6 +37,43 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="debiteCompteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:compteEntity"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="crediteCompte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:compteEntity"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="crediteCompteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:compteEntity"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findCompteByEmployee">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findCompteByEmployeeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:compteEntity"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createCompte">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:compteEntity"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="createCompteResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="tns:compteEntity"/>
@@ -32,8 +82,32 @@
 
 </xs:schema>
   </wsdl:types>
+  <wsdl:message name="debiteCompteResponse">
+    <wsdl:part element="tns:debiteCompteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crediteCompte">
+    <wsdl:part element="tns:crediteCompte" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findCompteByEmployee">
+    <wsdl:part element="tns:findCompteByEmployee" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="createCompte">
     <wsdl:part element="tns:createCompte" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findCompteByEmployeeResponse">
+    <wsdl:part element="tns:findCompteByEmployeeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="debiteCompte">
+    <wsdl:part element="tns:debiteCompte" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="crediteCompteResponse">
+    <wsdl:part element="tns:crediteCompteResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="createCompteResponse">
@@ -41,6 +115,24 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="BankocashSoapService">
+    <wsdl:operation name="debiteCompte">
+      <wsdl:input message="tns:debiteCompte" name="debiteCompte">
+    </wsdl:input>
+      <wsdl:output message="tns:debiteCompteResponse" name="debiteCompteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="crediteCompte">
+      <wsdl:input message="tns:crediteCompte" name="crediteCompte">
+    </wsdl:input>
+      <wsdl:output message="tns:crediteCompteResponse" name="crediteCompteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findCompteByEmployee">
+      <wsdl:input message="tns:findCompteByEmployee" name="findCompteByEmployee">
+    </wsdl:input>
+      <wsdl:output message="tns:findCompteByEmployeeResponse" name="findCompteByEmployeeResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="createCompte">
       <wsdl:input message="tns:createCompte" name="createCompte">
     </wsdl:input>
@@ -50,6 +142,33 @@
   </wsdl:portType>
   <wsdl:binding name="BankocashSoapServiceServiceSoapBinding" type="tns:BankocashSoapService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="debiteCompte">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="debiteCompte">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="debiteCompteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="crediteCompte">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="crediteCompte">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="crediteCompteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findCompteByEmployee">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findCompteByEmployee">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findCompteByEmployeeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="createCompte">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="createCompte">
