@@ -20,6 +20,7 @@ import fr.imie.bankocash.soap.BankocashSoapService;
 import fr.imie.bankocash.soap.BankocashSoapServiceService;
 import fr.imie.bankocash.soap.CompteEntity;
 import fr.imie.data.Employee;
+import fr.imie.data.Virement;
 
 
 
@@ -76,6 +77,8 @@ public class IHMConsole implements AutoCloseable {
                 case COMPTE_CREDITE: crediteCompte();
                 break;
                 case COMPTE_DEBITE: debiteCompte();
+                break;
+                case EXECUTE_VIREMENT: executeVirement();
                 break;
                 default:System.out.println("Ce menu n'est pas implemente");
                 break;
@@ -232,6 +235,70 @@ public class IHMConsole implements AutoCloseable {
                 }
             }
         }
+    }
+    
+    public void executeVirement() {
+        CompteEntity compteToDebite = null;
+        CompteEntity compteToCredite = null;
+        Employee emetteur = null;
+        displayEmployeeList();
+        Integer id = getInteger("Selectionner l'employé auquel l'argent sera débité", null, false);
+        Employee employee = getEmployee(id);
+        emetteur = employee;
+        BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
+        BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
+        List<CompteEntity> compteList = bankoService.findCompteByEmployee(employee.getId());
+        if (compteList.size() == 0) {
+            System.out.println("Aucun compte n'existe pour l'employé sélectionné");
+        } else {
+            compteList.stream().forEach(compte -> System.out.println(String.format(" - %d Compte \"%s\". Solde actuel: %.02f €",compte.getId(), compte.getNom(), compte.getSolde())));
+            Integer idCompte = getInteger("Choisir l'Id du compte à débiter", null, false);
+            for (CompteEntity compte: compteList) {
+                if (compte.getId() == idCompte) {
+                    compteToDebite = compte;
+                    break;
+                }
+            }
+        }
+        displayEmployeeList();
+        id = getInteger("Selectionner l'employé auquel l'argent sera crédité", null, false);
+        employee = getEmployee(id);
+        compteList = bankoService.findCompteByEmployee(employee.getId());
+        if (compteList.size() == 0) {
+            System.out.println("Aucun compte n'existe pour l'employé sélectionné");
+        } else {
+            compteList.stream().forEach(compte -> System.out.println(String.format(" - %d Compte \"%s\". Solde actuel: %.02f €",compte.getId(), compte.getNom(), compte.getSolde())));
+            Integer idCompte = getInteger("Choisir l'Id du compte à débiter", null, false);
+            for (CompteEntity compte: compteList) {
+                if (compte.getId() == idCompte) {
+                    compteToCredite = compte;
+                    break;
+                }
+            }
+        }
+        if (compteToDebite != null && compteToCredite != null) {
+            Float value = getFloat("Indiquer la somme à virer: ", null, false);
+            Virement virement = new Virement();
+            virement.setFrom(compteToDebite);
+            virement.setTo(compteToCredite);
+            virement.setMontant(value);
+            if (value > 0) {
+                Client client = ClientBuilder.newClient();
+                WebTarget target = client.target(API_ADDRESS + "/employee");
+                Invocation.Builder builder = target.path(String.valueOf(id)).path("virement").request();
+                Response resp = builder.post(Entity.entity(virement, MediaType.APPLICATION_JSON),
+                                            Response.class);
+                if (resp.getStatus() == 200) {
+                    System.out.println("Nouvel employé créé : " + employee.getId() + " " + employee.getPrenom() + " " + employee.getNom() + " " + employee.getMatricule());
+                } else {
+                    System.out.println("Impossible d'effectuer le virement");
+                }
+            } else {
+                System.out.println("La somme de virement doit être positive!");
+            }
+        }
+        
+        
     }
 
     /** Prints a message in the console and return the value set by the user.

@@ -3,9 +3,12 @@ package fr.imie.services;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import fr.imie.bankocash.Virement;
+import fr.imie.bankocash.jms.VirementProducer;
 import fr.imie.entities.EmployeeEntity;
 import fr.imie.entities.ProjectEntity;
 
@@ -19,6 +22,7 @@ public class Services {
     /** Entity Manager for JPA.
      */
     @PersistenceContext EntityManager em;
+    @Inject private VirementProducer producer;
     /** Constructor.
      */
     public Services() {
@@ -72,5 +76,9 @@ public class Services {
     
     public void remove(ProjectEntity project) {
         em.remove(em.merge(project));
+    }
+    
+    public void executeVirement(Virement virement) {
+        producer.sendMessage(virement);
     }
 }

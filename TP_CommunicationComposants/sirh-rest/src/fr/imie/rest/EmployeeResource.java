@@ -18,11 +18,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.ws.WebServiceRef;
 
+import fr.imie.bankocash.Virement;
 import fr.imie.bankocash.soap.BankocashSoapService;
 import fr.imie.bankocash.soap.BankocashSoapServiceService;
 import fr.imie.bankocash.soap.CompteEntity;
 import fr.imie.entities.EmployeeEntity;
-import fr.imie.entities.ProjectEntity;
 import fr.imie.services.Services;
 
 @RequestScoped
@@ -32,7 +32,7 @@ public class EmployeeResource {
     private Services serv;
     @WebServiceRef(value=BankocashSoapServiceService.class)
     private BankocashSoapService bankoService;
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
@@ -79,6 +79,20 @@ public class EmployeeResource {
             employee = serv.save(employee);
             builder.entity(employee);
         } else {
+            builder = Response.status(Status.BAD_REQUEST);
+        }
+        return builder.build();
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}/virement")
+    public Response executeVirement(@PathParam("id") Integer id, Virement virement) {
+        ResponseBuilder builder = null;
+        try {
+           serv.executeVirement(virement);
+           builder = Response.status(Status.OK);
+        } catch(Exception e) {
             builder = Response.status(Status.BAD_REQUEST);
         }
         return builder.build();

@@ -16,7 +16,8 @@ public enum AppliMenu {
     EMPLOYEE_DELETE (4, "Supprimer un employé"),
     COMPTE_ADD(12, "Ajouter un compte"),
     COMPTE_CREDITE(13, "Créditer un compte"),
-    COMPTE_DEBITE(14, "Débiter un compte");
+    COMPTE_DEBITE(14, "Débiter un compte"),
+    EXECUTE_VIREMENT(15, "Faire un virement");
 
     /** Code for menu selection.
      */
