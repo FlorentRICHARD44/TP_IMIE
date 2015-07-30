@@ -64,7 +64,7 @@
 
   <xs:complexType name="findCompteByEmployeeResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:compteEntity"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:compteEntity"/>
     </xs:sequence>
   </xs:complexType>
 

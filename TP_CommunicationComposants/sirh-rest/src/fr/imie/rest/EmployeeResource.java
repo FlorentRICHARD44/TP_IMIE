@@ -16,7 +16,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.xml.ws.WebServiceRef;
 
+import fr.imie.bankocash.soap.BankocashSoapService;
+import fr.imie.bankocash.soap.BankocashSoapServiceService;
+import fr.imie.bankocash.soap.CompteEntity;
 import fr.imie.entities.EmployeeEntity;
 import fr.imie.entities.ProjectEntity;
 import fr.imie.services.Services;
@@ -26,6 +30,8 @@ import fr.imie.services.Services;
 public class EmployeeResource {
     @EJB
     private Services serv;
+    @WebServiceRef(value=BankocashSoapServiceService.class)
+    private BankocashSoapService bankoService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +52,20 @@ public class EmployeeResource {
             builder = Response.status(Status.BAD_REQUEST);
         } else {
             builder.entity(employee);
+        }
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/{id}/comptes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEmployeeComptes(@PathParam("id") Integer id) {
+        ResponseBuilder builder = Response.status(Status.OK);
+        List<CompteEntity> compteList = bankoService.findCompteByEmployee(id);
+        if (compteList == null) {
+            builder = Response.status(Status.BAD_REQUEST);
+        } else {
+            builder.entity(compteList);
         }
         return builder.build();
     }

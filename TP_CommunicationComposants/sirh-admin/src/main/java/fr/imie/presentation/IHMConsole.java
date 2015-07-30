@@ -174,13 +174,27 @@ public class IHMConsole implements AutoCloseable {
         Employee employee = getEmployee(id);
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
-        CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
-        if (compte == null) {
+        List<CompteEntity> compteList = bankoService.findCompteByEmployee(employee.getId());
+        if (compteList.size() == 0) {
             System.out.println("Aucun compte n'existe pour l'employé sélectionné");
         } else {
-            Float value = getFloat("Indiquer la somme à créditer: ", null, false);
-            compte = bankoService.crediteCompte(compte, value);
-            System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+            compteList.stream().forEach(compte -> System.out.println("- " + compte.getId() + " Compte: " + compte.getNom() + " : solde actuel = " + compte.getSolde() + " euros."));
+            Integer idCompte = getInteger("Choisir l'Id du compte à modifier", null, false);
+            CompteEntity compteToModify = null;
+            for (CompteEntity compte: compteList) {
+                if (compte.getId() == idCompte) {
+                    compteToModify = compte;
+                    break;
+                }
+            }
+            if (compteToModify == null) {
+                System.out.println("L'id renseigné n'existe pas");
+            } else {
+                Float value = getFloat("Indiquer la somme à créditer: ", null, false);
+                compteToModify = bankoService.crediteCompte(compteToModify, value);
+                System.out.println("Compte crédité de \"" + value + "\" euros. Solde actuel: " + compteToModify.getSolde() + "euros");
+            
+            }
         }
     }
     
@@ -190,13 +204,27 @@ public class IHMConsole implements AutoCloseable {
         Employee employee = getEmployee(id);
         BankocashSoapServiceService serviceBanko = new BankocashSoapServiceService();
         BankocashSoapService bankoService = serviceBanko.getBankocashSoapServicePort();
-        CompteEntity compte = bankoService.findCompteByEmployee(employee.getId());
-        if (compte == null) {
+        List<CompteEntity> compteList = bankoService.findCompteByEmployee(employee.getId());
+        if (compteList.size() == 0) {
             System.out.println("Aucun compte n'existe pour l'employé sélectionné");
         } else {
-             Float value = getFloat("Indiquer la somme à débiter: ", null, false);
-            compte = bankoService.debiteCompte(compte, value);
-            System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compte.getSolde() + "euros");
+            compteList.stream().forEach(compte -> System.out.println("- " + compte.getId() + " Compte: " + compte.getNom() + " : solde actuel = " + compte.getSolde() + " euros."));
+            Integer idCompte = getInteger("Choisir l'Id du compte à modifier", null, false);
+            CompteEntity compteToModify = null;
+            for (CompteEntity compte: compteList) {
+                if (compte.getId() == idCompte) {
+                    compteToModify = compte;
+                    break;
+                }
+            }
+            if (compteToModify == null) {
+                System.out.println("L'id renseigné n'existe pas");
+            } else {
+                Float value = getFloat("Indiquer la somme à débiter: ", null, false);
+                compteToModify = bankoService.debiteCompte(compteToModify, value);
+                System.out.println("Compte débité de \"" + value + "\" euros. Solde actuel: " + compteToModify.getSolde() + "euros");
+            
+            }
         }
     }
 

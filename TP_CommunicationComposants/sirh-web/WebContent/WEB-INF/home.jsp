@@ -49,6 +49,14 @@
 					<ul id="project-list"></ul>
 				</div>
 			</div>
+			<div class="table-row">
+				<div class="table-cell"></div>
+				<div class="table-cell">
+					<button id="see-comptes" class="button action">Voir les comptes</button>
+					<button id="close-comptes" class="button action" hidden="true">Masquer les comptes</button>
+					<ul id="compte-list"></ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

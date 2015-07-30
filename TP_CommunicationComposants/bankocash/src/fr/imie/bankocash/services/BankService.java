@@ -36,11 +36,11 @@ public class BankService {
         return compteList;
     }
     
-    public CompteEntity findCompteByEmployee(Integer id) {
+    public List<CompteEntity> findCompteByEmployee(Integer id) {
         try {
             Query query = em.createNamedQuery("CompteEntity.findByEmployee", CompteEntity.class);
             query.setParameter("id", String.valueOf(id));
-            return (CompteEntity) query.getResultList().get(0);
+            return query.getResultList();
         } catch(IndexOutOfBoundsException e) {
             return null;
         }

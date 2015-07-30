@@ -1,6 +1,7 @@
 
 package fr.imie.bankocash.soap;
 
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -61,13 +62,13 @@ public interface BankocashSoapService {
      * 
      * @param arg0
      * @return
-     *     returns fr.imie.bankocash.soap.CompteEntity
+     *     returns java.util.List<fr.imie.bankocash.soap.CompteEntity>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "findCompteByEmployee", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.FindCompteByEmployee")
     @ResponseWrapper(localName = "findCompteByEmployeeResponse", targetNamespace = "http://soap.bankocash.imie.fr/", className = "fr.imie.bankocash.soap.FindCompteByEmployeeResponse")
-    public CompteEntity findCompteByEmployee(
+    public List<CompteEntity> findCompteByEmployee(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0);
 

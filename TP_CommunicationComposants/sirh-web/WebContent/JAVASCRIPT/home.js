@@ -29,6 +29,9 @@ $(function() {
 								    	$('ul#project-list li').remove();
 							    		$('#close-projects').attr("hidden", "true");
 							    		$('#see-projects').removeAttr("hidden");
+								    	$('ul#compte-list li').remove();
+							    		$('#close-comptes').attr("hidden", "true");
+							    		$('#see-comptes').removeAttr("hidden");
 								    })
 								    .fail(function(data) {
 								    	$('div.employee-selection p.error').text("Employé non trouvé");
@@ -60,5 +63,30 @@ $(function() {
 		$('#close-projects').attr("hidden", "true");
 		$('#see-projects').removeAttr("hidden");
     	$('ul#project-list li').remove();
+	})
+	
+	$('#see-comptes').on('click',
+						  function() {
+						$.ajax({url: 'http://localhost:8080/sirh-rest/api/employee/' 
+									 + userConnected.id + "/comptes",
+							    method: 'GET',
+							    dataType: 'json'})
+							    .done(function(data) {
+							    	$('ul#compte-list li').remove();
+							    	for (var i in data) {
+							    		$('ul#compte-list').append($('<li>').text(data[i].nom + " Solde = " + data[i].solde + " euros"));
+							    	}
+						    		$('#see-comptes').attr("hidden", "true");
+						    		$('#close-comptes').removeAttr("hidden");
+							    })
+							    .fail(function(data) {
+							    	console.log("compte error");
+							    })
+	})
+	$('#close-comptes').on('click',
+							function() {
+		$('#close-comptes').attr("hidden", "true");
+		$('#see-comptes').removeAttr("hidden");
+    	$('ul#compte-list li').remove();
 	})
 })
