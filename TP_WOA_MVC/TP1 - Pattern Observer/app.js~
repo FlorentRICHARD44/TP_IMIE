@@ -32,27 +32,28 @@ $(function() {
     MessageSender.prototype = subjectObject;
 
     var TextView = function(identifier) {
+        var text = []
         var id = identifier;
+        Observer.call(this);
         this.notify = function(message) {
-            console.log("message notifié: " + message);
-            $('div#view' + id + ' .text').val($('div#view' + id + ' .text').val() + "\r\n" + message);
+            console.log("message notifié: " + message); 
+            text.push(message);
+            $('div#view' + id + ' .text').val(text.join('\n'));
         };
         this.getId = function() {return id;};
     };
-    TextView.prototype = observerObject;
 
     var msgSender = new MessageSender();
     $('button#send-msg').on("click", function() {
         msgSender.sendMessage($('input#msg').val());
+        $('input#msg').val('');
     });
     var view1 = new TextView(1);
     var view2 = new TextView(2);
     var view3 = new TextView(3);
     var view4 = new TextView(4);
     var viewList = [view1, view2, view3, view4];
-    var tableIndex = [1, 2, 3, 4];
     for (var i in viewList) {
-console.log(viewList[i].getId());
         $('div#view' + viewList[i].getId() + ' button#btnReg').on("click", (function(copieView) {
                 return function() {
                         $('div#view' + copieView.getId() + ' button#btnUnreg').removeAttr("disabled");
