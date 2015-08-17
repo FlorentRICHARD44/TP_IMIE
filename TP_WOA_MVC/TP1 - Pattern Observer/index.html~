@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TP 01 - Pattern Observer</title>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body class="container">
+    <h1>Pattern Observer</h1>
+    <div id="messaging">
+        <div class="row">
+            <div class="col-md-2">
+                <label>Message</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <input id="msg" type="text"/>
+            </div>
+            <div class="col-md-2">
+                <button id="send-msg" class="btn btn-success">Envoyer</button>
+            </div>
+        </div>
+    </div>
+    <div id="views" class="row">
+        <div class="view col-md-3" id="view1">            
+            <div class="row">
+                <div class="col-md-12"><h3>Vue 1</h3></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-12"><textarea class="text"/></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-primary" id="btnReg">S'abonner</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger" id="btnUnreg" disabled>Se Désabonner</button>
+                </div>
+            </div>
+        </div>
+        <div class="view col-md-3" id="view2">            
+            <div class="row">
+                <div class="col-md-12"><h3>Vue 2</h3></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-12"><textarea class="text"/></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-primary" id="btnReg">S'abonner</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger" id="btnUnreg" disabled>Se Désabonner</button>
+                </div>
+            </div>
+        </div>
+        <div class="view col-md-3" id="view3">            
+            <div class="row">
+                <div class="col-md-12"><h3>Vue 3</h3></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-12"><textarea class="text"/></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-primary" id="btnReg">S'abonner</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger" id="btnUnreg" disabled>Se Désabonner</button>
+                </div>
+            </div>
+        </div>
+        <div class="view col-md-3" id="view4">            
+            <div class="row">
+                <div class="col-md-12"><h3>Vue 4</h3></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-12"><textarea class="text"/></div>
+            </div>                    
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-primary" id="btnReg">S'abonner</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger" id="btnUnreg" disabled>Se Désabonner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="app.js" charset="utf-8"></script>
+  </body>
+</html>
