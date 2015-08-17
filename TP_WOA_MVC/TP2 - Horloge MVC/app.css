@@ -1,0 +1,10 @@
+
+div.horloge
+{
+    border: solid 1px black;
+}
+
+span.hour
+{
+    text-align: center;
+}
