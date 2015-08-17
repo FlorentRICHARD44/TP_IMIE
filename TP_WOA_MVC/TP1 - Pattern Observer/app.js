@@ -16,10 +16,7 @@ $(function() {
             observers.splice(observers.indexOf(obs), 1);
         };
         this.notifyObservers = function(message) {
-            for (var ind in observers) {
-                console.log(ind + " " + observers[i]);
-                observers[ind].notify(message);
-            }  
+            observers.forEach(function(obs) { obs.notify(message);});
         };
     }
     var subjectObject = new Subject();
@@ -41,6 +38,16 @@ $(function() {
             $('div#view' + id + ' .text').val(text.join('\n'));
         };
         this.getId = function() {return id;};
+        this.register = function() {
+            $('div#view' + id + ' button#btnUnreg').removeAttr("disabled");
+            $('div#view' + id + ' button#btnReg').attr("disabled", "disabled");
+            msgSender.registerObserver(this);  
+        };
+        this.unregister = function() {
+            $('div#view' + id + ' button#btnReg').removeAttr("disabled");
+            $('div#view' + id + ' button#btnUnreg').attr("disabled", "disabled");
+            msgSender.unregisterObserver(this);  
+        };
     };
 
     var msgSender = new MessageSender();
@@ -54,22 +61,14 @@ $(function() {
     var view4 = new TextView(4);
     var viewList = [view1, view2, view3, view4];
     for (var i in viewList) {
-        $('div#view' + viewList[i].getId() + ' button#btnReg').on("click", (function(copieView) {
-                return function() {
-                        $('div#view' + copieView.getId() + ' button#btnUnreg').removeAttr("disabled");
-                        $('div#view' + copieView.getId() + ' button#btnReg').attr("disabled", "disabled");
-                        msgSender.registerObserver(copieView);
-                    }
-                })(viewList[i])
-        );
-        $('div#view' + viewList[i].getId() + ' button#btnUnreg').on("click", (function(copieView) {
-                return function() {
-                        $('div#view' + copieView.getId() + ' button#btnReg').removeAttr("disabled");
-                        $('div#view' + copieView.getId() + ' button#btnUnreg').attr("disabled", "disabled");
-                        msgSender.unregisterObserver(copieView);
-                    }
-                })(viewList[i])
-        );
+        $('div#view' + viewList[i].getId() + ' button#btnReg').on("click", (function(copieView){
+                    return function() {
+                        copieView.register()}
+                    })(viewList[i]));
+        $('div#view' + viewList[i].getId() + ' button#btnUnreg').on("click", (function(copieView){
+                    return function() {
+                        copieView.unregister()}
+                    })(viewList[i]));
     }
 });
 
