@@ -14,13 +14,18 @@
   </head>
   <body class="container">
     <h1>Horloge MVC</h1>
-    <div class="horloge row">
-        <span class="col-md-1"></span>
-        <span id="hour" class="col-md-3 hour">00</span>
-        <span class="col-md-1">:</span>
-        <span id="minute" class="col-md-3 hour">00</span>
-        <span class="col-md-1">:</span>
-        <span id="second" class="col-md-3 hour">00</span>
+    <div class="horloge">
+        <span id="hour" class="hour">00</span>
+        <span>:</span>
+        <span id="minute" class="hour">00</span>
+        <span>:</span>
+        <span id="second" class="hour">00</span>
+        <div class="row">
+            <div class="col-md-2"><button id="addhour" class="btn btn-primary">+ 1 heure</button></div>
+            <div class="col-md-2"><button id="addhour" class="btn btn-danger">- 1 heure</button></div>
+            <div class="col-md-2"><button id="addhour" class="btn btn-primary">+ 1 minute</button></div>
+            <div class="col-md-2"><button id="addhour" class="btn btn-danger">- 1 minute</button></div>
+        </div>
     </div>
     <script src="lib/jquery-2.1.4.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
