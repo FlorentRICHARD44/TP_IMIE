@@ -16,7 +16,7 @@ var Controller = function(prodListView, prodEditView, prodModel) {
     prodModel.init();
     this.notify = function(msg, val) {
         switch(msg) {
-            case EVENT_CTRL.EDIT_PRODUCT: prodEditView.notify(EVENT_CTRL.EDIT_PRODUCT, val); break;
+            case EVENT_CTRL.EDIT_PRODUCT: prodModel.editProduct(val); break;
             case EVENT_CTRL.LIST_PRODUCT: self.goToListView(); break;
             case EVENT_CTRL.NEW_PRODUCT: prodModel.newProduct(); break;
             case EVENT_CTRL.DEL_PRODUCT: prodModel.removeProduct(val); break;

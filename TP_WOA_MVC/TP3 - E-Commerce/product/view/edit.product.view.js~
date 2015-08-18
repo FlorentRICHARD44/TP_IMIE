@@ -11,17 +11,31 @@ var ProductEditView = function() {
     });
 
     $('button#save').on('click', function() {
+        var error = false;
         var p = new Product();
         p.setId($('input#id').val());
-        p.setLabel($('input#label').val());
-        p.setPrice($('input#price').val());
+        if ($('input#label').val() == ) {
+            error = true;
+        } else {
+            p.setLabel($('input#label').val());
+        }
+        if ($('input#price').val() == ) {
+            error = true;
+        } else {
+            p.setPrice($('input#price').val());
+        }
         p.setImageUrl($('input#imageUrl').val());
-        self.notifyObservers(EVENT_CTRL.SAVE_PRODUCT, p);
-        $('input#id').val("");      
-        $('input#label').val("")  ;
-        $('input#price').val(""); 
-        $('input#imageUrl').val("");     
-        $('div#product-edit').attr("hidden", "");
+        if (error) {
+            $('div.alert').show();
+        } else {
+            self.notifyObservers(EVENT_CTRL.SAVE_PRODUCT, p);
+            $('input#id').val("");      
+            $('input#label').val("")  ;
+            $('input#price').val(""); 
+            $('input#imageUrl').val("");     
+            $('div#product-edit').attr("hidden", "");
+            $('div.alert').hide();
+        }
     });
 
     this.updateView = function(product) {
@@ -30,7 +44,7 @@ var ProductEditView = function() {
     this.notify = function(msg, val) {
         if (msg == EVENT_MODEL.NEW) {
             $('div#product-edit').removeAttr("hidden");
-        } else if (msg == EVENT_CTRL.EDIT_PRODUCT) {
+        } else if (msg == EVENT_MODEL.EDIT) {
             $('input#id').val(val.getId());      
             $('input#label').val(val.getLabel());
             $('input#price').val(val.getPrice()); 

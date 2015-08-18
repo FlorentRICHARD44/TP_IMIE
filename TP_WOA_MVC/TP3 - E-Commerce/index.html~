@@ -20,7 +20,7 @@
     <h1>IMIE Commerce</h1>
     
     <div id="product-list">
-        <button id="new-product" type="button" class="btn btn-primary">Nouveau</button>
+        <button id="new-product" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nouveau</button>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -37,7 +37,7 @@
         </table>
     </div>
     <div id="product-edit" hidden>
-        <button id="list-product" type="button" class="btn btn-primary">Liste des Produits</button>
+        <button id="list-product" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt"></span> Liste des Produits</button>
         <form>
             <div class="row">
                 <div class="col-md-4"><label>Id</label></div>
@@ -45,17 +45,19 @@
             </div>
             <div class="row">
                 <div class="col-md-4"><label>Libelle</label></div>
-                <div class="col-md-8"><input type="text" id="label"/></div>
+                <div class="col-md-8"><input type="text" id="label" required/></div>
             </div>
             <div class="row">
                 <div class="col-md-4"><label>Prix</label></div>
-                <div class="col-md-8"><input type="text" id="price"/></div>
+                <div class="col-md-8"><input type="text" id="price" required/></div>
             </div>
             <div class="row">
                 <div class="col-md-4"><label>Image URL</label></div>
                 <div class="col-md-8"><input type="text" id="imageUrl"/></div>
             </div>
         </form>
+        <button id="save" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Valider</button>
+        <div class="alert alert-danger" role="alert" hidden><b>Erreur: </b>Certains champs nécessaires ne sont pas remplis</div>
     </div>
   </body>
 </html>

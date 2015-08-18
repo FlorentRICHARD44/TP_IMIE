@@ -9,3 +9,10 @@ img.product
     width: 80px;
     height: 80px;
 }
+
+form
+{
+    margin: 10px 0px 10px 0px;
+    padding: 10px;
+    border: solid 1px black;
+}
