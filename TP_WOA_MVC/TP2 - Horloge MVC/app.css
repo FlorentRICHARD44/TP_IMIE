@@ -8,3 +8,8 @@ span.hour
 {
     text-align: center;
 }
+
+button
+{
+    width: 100%;
+}

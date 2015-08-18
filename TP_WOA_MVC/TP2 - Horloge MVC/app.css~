@@ -6,4 +6,11 @@ div.horloge
 
 span.hour
 {
+    text-align: center;
+}
+
+button
+{
+    width: 100%;
+    padding: 0px 10px 0px 10px;
 }
