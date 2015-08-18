@@ -1,19 +1,23 @@
 function zeroPad(number,base){
     var res = "" + number;
     while (res.length < base) {
-        res = "0"+ res;    
+        res = "0" + res;    
     }
     return res;
 }
 
-// Pattern Observer
+/******************************
+/ Pattern Observer
+/*****************************/
+// Observer: Interface for an observer.
 var Observer = function() {
     this.notify = function(msg) {
         throw new Exception("Cet objet observer ne peut rien faire");        
     };
 };
+// Subject: Interface for a subject to be observed.
 var Subject = function() {
-    var observers = [];
+    var observers = [];  // Set of observers
     this.registerObserver = function(obs) {
         if(observers.indexOf(obs) < 0) {
             observers.push(obs);
@@ -28,12 +32,16 @@ var Subject = function() {
 };
 
 $(function() {
+    /****************************
+    / Object View: Operations on the view.
+    / -> Observer
+    / -> Subject
+    *****************************/
     var View = function() {
         Observer.call(this);
         Subject.call(this);
         var thisview = this;
         $('button#addhour').on('click', function() {
-            console.log("view +1h");
             thisview.notifyObservers('ADD_1_HOUR');
         });
         $('button#delhour').on('click', function() {
@@ -45,6 +53,19 @@ $(function() {
         $('button#delminute').on('click', function() {
             thisview.notifyObservers('DEL_1_MINUTE');
         });
+        $('button#play').on('click', function() {
+            thisview.notifyObservers('PLAY');
+            $('button#play').attr("disabled", "");
+            $('button#stop').removeAttr("disabled");
+        });
+        $('button#stop').on('click', function() {
+            thisview.notifyObservers('STOP');
+            $('button#stop').attr("disabled", "");
+            $('button#play').removeAttr("disabled");
+        });
+        $('button#refresh').on('click', function() {
+            thisview.notifyObservers('REFRESH');
+        });
         this.notify = function(msg) {
             $('#hour').text(zeroPad(model.getHour(), 2)); 
             $('#minute').text(zeroPad(model.getMinute(), 2)); 
@@ -52,6 +73,10 @@ $(function() {
         }
     }
 
+    /****************************
+    / Object Model: Model of data and services
+    / -> Subject
+    *****************************/
     var Model = function() {
         Subject.call(this);
         var time = 0;
@@ -62,19 +87,30 @@ $(function() {
             time = (time + val + 86400) % (86400);
             this.notifyObservers();
         }
+        this.raz = function() {
+            time = 0;
+            this.notifyObservers();
+        }
     }
 
+    /****************************
+    / Object Controller: Control of the application
+    / -> Observer
+    *****************************/
     var Controller = function(v, m) {
         Observer.call(this);
-        m.registerObserver(v);
-        v.registerObserver(this);
-        setInterval(function() {model.increment(1)}, 1000);
+        m.registerObserver(v);  // View observes Model
+        v.registerObserver(this);  // Controller observes View
+        var secondInterval = setInterval(function() {model.increment(1)}, 1000);
         this.notify = function(msg) {
             switch(msg) {
                 case 'ADD_1_HOUR': m.increment(3600); break;
                 case 'DEL_1_HOUR': m.increment(-3600); break;
                 case 'ADD_1_MINUTE': m.increment(60); break;
                 case 'DEL_1_MINUTE': m.increment(-60); break;
+                case 'STOP': clearInterval(secondInterval); break;
+                case 'REFRESH': m.raz(); break;
+                case 'PLAY': secondInterval = setInterval(function() {model.increment(1)}, 1000); break;}
             }
         }
     };

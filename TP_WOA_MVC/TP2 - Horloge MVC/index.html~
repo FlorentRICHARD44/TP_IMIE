@@ -14,6 +14,11 @@
   </head>
   <body class="container">
     <h1>Horloge MVC</h1>
+    <div class="row">
+            <div class="col-md-1"><button id="playpause" type="button" class="btn btn-default" aria-label="Play / Pause"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button></div>
+            <div class="col-md-1"><button id="stop" class="btn btn-default"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button></div>
+            <div class="col-md-1"><button id="refresh" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></div>
+    </div>
     <div class="horloge">
         <span id="hour" class="hour">00</span>
         <span>:</span>
@@ -21,10 +26,10 @@
         <span>:</span>
         <span id="second" class="hour">00</span>
         <div class="row">
-            <div class="col-md-2"><button id="addhour" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 1 heure</button></div>
-            <div class="col-md-2"><button id="delhour" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 1 heure</button></div>
-            <div class="col-md-2"><button id="addminute" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 1 minute</button></div>
-            <div class="col-md-2"><button id="delminute" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 1 minute</button></div>
+            <div class="col-md-1"><button id="addhour" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 1 h</button></div>
+            <div class="col-md-1"><button id="delhour" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 1 h</button></div>
+            <div class="col-md-1"><button id="addminute" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 1 min</button></div>
+            <div class="col-md-1"><button id="delminute" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 1 min</button></div>
         </div>
     </div>
     <script src="lib/jquery-2.1.4.min.js"></script>

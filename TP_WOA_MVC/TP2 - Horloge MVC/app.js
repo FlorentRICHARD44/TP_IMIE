@@ -53,6 +53,19 @@ $(function() {
         $('button#delminute').on('click', function() {
             thisview.notifyObservers('DEL_1_MINUTE');
         });
+        $('button#play').on('click', function() {
+            thisview.notifyObservers('PLAY');
+            $('button#play').attr("disabled", "");
+            $('button#stop').removeAttr("disabled");
+        });
+        $('button#stop').on('click', function() {
+            thisview.notifyObservers('STOP');
+            $('button#stop').attr("disabled", "");
+            $('button#play').removeAttr("disabled");
+        });
+        $('button#refresh').on('click', function() {
+            thisview.notifyObservers('REFRESH');
+        });
         this.notify = function(msg) {
             $('#hour').text(zeroPad(model.getHour(), 2)); 
             $('#minute').text(zeroPad(model.getMinute(), 2)); 
@@ -74,6 +87,10 @@ $(function() {
             time = (time + val + 86400) % (86400);
             this.notifyObservers();
         }
+        this.raz = function() {
+            time = 0;
+            this.notifyObservers();
+        }
     }
 
     /****************************
@@ -84,13 +101,16 @@ $(function() {
         Observer.call(this);
         m.registerObserver(v);  // View observes Model
         v.registerObserver(this);  // Controller observes View
-        setInterval(function() {model.increment(1)}, 1000);
+        var secondInterval = setInterval(function() {model.increment(1)}, 1000);
         this.notify = function(msg) {
             switch(msg) {
                 case 'ADD_1_HOUR': m.increment(3600); break;
                 case 'DEL_1_HOUR': m.increment(-3600); break;
                 case 'ADD_1_MINUTE': m.increment(60); break;
                 case 'DEL_1_MINUTE': m.increment(-60); break;
+                case 'STOP': clearInterval(secondInterval); break;
+                case 'REFRESH': m.raz(); break;
+                case 'PLAY': secondInterval = setInterval(function() {model.increment(1)}, 1000); break;
             }
         }
     };
