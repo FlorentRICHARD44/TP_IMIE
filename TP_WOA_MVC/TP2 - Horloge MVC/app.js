@@ -32,6 +32,17 @@ var Subject = function() {
 };
 
 $(function() {
+    // Enum of events.
+    var EVENTS = {
+            ADD_1_HOUR: "ADD_1_HOUR",
+            DEL_1_HOUR: "DEL_1_HOUR",
+            ADD_1_MINUTE: "ADD_1_MINUTE",
+            DEL_1_MINUTE: "DEL_1_MINUTE",
+            PLAY: "PLAY",
+            STOP: "STOP",
+            REFRESH: "REFRESH"
+    };
+
     /****************************
     / Object View: Operations on the view.
     / -> Observer
@@ -42,29 +53,29 @@ $(function() {
         Subject.call(this);
         var thisview = this;
         $('button#addhour').on('click', function() {
-            thisview.notifyObservers('ADD_1_HOUR');
+            thisview.notifyObservers(EVENTS.ADD_1_HOUR);
         });
         $('button#delhour').on('click', function() {
-            thisview.notifyObservers('DEL_1_HOUR');
+            thisview.notifyObservers(EVENTS.DEL_1_HOUR);
         });
         $('button#addminute').on('click', function() {
-            thisview.notifyObservers('ADD_1_MINUTE');
+            thisview.notifyObservers(EVENTS.ADD_1_MINUTE);
         });
         $('button#delminute').on('click', function() {
-            thisview.notifyObservers('DEL_1_MINUTE');
+            thisview.notifyObservers(EVENTS.DEL_1_MINUTE);
         });
         $('button#play').on('click', function() {
-            thisview.notifyObservers('PLAY');
+            thisview.notifyObservers(EVENTS.PLAY);
             $('button#play').attr("disabled", "");
             $('button#stop').removeAttr("disabled");
         });
         $('button#stop').on('click', function() {
-            thisview.notifyObservers('STOP');
+            thisview.notifyObservers(EVENTS.STOP);
             $('button#stop').attr("disabled", "");
             $('button#play').removeAttr("disabled");
         });
         $('button#refresh').on('click', function() {
-            thisview.notifyObservers('REFRESH');
+            thisview.notifyObservers(EVENTS.REFRESH);
         });
         this.notify = function(msg) {
             $('#hour').text(zeroPad(model.getHour(), 2)); 
@@ -104,13 +115,13 @@ $(function() {
         var secondInterval = setInterval(function() {model.increment(1)}, 1000);
         this.notify = function(msg) {
             switch(msg) {
-                case 'ADD_1_HOUR': m.increment(3600); break;
-                case 'DEL_1_HOUR': m.increment(-3600); break;
-                case 'ADD_1_MINUTE': m.increment(60); break;
-                case 'DEL_1_MINUTE': m.increment(-60); break;
-                case 'STOP': clearInterval(secondInterval); break;
-                case 'REFRESH': m.raz(); break;
-                case 'PLAY': secondInterval = setInterval(function() {model.increment(1)}, 1000); break;
+                case EVENTS.ADD_1_HOUR: m.increment(3600); break;
+                case EVENTS.DEL_1_HOUR: m.increment(-3600); break;
+                case EVENTS.ADD_1_MINUTE: m.increment(60); break;
+                case EVENTS.DEL_1_MINUTE: m.increment(-60); break;
+                case EVENTS.STOP: clearInterval(secondInterval); break;
+                case EVENTS.REFRESH: m.raz(); break;
+                case EVENTS.PLAY: secondInterval = setInterval(function() {model.increment(1)}, 1000); break;
             }
         }
     };

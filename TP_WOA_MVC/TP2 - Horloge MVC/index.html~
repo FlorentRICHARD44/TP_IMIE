@@ -3,21 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>TP 02 - MVC</title>
-    <link rel="stylesheet" href="lib/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="app.css">
-    <style media="screen">
-      .horloge {
-        font-size: 8em;
-      }
-    </style>
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="app.js" charset="utf-8"></script>
   </head>
   <body class="container">
     <h1>Horloge MVC</h1>
-    <div class="row">
-            <div class="col-md-1"><button id="playpause" type="button" class="btn btn-default" aria-label="Play / Pause"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></button></div>
-            <div class="col-md-1"><button id="stop" class="btn btn-default"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button></div>
-            <div class="col-md-1"><button id="refresh" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></div>
+    <div class="btn-group">
+            <button id="play" type="button" class="btn btn-default" aria-label="Play" disabled><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+            <button id="stop" class="btn btn-default"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+            <button id="refresh" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
     </div>
     <div class="horloge">
         <span id="hour" class="hour">00</span>
@@ -32,8 +30,5 @@
             <div class="col-md-1"><button id="delminute" class="btn btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 1 min</button></div>
         </div>
     </div>
-    <script src="lib/jquery-2.1.4.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="app.js" charset="utf-8"></script>
   </body>
 </html>

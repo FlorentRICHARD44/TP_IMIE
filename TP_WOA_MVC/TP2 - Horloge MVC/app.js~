@@ -32,6 +32,15 @@ var Subject = function() {
 };
 
 $(function() {
+    var EVENTS = {
+            ADD_1_HOUR: "ADD_1_HOUR",
+            DEL_1_HOUR: "DEL_1_HOUR",
+            ADD_1_MINUTE: "ADD_1_MINUTE",
+            DEL_1_MINUTE: "DEL_1_MINUTE",
+            PLAY: "PLAY",
+            STOP: "STOP",
+            REFRESH: "REFRESH"
+    };
     /****************************
     / Object View: Operations on the view.
     / -> Observer
@@ -110,7 +119,7 @@ $(function() {
                 case 'DEL_1_MINUTE': m.increment(-60); break;
                 case 'STOP': clearInterval(secondInterval); break;
                 case 'REFRESH': m.raz(); break;
-                case 'PLAY': secondInterval = setInterval(function() {model.increment(1)}, 1000); break;}
+                case 'PLAY': secondInterval = setInterval(function() {model.increment(1)}, 1000); break;
             }
         }
     };
