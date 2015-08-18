@@ -6,9 +6,8 @@ function zeroPad(number,base){
     return res;
 }
 
-
-$(function() {
-    var Observer = function() {
+// Pattern Observer
+var Observer = function() {
         this.notify = function(msg) {
             throw new Exception("Cet objet observer ne peut rien faire");        
         };
@@ -26,6 +25,7 @@ $(function() {
         };
     }
 
+$(function() {
     var View = function() {
         Observer.call(this);
         Subject.call(this);
@@ -52,86 +52,33 @@ $(function() {
 
     var Model = function() {
         Subject.call(this);
-        var hour = 0;
-        var minute = 0;
-        var second = 0;
-        this.getHour = function() {return hour;};
-        this.getMinute = function() {return minute;};
-        this.getSecond = function() {return second;};
-        this.increment = function() {
-            if (second < 59) {
-                second++;
-            } else {
-                second = 0;
-                if (minute < 59) {
-                    minute++;
-                } else {
-                    minute = 0;
-                    if (hour < 23) {
-                        hour++;
-                    } else {
-                        hour = 0;
-                    }
-                }
-            }
+        var time = 0;
+        this.getHour = function() {return (Math.floor(time / 3600) % 24);};
+        this.getMinute = function() {return (Math.floor(time / 60) % 60);};
+        this.getSecond = function() {return time % 60;};
+        this.increment = function(val) {
+            time = (time + val + 86400) % (86400);
             this.notifyObservers();
         }
-        this.addHour = function(nb) {
-            if ((hour + nb) < 23) {
-               hour += nb;
-            } else {
-                hour = (hour + nb) % 24;            
-            }
-            this.notifyObservers();
-        };
-        this.delHour = function(nb) {
-            if ((hour - nb) > -1) {
-               hour -= nb;
-            } else {
-                hour = (hour - nb + 24) % 24;            
-            }
-            this.notifyObservers();
-        };
-        this.addMinute = function(nb) {
-            if ((minute + nb) < 59) {
-               minute += nb;
-            } else {
-                minute = (minute + nb) % 60; 
-                this.addHour(nb / 60);           
-            }
-            this.notifyObservers();
-        };
-        this.delMinute = function(nb) {
-            if ((minute - nb) > -1) {
-               minute -= nb;
-            } else {
-                minute = (minute - nb + 60) % 60; 
-                this.delHour(nb / 60);                  
-            }
-            this.notifyObservers();
-        };
     }
 
-    // TODO Créer la structure d'un contrôleur
     var Controller = function(v, m) {
         Observer.call(this);
         m.registerObserver(v);
         this.notify = function(msg) {
-            console.log("controller " + msg);
             switch(msg) {
-                case 'ADD_1_HOUR': m.addHour(1); break;
-                case 'DEL_1_HOUR': m.delHour(1); break;
-                case 'ADD_1_MINUTE': m.addMinute(1); break;
-                case 'DEL_1_MINUTE': m.delMinute(1); break;
+                case 'ADD_1_HOUR': m.increment(3600); break;
+                case 'DEL_1_HOUR': m.increment(-3600); break;
+                case 'ADD_1_MINUTE': m.increment(60); break;
+                case 'DEL_1_MINUTE': m.increment(-60); break;
             }
         }
     };
 
-    // TODO instancier les différents objets
     var model = new Model();
     var view = new View();
     var ctrl = new Controller(view, model);
     view.registerObserver(ctrl);
-    setInterval(function() {model.increment()}, 1000);
+    setInterval(function() {model.increment(1)}, 1000);
 });
 
