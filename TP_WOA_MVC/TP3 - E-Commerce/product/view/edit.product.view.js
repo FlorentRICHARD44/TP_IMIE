@@ -7,7 +7,6 @@ var ProductEditView = function() {
 
     $('button#list-product').on('click', function() {
         self.notifyObservers(EVENT_CTRL.LIST_PRODUCT);
-        $('div#product-edit').attr("hidden", "");
     });
 
     $('button#save').on('click', function() {
@@ -32,24 +31,29 @@ var ProductEditView = function() {
             $('input#id').val("");      
             $('input#label').val("")  ;
             $('input#price').val(""); 
-            $('input#imageUrl').val("");     
-            $('div#product-edit').attr("hidden", "");
+            $('input#imageUrl').val("");
             $('div.alert').hide();
         }
     });
 
-    this.updateView = function(product) {
-        $('div#product-edit').removeAttr("hidden");
+    this.show = function(product) {
+        $('div#product-edit').show();
+    }
+
+    this.hide = function(product) {
+        $('div#product-edit').hide();
     }
     this.notify = function(msg, val) {
         if (msg == EVENT_MODEL.NEW) {
-            $('div#product-edit').removeAttr("hidden");
+            $('input#id').val("");      
+            $('input#label').val(val.label);
+            $('input#price').val(val.price); 
+            $('input#imageUrl').val(val.imageUrl);
         } else if (msg == EVENT_MODEL.EDIT) {
             $('input#id').val(val.id);      
             $('input#label').val(val.label);
             $('input#price').val(val.price); 
-            $('input#imageUrl').val(val.imageUrl); 
-            $('div#product-edit').removeAttr("hidden");
+            $('input#imageUrl').val(val.imageUrl);
         }
     }
 

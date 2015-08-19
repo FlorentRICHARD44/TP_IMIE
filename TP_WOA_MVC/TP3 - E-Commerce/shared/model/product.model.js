@@ -11,55 +11,44 @@ var Product = function() {
     this.imageUrl = "";
 };
 
+var AjaxRequest = function(url, method, data, contentType) {
+    this.url = url;
+    this.method = method;
+    this.data = data;
+    this.contentType = contentType;
+};
+
 var ProductModel = function() {
     Subject.call(this);
     var self = this;
-    var productList = [];
-    var prodStorage = new ProductStorage();
     this.init = function() {
-        var p1 = new Product();
-        p1.id = 1;
-        p1.label = 'Vélo';
-        p1.price = 299.99;
-        p1.imageUrl = "img/velo.jpeg";
-        var p2 = new Product();
-        p2.id = 2;
-        p2.label = 'Chaussures';
-        p2.price = 24.49;
-        p2.imageUrl = "img/chaussure.jpeg";
-        var p3 = new Product();
-        p3.id = 3;
-        p3.label = 'Crayon';
-        p3.price = 0.39;
-        p3.imageUrl = "img/crayon.jpeg";
-        productList.push(p1);
-        productList.push(p2);
-        productList.push(p3);
-        //prodStorage.storeProducts(productList);
-        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
+        var actionList = []
+        self.prodStorage = new ProductStorage();
+        self.prodStorage.storeServeurActions(actionList);
+        self.synchronize();
+        setInterval(self.synchronize, 10000);
     }
-    this.getProductList = function() {return prodStorage.readProducts();};
+    this.getProductList = function() {return self.prodStorage.readProducts();};
     this.save = function(product) {
-        productList = prodStorage.readProducts();
+        console.log("model save")
+        productList = self.prodStorage.readProducts();
+        var actionList = self.prodStorage.readServeurActions();
         if (product.id == "") {        
-            var maxId = 0;
-            for (var i in productList) {
-                if (productList[i].id > maxId) {
-                    maxId = productList[i].id;
-                }
-            }
-            product.id = maxId + 1;
-            productList.push(product);
+            product.id = null;
+            actionList.push(new SynchroAction(new AjaxRequest('http://localhost:8080/Service_Rest/rest/products',
+                                                              "POST",
+                                                              product, "application/json"),
+                                                          null,
+                                                          null));
+            self.prodStorage.storeServeurActions(actionList);
         } else {
-            for (var i in productList) {
-                if (productList[i].id == product.id) {
-                    productList[i] = product;
-                    break;
-                }
-            }
+            actionList.push(new SynchroAction(new AjaxRequest('http://localhost:8080/Service_Rest/rest/products',
+                                                              "PUT",
+                                                              product, "application/json"),
+                                                          null,
+                                                          null));
+            self.prodStorage.storeServeurActions(actionList);
         }
-        prodStorage.storeProducts(productList);
-        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
     this.newProduct = function() {
         var p = new Product();
@@ -69,13 +58,29 @@ var ProductModel = function() {
         self.notifyObservers(EVENT_MODEL.EDIT, product);
     }
     this.removeProduct = function(product) {
-        productList = prodStorage.readProducts();
-        for (var index in productList) {
-            if (productList[index].id == product.id) {
-                productList.splice(index, 1);
-            }
+        var actionList = self.prodStorage.readServeurActions();
+        actionList.push(new SynchroAction(new AjaxRequest("http://localhost:8080/Service_Rest/rest/products",
+                                                          "DELETE",
+                                                          product, "application/json"),
+                                                 null,
+                                                 null)); 
+        self.prodStorage.storeServeurActions(actionList);
+        
+    }
+    this.synchronize = function() {
+        var actionList = self.prodStorage.readServeurActions();
+        while(actionList.length > 0) {
+            action = actionList.shift();            
+            $.ajax({url: action.ajaxRequest.url,
+                    method: action.ajaxRequest.method,
+                    data: JSON.stringify(action.ajaxRequest.data),
+                    contentType : action.ajaxRequest.contentType})
+                    .done(function(data) {console.log("action done")})
+                    .fail(function(data) {console.log("action fail")});
         }
-        prodStorage.storeProducts(productList);
-        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
+        self.prodStorage.storeServeurActions(actionList);
+        $.ajax({url: 'http://localhost:8080/Service_Rest/rest/products',
+                method: "GET"})
+                .done(function(data){self.prodStorage.storeProducts(data); self.notifyObservers(EVENT_MODEL.LIST_UPDATED);})
     }
 }

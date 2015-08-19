@@ -1,23 +1,30 @@
+
+var SynchroAction = function(ajaxRequest, doneMethod, failMethod) {
+    this.ajaxRequest = ajaxRequest;
+    this.done = doneMethod;
+    this.fail = failMethod;
+};
+
+var AjaxRequest = function(url, method, data, contentType) {
+    this.url = url;
+    this.method = method;
+    this.data = data;
+    this.contentType = contentType;
+}
+
 var ProductStorage = function() {
+    var self = this;
     this.storeProducts = function(productList) {
-        console.log(productList);
-        for (var i in productList) {
-            console.log(i)
-            console.log(productList[i]);
-        }
-        var objString = JSON.stringify(productList);
-        console.log(objString);
-        localStorage.setItem("productList", objString);
+        localStorage.setItem("productList", JSON.stringify(productList));
     }
     this.readProducts = function() {
-        console.log(localStorage.getItem("productList"));
-        var productList = JSON.parse(localStorage.getItem("productList"));
-        console.log(productList);
-        for (var i in productList) {
-            console.log(i)
-            console.log(productList[i]);
-        }
-        return productList;
+        return JSON.parse(localStorage.getItem("productList"));
+    }
+    this.storeServeurActions = function(actionList) {
+        localStorage.setItem("synchroActions", JSON.stringify(actionList));
+    }
+    this.readServeurActions = function() {
+        return JSON.parse(localStorage.getItem("synchroActions"));
     }
 }
 

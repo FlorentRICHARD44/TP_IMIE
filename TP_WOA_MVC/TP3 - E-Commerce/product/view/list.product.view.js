@@ -10,10 +10,11 @@
             }
         }
         $('button#new-product').on('click', function() {
-            $('div#product-list').attr("hidden", "");
             thisview.notifyObservers(EVENT_CTRL.NEW_PRODUCT);
         });
-    
+        this.hide = function() {
+            $('div#product-list').hide();
+        }
         this.show = function() {
             var pList = model.getProductList();
             $('div#product-list tbody').text('');
@@ -37,7 +38,6 @@
                                                    thisview.notifyObservers(EVENT_CTRL.DEL_PRODUCT, copieProduct);
                                                }
                                           })(pList[p_index]));
-                console.log(pList[p_index]);
                 var line = $('<tr>').append($('<td>').append(
                                         $('<img>').addClass("product")
                                                   .attr("src", pList[p_index].imageUrl)
@@ -49,7 +49,7 @@
                                                      .append(btnDel));
                 $('div#product-list tbody').append(line);
             }
-            $('div#product-list').removeAttr("hidden");
+            $('div#product-list').show();
         }
     };
 

@@ -7,24 +7,23 @@ var ProductEditView = function() {
 
     $('button#list-product').on('click', function() {
         self.notifyObservers(EVENT_CTRL.LIST_PRODUCT);
-        $('div#product-edit').attr("hidden", "");
     });
 
     $('button#save').on('click', function() {
         var error = false;
         var p = new Product();
-        p.setId($('input#id').val());
+        p.id = $('input#id').val();
         if ($('input#label').val() == "") {
             error = true;
         } else {
-            p.setLabel($('input#label').val());
+            p.label = $('input#label').val();
         }
         if ($('input#price').val() == "") {
             error = true;
         } else {
-            p.setPrice($('input#price').val());
+            p.price = $('input#price').val();
         }
-        p.setImageUrl($('input#imageUrl').val());
+        p.imageUrl = $('input#imageUrl').val();
         if (error) {
             $('div.alert').show();
         } else {
@@ -32,24 +31,29 @@ var ProductEditView = function() {
             $('input#id').val("");      
             $('input#label').val("")  ;
             $('input#price').val(""); 
-            $('input#imageUrl').val("");     
-            $('div#product-edit').attr("hidden", "");
+            $('input#imageUrl').val("");
             $('div.alert').hide();
         }
     });
 
-    this.updateView = function(product) {
+    this.show = function(product) {
         $('div#product-edit').removeAttr("hidden");
+    }
+
+    this.hide = function(product) {
+        $('div#product-edit').attr("hidden", "");
     }
     this.notify = function(msg, val) {
         if (msg == EVENT_MODEL.NEW) {
-            $('div#product-edit').removeAttr("hidden");
+            $('input#id').val("");      
+            $('input#label').val(val.label);
+            $('input#price').val(val.price); 
+            $('input#imageUrl').val(val.imageUrl);
         } else if (msg == EVENT_MODEL.EDIT) {
-            $('input#id').val(val.getId());      
-            $('input#label').val(val.getLabel());
-            $('input#price').val(val.getPrice()); 
-            $('input#imageUrl').val(val.getImageUrl()); 
-            $('div#product-edit').removeAttr("hidden");
+            $('input#id').val(val.id);      
+            $('input#label').val(val.label);
+            $('input#price').val(val.price); 
+            $('input#imageUrl').val(val.imageUrl);
         }
     }
 

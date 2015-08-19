@@ -6,16 +6,6 @@
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <script src="lib/jquery-2.1.4.min.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="app.js" charset="utf-8"></script>
-    <script src="shared/functions.js" charset="utf-8"></script>
-    <script src="shared/pattern.observer.js" charset="utf-8"></script>
-    <script src="shared/model/product.model.js" charset="utf-8"></script>
-    <script src="shared/storage/product.storage.js" charset="utf-8"></script>
-    <script src="product/product.ctrl.js" charset="utf-8"></script>
-    <script src="product/view/edit.product.view.js" charset="utf-8"></script>
-    <script src="product/view/list.product.view.js" charset="utf-8"></script>
   </head>
   <body class="container">
     <h1>IMIE Commerce</h1>
@@ -56,9 +46,19 @@
                 <div class="col-md-4"><label>Image URL</label></div>
                 <div class="col-md-8"><input type="text" id="imageUrl" name="imageUrl"/></div>
             </div>
-            <button id="save" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Valider</button>
         </form>
+        <button id="save" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Valider</button>
         <div class="alert alert-danger" role="alert" hidden><b>Erreur: </b>Certains champs nécessaires ne sont pas remplis</div>
     </div>
   </body>
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="shared/functions.js" charset="utf-8"></script>
+    <script src="shared/pattern.observer.js" charset="utf-8"></script>
+    <script src="shared/storage/product.storage.js" charset="utf-8"></script>
+    <script src="shared/model/product.model.js" charset="utf-8"></script>
+    <script src="product/view/edit.product.view.js" charset="utf-8"></script>
+    <script src="product/view/list.product.view.js" charset="utf-8"></script>
+    <script src="product/product.ctrl.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
 </html>
