@@ -11,12 +11,15 @@ var EVENT_CTRL = {
 var Controller = function(prodListView, prodEditView, prodModel) {
     Observer.call(this);
     var self = this;
-    prodModel.registerObserver(prodListView);  // List View observes Model
-    //prodModel.registerObserver(prodEditView);  // Edit View observes Model
-    prodListView.registerObserver(this);       // Controller observes List View
-    prodEditView.registerObserver(this);       // Controller observes Edit View
-    prodModel.init();
-    
+
+    this.init = function() {
+        prodModel.registerObserver(prodListView);  // List View observes Model
+        prodListView.registerObserver(this);       // Controller observes List View
+        prodEditView.registerObserver(this);       // Controller observes Edit View
+        prodModel.init();
+        prodListView.show();
+    }
+
     // Notify called by Subject(s)
     this.notify = function(msg, val) {
         switch(msg) {

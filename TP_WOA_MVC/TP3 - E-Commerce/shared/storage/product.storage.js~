@@ -1,6 +1,6 @@
 
+// Storage for products (data and actions)
 var ProductStorage = function() {
-    var self = this;
     this.storeProducts = function(productList) {
         localStorage.setItem("productList", JSON.stringify(productList));
     }

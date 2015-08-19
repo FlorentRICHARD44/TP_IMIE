@@ -62,6 +62,5 @@ var ProductEditView = function() {
             $('input#imageUrl').val(val.imageUrl);
         }
     }
-
 };
 

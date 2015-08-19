@@ -54,6 +54,7 @@ var ProductModel = function() {
                                                           null,
                                                           null));
             self.prodStorage.storeServeurActions(actionList);
+            productList.push(product);
         } else {  // Product to modify
             actionList.push(new SynchroAction(new AjaxRequest('http://localhost:8080/Service_Rest/rest/products',
                                                               "PUT",
@@ -61,7 +62,15 @@ var ProductModel = function() {
                                                           null,
                                                           null));
             self.prodStorage.storeServeurActions(actionList);
+            for (var ind in productList) {
+                if (productList[ind].id == product.id) {
+                    productList[ind] = product;
+                    break;
+                }
+            }
         }
+        self.prodStorage.storeProducts(productList);
+        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
     // Prepare a new Producted to be edited.
     this.newProduct = function() {
@@ -81,7 +90,15 @@ var ProductModel = function() {
                                                  null,
                                                  null)); 
         self.prodStorage.storeServeurActions(actionList);
-        
+        productList = self.prodStorage.readProducts();
+        for (var ind in productList) {
+            if (productList[ind].id == product.id) {
+                productList.splice(ind, 1);
+                break;
+            }
+        }
+        self.prodStorage.storeProducts(productList);
+        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
     // Synchronize the products with persistance in server.
     this.synchronize = function() {

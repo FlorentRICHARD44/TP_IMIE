@@ -17,6 +17,7 @@ var Controller = function(prodListView, prodEditView, prodModel) {
         prodListView.registerObserver(this);       // Controller observes List View
         prodEditView.registerObserver(this);       // Controller observes Edit View
         prodModel.init();
+        this.applyListView();
     }
 
     // Notify called by Subject(s)

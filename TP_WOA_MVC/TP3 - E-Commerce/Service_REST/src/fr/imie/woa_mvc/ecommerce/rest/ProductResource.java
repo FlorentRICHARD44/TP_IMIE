@@ -84,7 +84,7 @@ public class ProductResource {
     
     /** Deletes a product in persistence.
      * @param productToDelete Product to be removed
-     * @return Response with nothing.
+     * @return Response with nothing.l
      */
     @DELETE
     @Consumes(value=MediaType.APPLICATION_JSON)
