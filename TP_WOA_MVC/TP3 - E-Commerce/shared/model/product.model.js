@@ -1,9 +1,11 @@
+// Event produced by the Model.
 var EVENT_MODEL = {
     LIST_UPDATED: "list_updated",
     NEW: "new",
     EDIT: "edit"
 }
 
+// Class Product
 var Product = function() {
     this.id = undefined;
     this.label = "";
@@ -11,6 +13,7 @@ var Product = function() {
     this.imageUrl = "";
 };
 
+// Class AjaxRequest
 var AjaxRequest = function(url, method, data, contentType) {
     this.url = url;
     this.method = method;
@@ -18,9 +21,18 @@ var AjaxRequest = function(url, method, data, contentType) {
     this.contentType = contentType;
 };
 
+// Class SynchroAction:
+var SynchroAction = function(ajaxRequest, doneMethod, failMethod) {
+    this.ajaxRequest = ajaxRequest;
+    this.done = doneMethod;
+    this.fail = failMethod;
+};
+
+// Model for product.
 var ProductModel = function() {
     Subject.call(this);
     var self = this;
+    // Initialisation of the model.
     this.init = function() {
         var actionList = []
         self.prodStorage = new ProductStorage();
@@ -28,12 +40,13 @@ var ProductModel = function() {
         self.synchronize();
         setInterval(self.synchronize, 10000);
     }
+    // Getter for the product List from storage
     this.getProductList = function() {return self.prodStorage.readProducts();};
+    // Save a product
     this.save = function(product) {
-        console.log("model save")
         productList = self.prodStorage.readProducts();
         var actionList = self.prodStorage.readServeurActions();
-        if (product.id == "") {        
+        if (product.id == "") {  // New Product to create.   
             product.id = null;
             actionList.push(new SynchroAction(new AjaxRequest('http://localhost:8080/Service_Rest/rest/products',
                                                               "POST",
@@ -41,7 +54,7 @@ var ProductModel = function() {
                                                           null,
                                                           null));
             self.prodStorage.storeServeurActions(actionList);
-        } else {
+        } else {  // Product to modify
             actionList.push(new SynchroAction(new AjaxRequest('http://localhost:8080/Service_Rest/rest/products',
                                                               "PUT",
                                                               product, "application/json"),
@@ -50,13 +63,16 @@ var ProductModel = function() {
             self.prodStorage.storeServeurActions(actionList);
         }
     }
+    // Prepare a new Producted to be edited.
     this.newProduct = function() {
         var p = new Product();
         self.notifyObservers(EVENT_MODEL.NEW, p);
     }
+    // Edit an existing product.
     this.editProduct = function(product) {
         self.notifyObservers(EVENT_MODEL.EDIT, product);
     }
+    // Delete a product.
     this.removeProduct = function(product) {
         var actionList = self.prodStorage.readServeurActions();
         actionList.push(new SynchroAction(new AjaxRequest("http://localhost:8080/Service_Rest/rest/products",
@@ -67,6 +83,7 @@ var ProductModel = function() {
         self.prodStorage.storeServeurActions(actionList);
         
     }
+    // Synchronize the products with persistance in server.
     this.synchronize = function() {
         var actionList = self.prodStorage.readServeurActions();
         while(actionList.length > 0) {

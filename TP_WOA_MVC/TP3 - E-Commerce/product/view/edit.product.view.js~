@@ -1,14 +1,16 @@
 
-
+// View for the Production Edition
 var ProductEditView = function() {
     Observer.call(this);
     Subject.call(this);
     var self = this;
 
+    // Button: go to List.
     $('button#list-product').on('click', function() {
         self.notifyObservers(EVENT_CTRL.LIST_PRODUCT);
     });
 
+    // Button: SAVE
     $('button#save').on('click', function() {
         var error = false;
         var p = new Product();
@@ -36,13 +38,17 @@ var ProductEditView = function() {
         }
     });
 
+    // Show the view
     this.show = function(product) {
-        $('div#product-edit').removeAttr("hidden");
+        $('div#product-edit').show();
     }
 
+    // Hide the view
     this.hide = function(product) {
-        $('div#product-edit').attr("hidden", "");
+        $('div#product-edit').hide();
     }
+
+    // Notify called by subject
     this.notify = function(msg, val) {
         if (msg == EVENT_MODEL.NEW) {
             $('input#id').val("");      

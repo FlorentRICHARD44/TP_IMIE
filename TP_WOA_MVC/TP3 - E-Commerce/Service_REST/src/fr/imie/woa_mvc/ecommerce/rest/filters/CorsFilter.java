@@ -12,9 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.resteasy.spi.HttpRequest;
-
-/**
+/** Filter to allow Cross-Domain request for the REST.
  * Servlet Filter implementation class CorsFilter
  */
 @WebFilter("/rest/*")

@@ -1,13 +1,6 @@
 
-var SynchroAction = function(ajaxRequest, doneMethod, failMethod) {
-    this.ajaxRequest = ajaxRequest;
-    this.done = doneMethod;
-    this.fail = failMethod;
-};
-
-
+// Storage for products (data and actions)
 var ProductStorage = function() {
-    var self = this;
     this.storeProducts = function(productList) {
         localStorage.setItem("productList", JSON.stringify(productList));
     }

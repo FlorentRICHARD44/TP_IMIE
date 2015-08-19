@@ -38,17 +38,23 @@
                                                    thisview.notifyObservers(EVENT_CTRL.DEL_PRODUCT, copieProduct);
                                                }
                                           })(pList[p_index]));
-                var line = $('<tr>').append($('<td>').append(
+                var line = $('<tr>').append($('<td>').addClass("vert-align")
+                                                     .append(
                                         $('<img>').addClass("product")
                                                   .attr("src", pList[p_index].imageUrl)
                                                   .attr("alt", pList[p_index].label)))
-                                    .append($('<td>').text(pList[p_index].id))
-                                    .append($('<td>').text(pList[p_index].label))
-                                    .append($('<td>').text(pList[p_index].price))
-                                    .append($('<td>').append(btnEdit)
+                                    .append($('<td>').addClass("vert-align")
+                                                     .text(pList[p_index].id))
+                                    .append($('<td>').addClass("vert-align")
+                                                     .text(pList[p_index].label))
+                                    .append($('<td>').addClass("vert-align")
+                                                     .text(pList[p_index].price))
+                                    .append($('<td>').addClass("vert-align")
+                                                     .append(btnEdit)
                                                      .append(btnDel));
                 $('div#product-list tbody').append(line);
             }
+            $('div#product-list').show();
         }
     };
 

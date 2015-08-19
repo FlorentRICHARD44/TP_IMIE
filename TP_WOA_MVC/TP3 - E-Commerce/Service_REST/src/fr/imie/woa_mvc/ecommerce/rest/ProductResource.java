@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.imie.woa_mvc.ecommerce.rest;
 
 import java.util.List;
@@ -23,15 +20,19 @@ import javax.ws.rs.core.Response.Status;
 import fr.imie.woa_mvc.ecommerce.persistance.ProductEntity;
 import fr.imie.woa_mvc.ecommerce.service.ServiceProducts;
 
-/**
+/** Resource to use REST for Products.
  * @author imie
- *
  */
 @RequestScoped
 @Path("/products")
 public class ProductResource {
+    /** Service for Products.
+     */
     @EJB private ServiceProducts servProducts;
     
+    /** Get the list of all the products.
+     * @return Response for the request, containing Product List if no error.
+     */
     @GET
     @Produces(value=MediaType.APPLICATION_JSON)
     public Response getAllProducts() {
@@ -45,6 +46,10 @@ public class ProductResource {
         return builder.build();
     }
     
+    /** Creates a new Product.
+     * @param productToAdd New Product.
+     * @return Product as represented in persistance.
+     */
     @POST
     @Consumes(value=MediaType.APPLICATION_JSON)
     @Produces(value=MediaType.APPLICATION_JSON)
@@ -59,6 +64,10 @@ public class ProductResource {
         return builder.build();
     }
     
+    /** Updates a Product.
+     * @param productToUpdate New Product.
+     * @return Product as represented in persistence once modified.
+     */
     @PUT
     @Consumes(value=MediaType.APPLICATION_JSON)
     @Produces(value=MediaType.APPLICATION_JSON)
@@ -73,6 +82,10 @@ public class ProductResource {
         return builder.build();
     }
     
+    /** Deletes a product in persistence.
+     * @param productToDelete Product to be removed
+     * @return Response with nothing.
+     */
     @DELETE
     @Consumes(value=MediaType.APPLICATION_JSON)
     public Response deleteProduct(ProductEntity productToDelete) {

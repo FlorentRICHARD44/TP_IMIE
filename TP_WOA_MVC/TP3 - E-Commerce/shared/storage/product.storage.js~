@@ -1,17 +1,4 @@
 
-var SynchroAction = function(ajaxRequest, doneMethod, failMethod) {
-    this.ajaxRequest = ajaxRequest;
-    this.done = doneMethod;
-    this.fail = failMethod;
-};
-
-var AjaxRequest = function(url, method, data, contentType) {
-    this.url = url;
-    this.method = method;
-    this.data = data;
-    this.contentType = contentType;
-}
-
 var ProductStorage = function() {
     var self = this;
     this.storeProducts = function(productList) {

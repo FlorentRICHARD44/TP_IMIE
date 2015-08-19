@@ -1,3 +1,4 @@
+// Events produced by the views.
 var EVENT_CTRL = {
     EDIT_PRODUCT : "edit_product",
     NEW_PRODUCT : "new_product",
@@ -6,14 +7,19 @@ var EVENT_CTRL = {
     SAVE_PRODUCT: "save_product"
 }; 
 
+// Controller
 var Controller = function(prodListView, prodEditView, prodModel) {
     Observer.call(this);
     var self = this;
-    prodModel.registerObserver(prodListView);  // List View observes Model
-    //prodModel.registerObserver(prodEditView);  // Edit View observes Model
-    prodListView.registerObserver(this);       // Controller observes List View
-    prodEditView.registerObserver(this);       // Controller observes Edit View
-    prodModel.init();
+
+    this.init = function() {
+        prodModel.registerObserver(prodListView);  // List View observes Model
+        prodListView.registerObserver(this);       // Controller observes List View
+        prodEditView.registerObserver(this);       // Controller observes Edit View
+        prodModel.init();
+    }
+
+    // Notify called by Subject(s)
     this.notify = function(msg, val) {
         switch(msg) {
             case EVENT_CTRL.EDIT_PRODUCT: self.applyEditView();
@@ -26,17 +32,20 @@ var Controller = function(prodListView, prodEditView, prodModel) {
                                          prodModel.newProduct();
                                          break;
             case EVENT_CTRL.DEL_PRODUCT: prodModel.removeProduct(val); break;
-            case EVENT_CTRL.SAVE_PRODUCT: console.log("ctrl save action");
-                                          self.applyListView();
+            case EVENT_CTRL.SAVE_PRODUCT: self.applyListView();
                                           prodModel.save(val); break;
         }
     };
+
+    // Apply the View Product Edition
     this.applyEditView = function() {
         prodModel.unregisterObserver(prodListView);
         prodModel.registerObserver(prodEditView);
         prodListView.hide();
         prodEditView.show();
     }
+
+    // Apply the View Product List
     this.applyListView = function() {
         prodModel.unregisterObserver(prodEditView);
         prodModel.registerObserver(prodListView);

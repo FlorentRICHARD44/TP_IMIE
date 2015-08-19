@@ -16,3 +16,8 @@ form
     padding: 10px;
     border: solid 1px black;
 }
+
+td.vert-align
+{
+    vertical-align: middle!important;
+}

@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="products")
-@NamedQuery(name="ProductEntity.findAll", query="SELECT p FROM ProductEntity p")
+@NamedQuery(name="ProductEntity.findAll", query="SELECT p FROM ProductEntity p ORDER BY p.id")
 public class ProductEntity implements Serializable {
 
 	/**
