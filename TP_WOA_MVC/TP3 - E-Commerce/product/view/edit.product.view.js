@@ -13,18 +13,18 @@ var ProductEditView = function() {
     $('button#save').on('click', function() {
         var error = false;
         var p = new Product();
-        p.setId($('input#id').val());
+        p.id = $('input#id').val();
         if ($('input#label').val() == "") {
             error = true;
         } else {
-            p.setLabel($('input#label').val());
+            p.label = $('input#label').val();
         }
         if ($('input#price').val() == "") {
             error = true;
         } else {
-            p.setPrice($('input#price').val());
+            p.price = $('input#price').val();
         }
-        p.setImageUrl($('input#imageUrl').val());
+        p.imageUrl = $('input#imageUrl').val();
         if (error) {
             $('div.alert').show();
         } else {
@@ -45,10 +45,10 @@ var ProductEditView = function() {
         if (msg == EVENT_MODEL.NEW) {
             $('div#product-edit').removeAttr("hidden");
         } else if (msg == EVENT_MODEL.EDIT) {
-            $('input#id').val(val.getId());      
-            $('input#label').val(val.getLabel());
-            $('input#price').val(val.getPrice()); 
-            $('input#imageUrl').val(val.getImageUrl()); 
+            $('input#id').val(val.id);      
+            $('input#label').val(val.label);
+            $('input#price').val(val.price); 
+            $('input#imageUrl').val(val.imageUrl); 
             $('div#product-edit').removeAttr("hidden");
         }
     }

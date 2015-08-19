@@ -20,8 +20,7 @@ var Controller = function(prodListView, prodEditView, prodModel) {
             case EVENT_CTRL.LIST_PRODUCT: prodListView.show(); break;
             case EVENT_CTRL.NEW_PRODUCT: prodModel.newProduct(); break;
             case EVENT_CTRL.DEL_PRODUCT: prodModel.removeProduct(val); break;
-            case EVENT_CTRL.SAVE_PRODUCT: prodModel.save(val);
-                                          break;
+            case EVENT_CTRL.SAVE_PRODUCT: prodModel.save(val); break;
         }
     };
 };

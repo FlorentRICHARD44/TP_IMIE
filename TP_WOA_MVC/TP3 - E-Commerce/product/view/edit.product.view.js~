@@ -14,12 +14,12 @@ var ProductEditView = function() {
         var error = false;
         var p = new Product();
         p.setId($('input#id').val());
-        if ($('input#label').val() == ) {
+        if ($('input#label').val() == "") {
             error = true;
         } else {
             p.setLabel($('input#label').val());
         }
-        if ($('input#price').val() == ) {
+        if ($('input#price').val() == "") {
             error = true;
         } else {
             p.setPrice($('input#price').val());

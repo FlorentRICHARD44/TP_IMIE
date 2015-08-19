@@ -1,0 +1,23 @@
+var ProductStorage = function() {
+    this.storeProducts = function(productList) {
+        console.log(productList);
+        for (var i in productList) {
+            console.log(i)
+            console.log(productList[i]);
+        }
+        var objString = JSON.stringify(productList);
+        console.log(objString);
+        localStorage.setItem("productList", objString);
+    }
+    this.readProducts = function() {
+        console.log(localStorage.getItem("productList"));
+        var productList = JSON.parse(localStorage.getItem("productList"));
+        console.log(productList);
+        for (var i in productList) {
+            console.log(i)
+            console.log(productList[i]);
+        }
+        return productList;
+    }
+}
+

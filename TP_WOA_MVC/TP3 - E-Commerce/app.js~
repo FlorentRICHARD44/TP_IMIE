@@ -1,7 +1,0 @@
-$(function() {
-    var productModel = new ProductModel();
-    var productListView = new ProductListView();
-    var productEditView = new ProductEditView();
-    var ctrl = new Controller(productListView, productEditView, productModel);
-});
-

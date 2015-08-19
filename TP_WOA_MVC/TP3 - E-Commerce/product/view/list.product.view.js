@@ -20,8 +20,8 @@
             for (var p_index in pList) {
                 var btnEdit = $('<button>').addClass('btn')
                                            .addClass('btn-primary')
-                                            .append($('<span>').addClass('glyphicon')
-                                                               .addClass('glyphicon-pencil'))
+                                           .append($('<span>').addClass('glyphicon')
+                                                              .addClass('glyphicon-pencil'))
                                            .on('click', (function(copieProduct) { 
                                                 return function() {
                                                     $('div#product-list').attr("hidden", "");
@@ -29,21 +29,22 @@
                                                 }
                                             })(pList[p_index]));
                 var btnDel = $('<button>').addClass('btn')
-                                           .addClass('btn-danger')
-                                            .append($('<span>').addClass('glyphicon')
-                                                               .addClass('glyphicon-trash'))
-                                           .on('click', (function(copieProduct) { 
-                                                return function() {
-                                                     thisview.notifyObservers(EVENT_CTRL.DEL_PRODUCT, copieProduct);
-                                                }
-                                            })(pList[p_index]));
+                                          .addClass('btn-danger')
+                                          .append($('<span>').addClass('glyphicon')
+                                                             .addClass('glyphicon-trash'))
+                                          .on('click', (function(copieProduct) { 
+                                               return function() {
+                                                   thisview.notifyObservers(EVENT_CTRL.DEL_PRODUCT, copieProduct);
+                                               }
+                                          })(pList[p_index]));
+                console.log(pList[p_index]);
                 var line = $('<tr>').append($('<td>').append(
                                         $('<img>').addClass("product")
-                                                  .attr("src", pList[p_index].getImageUrl())
-                                                  .attr("alt", pList[p_index].getLabel())))
-                                    .append($('<td>').text(pList[p_index].getId()))
-                                    .append($('<td>').text(pList[p_index].getLabel()))
-                                    .append($('<td>').text(pList[p_index].getPrice()))
+                                                  .attr("src", pList[p_index].imageUrl)
+                                                  .attr("alt", pList[p_index].label)))
+                                    .append($('<td>').text(pList[p_index].id))
+                                    .append($('<td>').text(pList[p_index].label))
+                                    .append($('<td>').text(pList[p_index].price))
                                     .append($('<td>').append(btnEdit)
                                                      .append(btnDel));
                 $('div#product-list tbody').append(line);

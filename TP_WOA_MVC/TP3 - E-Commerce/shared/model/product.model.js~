@@ -5,64 +5,60 @@ var EVENT_MODEL = {
 }
 
 var Product = function() {
-    var id;
-    var label = "";
-    var price = 0.00;
-    var imageUrl = "";
-    this.getId = function() {return id;};
-    this.setId = function(newId) {id = newId;};
-    this.getLabel = function() {return label;};
-    this.setLabel = function(newLabel) {label = newLabel;};
-    this.getPrice = function() {return price;};
-    this.setPrice = function(newPrice) {price = newPrice;};
-    this.getImageUrl = function() {return imageUrl;};
-    this.setImageUrl = function(newImageUrl) {imageUrl = newImageUrl;};
+    this.id = undefined;
+    this.label = "";
+    this.price = 0.00;
+    this.imageUrl = "";
 };
 
 var ProductModel = function() {
     Subject.call(this);
     var self = this;
     var productList = [];
+    var prodStorage = new ProductStorage();
     this.init = function() {
         var p1 = new Product();
-        p1.setId(1);
-        p1.setLabel('Vélo');
-        p1.setPrice(299.99);
-        p1.setImageUrl("img/velo.jpeg");
+        p1.id = 1;
+        p1.label = 'Vélo';
+        p1.price = 299.99;
+        p1.imageUrl = "img/velo.jpeg";
         var p2 = new Product();
-        p2.setId(2);
-        p2.setLabel('Chaussures');
-        p2.setPrice(24.49);
-        p2.setImageUrl("img/chaussure.jpeg");
+        p2.id = 2;
+        p2.label = 'Chaussures';
+        p2.price = 24.49;
+        p2.imageUrl = "img/chaussure.jpeg";
         var p3 = new Product();
-        p3.setId(3);
-        p3.setLabel('Crayon');
-        p3.setPrice(0.39);
-        p3.setImageUrl("img/crayon.jpeg");
+        p3.id = 3;
+        p3.label = 'Crayon';
+        p3.price = 0.39;
+        p3.imageUrl = "img/crayon.jpeg";
         productList.push(p1);
         productList.push(p2);
         productList.push(p3);
+        prodStorage.storeProducts(productList);
         self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
-    this.getProductList = function() {return productList;};
+    this.getProductList = function() {return prodStorage.readProducts();};
     this.save = function(product) {
-        if (product.getId() == undefined) {        
+        productList = prodStorage.readProducts();
+        if (product.id == "") {        
             var maxId = 0;
             for (var i in productList) {
-                if (productList[i].getId() > maxId) {
-                    maxId = productList[i].getId();
+                if (productList[i].id > maxId) {
+                    maxId = productList[i].id;
                 }
             }
-            product.setId(maxId + 1);
+            product.id = maxId + 1;
             productList.push(product);
         } else {
             for (var i in productList) {
-                if (productList[i].getId() == product.getId()) {
+                if (productList[i].id == product.id) {
                     productList[i] = product;
                     break;
                 }
             }
         }
+        prodStorage.storeProducts(productList);
         self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
     this.newProduct = function() {
@@ -73,7 +69,13 @@ var ProductModel = function() {
         self.notifyObservers(EVENT_MODEL.EDIT, product);
     }
     this.removeProduct = function(product) {
-        productList.splice(productList.indexOf(product), 1);
+        productList = prodStorage.readProducts();
+        for (var index in productList) {
+            if (productList[index].id == product.id) {
+                productList.splice(index, 1);
+            }
+        }
+        prodStorage.storeProducts(productList);
         self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
 }
