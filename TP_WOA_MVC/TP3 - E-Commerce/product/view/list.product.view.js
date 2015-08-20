@@ -9,15 +9,9 @@ var ProductListView = function(model) {
     this.notify = function(msg, val) {
         switch (msg) {
             case EVENT_MODEL.LIST_UPDATED : this.show(); break;  
-            case EVENT_MODEL.ERROR: var divAlert = $('<div>').addClass("alert")
-                                                             .addClass("alert-danger")
-                                                             .append($('<button>').addClass("close")
-                                                                                  .append($('<span>').addClass('glyphicon').addClass('glyphicon-remove'))
-                                                                                  .on("click", function() {$(this).parent().remove();}))
-                                                             .append($('<strong>').text("Erreur: "))
-                                                             .append(val)
-                                    $('div#alerts').append(divAlert);
-                                    break;
+            case EVENT_MODEL.ERROR: this.addErrorAlert(val); break;
+            case EVENT_MODEL.SYNCHRONIZED: this.showUnsynchronized(false); break;
+            case EVENT_MODEL.UNSYNCHRONIZED: this.showUnsynchronized(true); break;
         }
     }
 
@@ -71,6 +65,28 @@ var ProductListView = function(model) {
             $('div#product-list tbody').append(line);
         }
         $('div#product-list').show();
+    }
+
+    this.addErrorAlert = function(val) {
+        var divAlert = $('<div>').addClass("alert")
+                                 .addClass("alert-danger")
+                                 .append($('<button>').addClass("close")
+                                                      .append($('<span>').addClass('glyphicon')
+                                                                         .addClass('glyphicon-remove'))
+                                                      .on("click", function() {
+                                                                $(this).parent().remove();
+                                                          }))
+                                 .append($('<strong>').text("Erreur: "))
+                                 .append(val)
+        $('div#alerts').append(divAlert);                     
+    }
+
+    this.showUnsynchronized = function(synchro) {
+        if (synchro) {
+            $('div#unsynchro-alert').show();
+        } else {
+            $('div#unsynchro-alert').hide();
+        }
     }
 };
 

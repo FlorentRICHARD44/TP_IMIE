@@ -9,6 +9,9 @@
   </head>
   <body class="container">
     <h1>IMIE Commerce</h1>
+    <div id="alerts">
+        <div id="unsynchro-alert" class="alert alert-warning" role="alert" hidden><strong>Attention: </strong>Le serveur est actuellement indisponible! Vos actions seront synchronisées ultérieurement.</div>
+    </div>
     <div id="product-list">
         <button id="new-product" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nouveau</button>
         <table class="table table-striped">

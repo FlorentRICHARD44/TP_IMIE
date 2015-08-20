@@ -3,7 +3,9 @@ var EVENT_MODEL = {
     LIST_UPDATED: "list_updated",
     NEW: "new",
     EDIT: "edit",
-    ERROR: "error"
+    ERROR: "error",
+    SYNCHRONIZED: "synchronized",
+    UNSYNCHRONIZED: "unsynchronized"
 }
 
 // Class Product
@@ -39,7 +41,7 @@ var ProductModel = function() {
         self.prodStorage = new ProductStorage();
         self.prodStorage.storeServeurActions(actionList);
         self.synchronize();
-        setInterval(self.synchronize, 60000);
+        setInterval(self.synchronize, 20000);
     }
     // Getter for the product List from storage
     this.getProductList = function() {return self.prodStorage.readProducts();};
@@ -106,9 +108,10 @@ var ProductModel = function() {
                 method: "GET"})
                 .done(function(data){
                         self.prodStorage.storeProducts(data);
+                        self.notifyObservers(EVENT_MODEL.SYNCHRONIZED);
                         self.notifyObservers(EVENT_MODEL.LIST_UPDATED);})
                 .fail(function(data, statusText, xhr) {
-                            console.log("action fail " + xhr.status);
+                        self.notifyObservers(EVENT_MODEL.UNSYNCHRONIZED);
                      })
     }
 
@@ -126,12 +129,14 @@ var ProductModel = function() {
                     method: action.ajaxRequest.method,
                     data: JSON.stringify(action.ajaxRequest.data),
                     contentType : action.ajaxRequest.contentType})
-                    .done(function(data) {console.log("action done");})
+                    .done(function(data) {
+                        self.notifyObservers(EVENT_MODEL.SYNCHRONIZED);})
                     .fail((function(copieAction, copieNewActionList) {
                                 return function(jqXHR, textStatus, errorThrown) {
                                         if (jqXHR.status == 400) {
                                             self.notifyObservers(EVENT_MODEL.ERROR, jqXHR.responseText)
                                         } else {
+                                            self.notifyObservers(EVENT_MODEL.UNSYNCHRONIZED);
                                             actions = self.prodStorage.readServeurActions();
                                             actions.push(copieAction)
                                             self.prodStorage.storeServeurActions(actions);

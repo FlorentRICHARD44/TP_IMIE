@@ -27,14 +27,14 @@ var ProductEditView = function() {
         }
         p.imageUrl = $('input#imageUrl').val();
         if (error) {
-            $('div.alert').show();
+            $('div#edit-alert').show();
         } else {
             self.notifyObservers(EVENT_CTRL.SAVE_PRODUCT, p);
             $('input#id').val("");      
             $('input#label').val("")  ;
             $('input#price').val(""); 
             $('input#imageUrl').val("");
-            $('div.alert').hide();
+            $('div#edit-alert').hide();
         }
     });
 
