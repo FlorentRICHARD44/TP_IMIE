@@ -10,7 +10,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="products")
-@NamedQuery(name="ProductEntity.findAll", query="SELECT p FROM ProductEntity p ORDER BY p.id")
+@NamedQueries({
+    @NamedQuery(name="ProductEntity.findAll", query="SELECT p FROM ProductEntity p ORDER BY p.id"),
+    @NamedQuery(name="ProductEntity.findByLabel", query="SELECT p FROM ProductEntity p WHERE lower(p.label) = lower(:label)")
+})
 public class ProductEntity implements Serializable {
 
 	/**

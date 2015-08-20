@@ -1,5 +1,6 @@
 package fr.imie.woa_mvc.ecommerce.rest;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -58,8 +59,12 @@ public class ProductResource {
         try {
             ProductEntity productCreated = servProducts.addProduct(productToAdd);
             builder.entity(productCreated);
-        } catch(EJBException e) {
-            builder = Response.status(Status.BAD_REQUEST);
+        } catch(RemoteException e) {
+            Exception ne = (Exception) e.getCause();
+            if(ne.getClass() == IllegalArgumentException.class) {
+                builder = Response.status(Status.BAD_REQUEST);
+                builder.entity(ne.getMessage());
+            }
         }
         return builder.build();
     }

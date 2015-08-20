@@ -6,9 +6,18 @@ var ProductListView = function(model) {
     var self = this;
     
     // Notify called by subject.
-    this.notify = function(msg) {
-        if (msg == EVENT_MODEL.LIST_UPDATED) {
-            this.show();   
+    this.notify = function(msg, val) {
+        switch (msg) {
+            case EVENT_MODEL.LIST_UPDATED : this.show(); break;  
+            case EVENT_MODEL.ERROR: var divAlert = $('<div>').addClass("alert")
+                                                             .addClass("alert-danger")
+                                                             .append($('<button>').addClass("close")
+                                                                                  .append($('<span>').addClass('glyphicon').addClass('glyphicon-remove'))
+                                                                                  .on("click", function() {$(this).parent().remove();}))
+                                                             .append($('<strong>').text("Erreur: "))
+                                                             .append(val)
+                                    $('div#alerts').append(divAlert);
+                                    break;
         }
     }
 

@@ -17,7 +17,12 @@ form
     border: solid 1px black;
 }
 
-td.vert-align{
+td.vert-align
 {
     vertical-align: middle!important;
+}
+
+div.alert button
+{
+    margin-right: 30px;
 }

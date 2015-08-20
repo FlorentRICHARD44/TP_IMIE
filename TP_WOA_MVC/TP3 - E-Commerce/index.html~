@@ -9,7 +9,6 @@
   </head>
   <body class="container">
     <h1>IMIE Commerce</h1>
-    
     <div id="product-list">
         <button id="new-product" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nouveau</button>
         <table class="table table-striped">
@@ -57,8 +56,8 @@
     <script src="shared/pattern.observer.js" charset="utf-8"></script>
     <script src="shared/storage/product.storage.js" charset="utf-8"></script>
     <script src="shared/model/product.model.js" charset="utf-8"></script>
-    <script src="product/product.ctrl.js" charset="utf-8"></script>
     <script src="product/view/edit.product.view.js" charset="utf-8"></script>
     <script src="product/view/list.product.view.js" charset="utf-8"></script>
+    <script src="product/product.ctrl.js" charset="utf-8"></script>
     <script src="app.js" charset="utf-8"></script>
 </html>

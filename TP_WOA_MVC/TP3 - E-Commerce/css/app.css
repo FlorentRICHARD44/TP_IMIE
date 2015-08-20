@@ -21,3 +21,8 @@ td.vert-align
 {
     vertical-align: middle!important;
 }
+
+div.alert button
+{
+    margin-right: 20px;
+}

@@ -2,7 +2,8 @@
 var EVENT_MODEL = {
     LIST_UPDATED: "list_updated",
     NEW: "new",
-    EDIT: "edit"
+    EDIT: "edit",
+    ERROR: "error"
 }
 
 // Class Product
@@ -38,7 +39,7 @@ var ProductModel = function() {
         self.prodStorage = new ProductStorage();
         self.prodStorage.storeServeurActions(actionList);
         self.synchronize();
-        setInterval(self.synchronize, 10000);
+        setInterval(self.synchronize, 60000);
     }
     // Getter for the product List from storage
     this.getProductList = function() {return self.prodStorage.readProducts();};
@@ -100,21 +101,48 @@ var ProductModel = function() {
         self.prodStorage.storeProducts(productList);
         self.notifyObservers(EVENT_MODEL.LIST_UPDATED);
     }
+    this.readProductList = function() {
+        $.ajax({url: 'http://localhost:8080/Service_Rest/rest/products',
+                method: "GET"})
+                .done(function(data){
+                        self.prodStorage.storeProducts(data);
+                        self.notifyObservers(EVENT_MODEL.LIST_UPDATED);})
+                .fail(function(data, statusText, xhr) {
+                            console.log("action fail " + xhr.status);
+                     })
+    }
+
     // Synchronize the products with persistance in server.
     this.synchronize = function() {
         var actionList = self.prodStorage.readServeurActions();
+        self.prodStorage.storeServeurActions([]);
+        var newActionList = []
+        if (actionList.length == 0) {
+            self.readProductList();
+        }
         while(actionList.length > 0) {
             action = actionList.shift();            
             $.ajax({url: action.ajaxRequest.url,
                     method: action.ajaxRequest.method,
                     data: JSON.stringify(action.ajaxRequest.data),
                     contentType : action.ajaxRequest.contentType})
-                    .done(function(data) {console.log("action done")})
-                    .fail(function(data) {console.log("action fail")});
+                    .done(function(data) {console.log("action done");})
+                    .fail((function(copieAction, copieNewActionList) {
+                                return function(jqXHR, textStatus, errorThrown) {
+                                        if (jqXHR.status == 400) {
+                                            self.notifyObservers(EVENT_MODEL.ERROR, jqXHR.responseText)
+                                        } else {
+                                            actions = self.prodStorage.readServeurActions();
+                                            actions.push(copieAction)
+                                            self.prodStorage.storeServeurActions(actions);
+                                        }
+                                }
+                            })(action, newActionList))
+                    .always(function() {
+                        if (actionList.length == 0) {  // Last action -> read the actualised list
+                            self.readProductList();
+                        }                      
+                    })
         }
-        self.prodStorage.storeServeurActions(actionList);
-        $.ajax({url: 'http://localhost:8080/Service_Rest/rest/products',
-                method: "GET"})
-                .done(function(data){self.prodStorage.storeProducts(data); self.notifyObservers(EVENT_MODEL.LIST_UPDATED);})
     }
 }
