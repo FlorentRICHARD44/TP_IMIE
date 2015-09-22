@@ -1,0 +1,12 @@
+console.log("hello the world");
+//console.log(global);
+//console.log(process.argv);
+//var nb = require('./mod.js');
+//console.log(nb);
+//var os = require('os');
+//console.log(os);
+//console.log(os.cpus());
+//console.log(os.type());
+
+var colors = require('colors/safe');
+console.log(colors.inverse("toto green"));

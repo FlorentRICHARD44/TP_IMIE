@@ -1,0 +1,18 @@
+{
+  "name": "tp_01",
+  "version": "0.1.0",
+  "description": "Blabla c'est mon TP 01 mais vous ne saurez pas ce qu'il y a dedans",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "IMIE",
+    "Test"
+  ],
+  "author": "Moi",
+  "license": "DTFWYW",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
+}
