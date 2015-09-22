@@ -1,9 +1,9 @@
+function User(n) {
+};
+User.prototype.setName = function(n) {this._name = n;};
+User.prototype.getName = function() {return this._name;};
 
 module.exports = {
-    User: function(n) {
-        var name = n;
-        this.setName = function(n) {name = n;};
-        this.getName = function() {return name;};
-    }
+    User: User
 };
 

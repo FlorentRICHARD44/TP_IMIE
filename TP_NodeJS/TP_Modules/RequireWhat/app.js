@@ -23,13 +23,13 @@
 
 
 // app.js - PART 5
-//var User = require('./user').User;
-//var user = new User();
-//user.setName('toto');
-//console.log(user.getName()); // prints 'toto'
+var User = require('./user').User;
+var user = new User();
+user.setName('toto');
+console.log(user.getName()); // prints 'toto'
 
 // app.js - PART 6
-var userFactory = require('./userFactory');
-var user = userFactory('toto');
-console.log(user.getName()); // prints 'toto'
+//var userFactory = require('./userFactory');
+//var user = userFactory('toto');
+//console.log(user.getName()); // prints 'toto'
 

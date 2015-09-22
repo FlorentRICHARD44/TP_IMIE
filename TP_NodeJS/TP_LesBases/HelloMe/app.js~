@@ -13,7 +13,7 @@ process.argv.forEach(function(element, index, array) {
         console.log("Argument FOREACH " + (index - 1) + " : " + element);
     }
 })
-console.log(parseInt('a'));
+
 console.log("---------- SOMME ----------------");
 var somme = 0;
 process.argv.forEach(function(element, index, array) {
