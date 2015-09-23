@@ -16,12 +16,12 @@ var searchDirsAndFiles = function(currentPath, currentDeep) {
             var fileFullPath = path.join(currentPath,file)
             var stats = fs.statSync(fileFullPath);
             if (stats.isDirectory()) {
-                console.log(" " + Array(currentDeep + 1).join("_") + file);
+                console.log(" " + Array(currentDeep + 1).join("  ") + "|_ /" + file);
                 if (currentDeep < deep) {
                     searchDirsAndFiles(fileFullPath, currentDeep + 1);
                 }
-            } else {
-                console.log(Array(currentDeep + 1).join(" ") + file);
+            } else if (stats.isFile()) {
+                console.log(" " + Array(currentDeep + 1).join("  ") + "|_ " + file);
             }    
         }
     }
