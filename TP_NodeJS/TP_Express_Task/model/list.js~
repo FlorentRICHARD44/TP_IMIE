@@ -1,0 +1,26 @@
+function List() {
+    // id: Integer
+    // name: String
+    // tasks: array
+};
+
+Task.prototype.getId = function() {return this.id;};
+Task.prototype.setId = function(id) {this.id = id;};
+Task.prototype.getName = function() {return this.name;};
+Task.prototype.setName = function(name) {this.name = name;};
+Task.prototype.getTasks = function() {return this.tasks;};
+Task.prototype.setTasks = function(tasks){this.tasks = tasks;};
+Task.prototype.addTask = function(task) {this.tasks.push(task);};
+Task.prototype.removeTask = function(task) {
+    var posToDel = -1;
+    for (var i = 0; i < this.tasks.length; i++) {
+        if (this.tasks[i].getId() == task.getId()) {
+            posToDel = i;
+            break;
+        }
+    }
+    this.tasks.splice(posToDel, 1);
+};
+
+module.exports = List;
+
