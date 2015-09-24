@@ -1,0 +1,27 @@
+doctype html
+html
+    head
+        title #{title}
+    body
+        h1 Liste des utilisateurs
+        p
+            | Voici
+            | la liste
+            | de tous les utilisateurs
+        li: a(href="/img/imie.png") IMIE
+        p= msg.toUpperCase()
+        h2 Utilisateurs
+        table
+            thead: tr
+                    th NOM
+                    th Prénom
+                    th Âge
+                    th Description
+            tbody
+                for user in users
+                    tr: td= user.lastName
+                        td= user.firstName
+                        td= user.age
+                        td= user.desc
+                
+
